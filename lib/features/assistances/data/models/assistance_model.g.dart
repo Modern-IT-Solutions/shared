@@ -21,8 +21,10 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
       reviewer: json['reviewer'] == null
           ? null
           : ProfileModel.fromJson(json['reviewer'] as Map<String, dynamic>),
-      intervention: InterventionModel.fromJson(
-          json['intervention'] as Map<String, dynamic>),
+      intervention: json['intervention'] == null
+          ? null
+          : InterventionModel.fromJson(
+              json['intervention'] as Map<String, dynamic>),
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
       updatedAt:
@@ -42,7 +44,7 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
       'note': instance.note,
       'attachments': instance.attachments,
       'reviewer': instance.reviewer?.toJson(),
-      'intervention': instance.intervention.toJson(),
+      'intervention': instance.intervention?.toJson(),
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
       'updatedAt':

@@ -29,7 +29,7 @@ mixin _$AssistanceModel {
   String get note => throw _privateConstructorUsedError;
   List<dynamic> get attachments => throw _privateConstructorUsedError;
   ProfileModel? get reviewer => throw _privateConstructorUsedError;
-  InterventionModel get intervention => throw _privateConstructorUsedError;
+  InterventionModel? get intervention => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
@@ -58,14 +58,14 @@ abstract class $AssistanceModelCopyWith<$Res> {
       String note,
       List<dynamic> attachments,
       ProfileModel? reviewer,
-      InterventionModel intervention,
+      InterventionModel? intervention,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @TimestampDateTimeSerializer() DateTime? deletedAt});
 
   $StationModelCopyWith<$Res> get station;
   $ProfileModelCopyWith<$Res>? get reviewer;
-  $InterventionModelCopyWith<$Res> get intervention;
+  $InterventionModelCopyWith<$Res>? get intervention;
 }
 
 /// @nodoc
@@ -89,7 +89,7 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
     Object? note = null,
     Object? attachments = null,
     Object? reviewer = freezed,
-    Object? intervention = null,
+    Object? intervention = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? deletedAt = freezed,
@@ -127,10 +127,10 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
               as ProfileModel?,
-      intervention: null == intervention
+      intervention: freezed == intervention
           ? _value.intervention
           : intervention // ignore: cast_nullable_to_non_nullable
-              as InterventionModel,
+              as InterventionModel?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -168,8 +168,12 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $InterventionModelCopyWith<$Res> get intervention {
-    return $InterventionModelCopyWith<$Res>(_value.intervention, (value) {
+  $InterventionModelCopyWith<$Res>? get intervention {
+    if (_value.intervention == null) {
+      return null;
+    }
+
+    return $InterventionModelCopyWith<$Res>(_value.intervention!, (value) {
       return _then(_value.copyWith(intervention: value) as $Val);
     });
   }
@@ -192,7 +196,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
       String note,
       List<dynamic> attachments,
       ProfileModel? reviewer,
-      InterventionModel intervention,
+      InterventionModel? intervention,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @TimestampDateTimeSerializer() DateTime? deletedAt});
@@ -202,7 +206,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
   @override
   $ProfileModelCopyWith<$Res>? get reviewer;
   @override
-  $InterventionModelCopyWith<$Res> get intervention;
+  $InterventionModelCopyWith<$Res>? get intervention;
 }
 
 /// @nodoc
@@ -224,7 +228,7 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
     Object? note = null,
     Object? attachments = null,
     Object? reviewer = freezed,
-    Object? intervention = null,
+    Object? intervention = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? deletedAt = freezed,
@@ -262,10 +266,10 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
               as ProfileModel?,
-      intervention: null == intervention
+      intervention: freezed == intervention
           ? _value.intervention
           : intervention // ignore: cast_nullable_to_non_nullable
-              as InterventionModel,
+              as InterventionModel?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -334,7 +338,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   @override
   final ProfileModel? reviewer;
   @override
-  final InterventionModel intervention;
+  final InterventionModel? intervention;
   @override
   @TimestampDateTimeSerializer()
   final DateTime createdAt;
@@ -418,7 +422,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           required final String note,
           required final List<dynamic> attachments,
           required final ProfileModel? reviewer,
-          required final InterventionModel intervention,
+          required final InterventionModel? intervention,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
           @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
@@ -445,7 +449,7 @@ abstract class _AssistanceModel implements AssistanceModel {
   @override
   ProfileModel? get reviewer;
   @override
-  InterventionModel get intervention;
+  InterventionModel? get intervention;
   @override
   @TimestampDateTimeSerializer()
   DateTime get createdAt;
