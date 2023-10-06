@@ -21,7 +21,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
     required String note,
     required List<dynamic> attachments,
     required ProfileModel? reviewer,
-    required InterventionModel intervention,
+    required InterventionModel? intervention,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
     @TimestampDateTimeSerializer()
