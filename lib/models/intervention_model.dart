@@ -8,7 +8,7 @@ import 'package:shared/shared.dart';
 part 'intervention_model.freezed.dart';
 part 'intervention_model.g.dart';
 
-/// [Intervention]  is abstract class that represents the intervention that the client requested.
+/// [InterventionModel]  is abstract class that represents the intervention that the client requested.
 /// it contains :  status is [InterventionStatus], date is [Timestamp],
 /// description is [String], [Items] is list of [Item], type is [InterventionType], [Intervener] is [Profile],
 
@@ -25,7 +25,9 @@ class InterventionModel with _$InterventionModel implements Model {
     required List<dynamic> attachments,
     required InterventionType type,
     required ProfileModel intervener,
-
+    // next intervention date
+    @TimestampDateTimeSerializer()
+    required DateTime? nextInterventionDate,
     @Default({}) Map<String,dynamic> metadata,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,

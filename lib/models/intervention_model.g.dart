@@ -17,6 +17,8 @@ _$InterventionModelImpl _$$InterventionModelImplFromJson(
       type: $enumDecode(_$InterventionTypeEnumMap, json['type']),
       intervener:
           ProfileModel.fromJson(json['intervener'] as Map<String, dynamic>),
+      nextInterventionDate: const TimestampDateTimeSerializer()
+          .fromJson(json['nextInterventionDate']),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
@@ -36,6 +38,9 @@ Map<String, dynamic> _$$InterventionModelImplToJson(
       'attachments': instance.attachments,
       'type': _$InterventionTypeEnumMap[instance.type]!,
       'intervener': instance.intervener.toJson(),
+      'nextInterventionDate': _$JsonConverterToJson<dynamic, DateTime>(
+          instance.nextInterventionDate,
+          const TimestampDateTimeSerializer().toJson),
       'metadata': instance.metadata,
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),

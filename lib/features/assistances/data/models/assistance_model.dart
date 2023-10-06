@@ -50,8 +50,8 @@ class AssistanceModel with _$AssistanceModel implements Model {
             group: FieldGroup.primary,
           ),
         },
-        name: "Deposit Requests",
-        path: "depositRequests",
+        name: "Assistances Requests",
+        path: "assistances",
         fromJson: AssistanceModel.fromJson,
         tileBuilder: (model) => ModelGeneralData(
           title: model.station.name,
