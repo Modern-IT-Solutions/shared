@@ -17,7 +17,9 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
       status: $enumDecode(_$AssistanceStatusEnumMap, json['status']),
       date: DateTime.parse(json['date'] as String),
       note: json['note'] as String,
-      attachments: json['attachments'] as List<dynamic>,
+      attachments: (json['attachments'] as List<dynamic>)
+          .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       reviewer: json['reviewer'] == null
           ? null
           : ProfileModel.fromJson(json['reviewer'] as Map<String, dynamic>),
@@ -42,7 +44,7 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
       'status': _$AssistanceStatusEnumMap[instance.status]!,
       'date': instance.date.toIso8601String(),
       'note': instance.note,
-      'attachments': instance.attachments,
+      'attachments': instance.attachments.map((e) => e.toJson()).toList(),
       'reviewer': instance.reviewer?.toJson(),
       'intervention': instance.intervention?.toJson(),
       'createdAt':

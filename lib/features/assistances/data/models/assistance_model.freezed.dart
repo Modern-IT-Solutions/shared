@@ -27,7 +27,7 @@ mixin _$AssistanceModel {
   AssistanceStatus get status => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   String get note => throw _privateConstructorUsedError;
-  List<dynamic> get attachments => throw _privateConstructorUsedError;
+  List<AttachmentModel> get attachments => throw _privateConstructorUsedError;
   ProfileModel? get reviewer => throw _privateConstructorUsedError;
   InterventionModel? get intervention => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
@@ -56,7 +56,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
       AssistanceStatus status,
       DateTime date,
       String note,
-      List<dynamic> attachments,
+      List<AttachmentModel> attachments,
       ProfileModel? reviewer,
       InterventionModel? intervention,
       @TimestampDateTimeSerializer() DateTime createdAt,
@@ -122,7 +122,7 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<AttachmentModel>,
       reviewer: freezed == reviewer
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
@@ -194,7 +194,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
       AssistanceStatus status,
       DateTime date,
       String note,
-      List<dynamic> attachments,
+      List<AttachmentModel> attachments,
       ProfileModel? reviewer,
       InterventionModel? intervention,
       @TimestampDateTimeSerializer() DateTime createdAt,
@@ -261,7 +261,7 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
       attachments: null == attachments
           ? _value._attachments
           : attachments // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<AttachmentModel>,
       reviewer: freezed == reviewer
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
@@ -296,7 +296,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       required this.status,
       required this.date,
       required this.note,
-      required final List<dynamic> attachments,
+      required final List<AttachmentModel> attachments,
       required this.reviewer,
       required this.intervention,
       @TimestampDateTimeSerializer() required this.createdAt,
@@ -327,9 +327,9 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   final DateTime date;
   @override
   final String note;
-  final List<dynamic> _attachments;
+  final List<AttachmentModel> _attachments;
   @override
-  List<dynamic> get attachments {
+  List<AttachmentModel> get attachments {
     if (_attachments is EqualUnmodifiableListView) return _attachments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_attachments);
@@ -420,7 +420,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           required final AssistanceStatus status,
           required final DateTime date,
           required final String note,
-          required final List<dynamic> attachments,
+          required final List<AttachmentModel> attachments,
           required final ProfileModel? reviewer,
           required final InterventionModel? intervention,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
@@ -445,7 +445,7 @@ abstract class _AssistanceModel implements AssistanceModel {
   @override
   String get note;
   @override
-  List<dynamic> get attachments;
+  List<AttachmentModel> get attachments;
   @override
   ProfileModel? get reviewer;
   @override
