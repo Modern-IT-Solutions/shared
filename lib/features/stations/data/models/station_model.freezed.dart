@@ -25,8 +25,10 @@ mixin _$StationModel {
   String get name => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  List<String> get phoneNumbers => throw _privateConstructorUsedError;
-  List<ProfileModel> get technicians => throw _privateConstructorUsedError;
+  List<String> get phoneNumbers => throw _privateConstructorUsedError; // owner
+  Map<String, ProfileModel> get owners => throw _privateConstructorUsedError;
+  Map<String, ProfileModel> get technicians =>
+      throw _privateConstructorUsedError;
   Address get address => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -53,7 +55,8 @@ abstract class $StationModelCopyWith<$Res> {
       String photoUrl,
       String? email,
       List<String> phoneNumbers,
-      List<ProfileModel> technicians,
+      Map<String, ProfileModel> owners,
+      Map<String, ProfileModel> technicians,
       Address address,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
@@ -80,6 +83,7 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
     Object? photoUrl = null,
     Object? email = freezed,
     Object? phoneNumbers = null,
+    Object? owners = null,
     Object? technicians = null,
     Object? address = null,
     Object? createdAt = null,
@@ -107,10 +111,14 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
           ? _value.phoneNumbers
           : phoneNumbers // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      owners: null == owners
+          ? _value.owners
+          : owners // ignore: cast_nullable_to_non_nullable
+              as Map<String, ProfileModel>,
       technicians: null == technicians
           ? _value.technicians
           : technicians // ignore: cast_nullable_to_non_nullable
-              as List<ProfileModel>,
+              as Map<String, ProfileModel>,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -153,7 +161,8 @@ abstract class _$$StationModelImplCopyWith<$Res>
       String photoUrl,
       String? email,
       List<String> phoneNumbers,
-      List<ProfileModel> technicians,
+      Map<String, ProfileModel> owners,
+      Map<String, ProfileModel> technicians,
       Address address,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
@@ -179,6 +188,7 @@ class __$$StationModelImplCopyWithImpl<$Res>
     Object? photoUrl = null,
     Object? email = freezed,
     Object? phoneNumbers = null,
+    Object? owners = null,
     Object? technicians = null,
     Object? address = null,
     Object? createdAt = null,
@@ -206,10 +216,14 @@ class __$$StationModelImplCopyWithImpl<$Res>
           ? _value._phoneNumbers
           : phoneNumbers // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      owners: null == owners
+          ? _value._owners
+          : owners // ignore: cast_nullable_to_non_nullable
+              as Map<String, ProfileModel>,
       technicians: null == technicians
           ? _value._technicians
           : technicians // ignore: cast_nullable_to_non_nullable
-              as List<ProfileModel>,
+              as Map<String, ProfileModel>,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -239,12 +253,14 @@ class _$StationModelImpl implements _StationModel {
       required this.photoUrl,
       this.email,
       required final List<String> phoneNumbers,
-      required final List<ProfileModel> technicians,
+      required final Map<String, ProfileModel> owners,
+      required final Map<String, ProfileModel> technicians,
       required this.address,
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
       @TimestampDateTimeSerializer() this.deletedAt})
       : _phoneNumbers = phoneNumbers,
+        _owners = owners,
         _technicians = technicians;
 
   factory _$StationModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -267,12 +283,22 @@ class _$StationModelImpl implements _StationModel {
     return EqualUnmodifiableListView(_phoneNumbers);
   }
 
-  final List<ProfileModel> _technicians;
+// owner
+  final Map<String, ProfileModel> _owners;
+// owner
   @override
-  List<ProfileModel> get technicians {
-    if (_technicians is EqualUnmodifiableListView) return _technicians;
+  Map<String, ProfileModel> get owners {
+    if (_owners is EqualUnmodifiableMapView) return _owners;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_technicians);
+    return EqualUnmodifiableMapView(_owners);
+  }
+
+  final Map<String, ProfileModel> _technicians;
+  @override
+  Map<String, ProfileModel> get technicians {
+    if (_technicians is EqualUnmodifiableMapView) return _technicians;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_technicians);
   }
 
   @override
@@ -289,7 +315,7 @@ class _$StationModelImpl implements _StationModel {
 
   @override
   String toString() {
-    return 'StationModel(ref: $ref, name: $name, photoUrl: $photoUrl, email: $email, phoneNumbers: $phoneNumbers, technicians: $technicians, address: $address, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'StationModel(ref: $ref, name: $name, photoUrl: $photoUrl, email: $email, phoneNumbers: $phoneNumbers, owners: $owners, technicians: $technicians, address: $address, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -304,6 +330,7 @@ class _$StationModelImpl implements _StationModel {
             (identical(other.email, email) || other.email == email) &&
             const DeepCollectionEquality()
                 .equals(other._phoneNumbers, _phoneNumbers) &&
+            const DeepCollectionEquality().equals(other._owners, _owners) &&
             const DeepCollectionEquality()
                 .equals(other._technicians, _technicians) &&
             (identical(other.address, address) || other.address == address) &&
@@ -324,6 +351,7 @@ class _$StationModelImpl implements _StationModel {
       photoUrl,
       email,
       const DeepCollectionEquality().hash(_phoneNumbers),
+      const DeepCollectionEquality().hash(_owners),
       const DeepCollectionEquality().hash(_technicians),
       address,
       createdAt,
@@ -351,7 +379,8 @@ abstract class _StationModel implements StationModel {
           required final String photoUrl,
           final String? email,
           required final List<String> phoneNumbers,
-          required final List<ProfileModel> technicians,
+          required final Map<String, ProfileModel> owners,
+          required final Map<String, ProfileModel> technicians,
           required final Address address,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
@@ -372,8 +401,10 @@ abstract class _StationModel implements StationModel {
   String? get email;
   @override
   List<String> get phoneNumbers;
+  @override // owner
+  Map<String, ProfileModel> get owners;
   @override
-  List<ProfileModel> get technicians;
+  Map<String, ProfileModel> get technicians;
   @override
   Address get address;
   @override

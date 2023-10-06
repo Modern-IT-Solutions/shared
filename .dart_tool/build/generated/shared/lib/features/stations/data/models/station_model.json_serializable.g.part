@@ -11,9 +11,12 @@ _$StationModelImpl _$$StationModelImplFromJson(Map<String, dynamic> json) =>
       phoneNumbers: (json['phoneNumbers'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      technicians: (json['technicians'] as List<dynamic>)
-          .map((e) => ProfileModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      owners: (json['owners'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
+      ),
+      technicians: (json['technicians'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
+      ),
       address: Address.fromJson(json['address'] as Map<String, dynamic>),
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
@@ -30,7 +33,9 @@ Map<String, dynamic> _$$StationModelImplToJson(_$StationModelImpl instance) =>
       'photoUrl': instance.photoUrl,
       'email': instance.email,
       'phoneNumbers': instance.phoneNumbers,
-      'technicians': instance.technicians.map((e) => e.toJson()).toList(),
+      'owners': instance.owners.map((k, e) => MapEntry(k, e.toJson())),
+      'technicians':
+          instance.technicians.map((k, e) => MapEntry(k, e.toJson())),
       'address': instance.address.toJson(),
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),

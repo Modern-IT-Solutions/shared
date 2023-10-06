@@ -18,7 +18,9 @@ class StationModel with _$StationModel implements Model {
     required String photoUrl,
     String? email,
     required List<String> phoneNumbers,
-    required List<ProfileModel> technicians,
+    // owner
+    required Map<String,ProfileModel> owners,
+    required Map<String,ProfileModel> technicians,
     required Address address,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
