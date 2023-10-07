@@ -15,14 +15,14 @@ import '../../domain/request/requests.dart';
 /// [UpdateStationForm] is a form to update a new user
 class UpdateStationForm extends StatefulWidget {
   final String ref;
-  final StationModel station;
+  final StationModel model;
   final VoidCallback? onCancel;
   final Null Function(StationModel station)? onUpdated;
   const UpdateStationForm(
       {Key? key,
       this.onUpdated,
       this.onCancel,
-      required this.station,
+      required this.model,
       required this.ref})
       : super(key: key);
 
@@ -51,15 +51,15 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.station.name);
-    _emailController = TextEditingController(text: widget.station.email);
-    _addressController = TextEditingController(text: widget.station.address.raw);
-    _photoUrlController = TextEditingController(text: widget.station.photoUrl);
+    _nameController = TextEditingController(text: widget.model.name);
+    _emailController = TextEditingController(text: widget.model.email);
+    _addressController = TextEditingController(text: widget.model.address.raw);
+    _photoUrlController = TextEditingController(text: widget.model.photoUrl);
 
     _phoneTmpController = TextEditingController();
 
-    _location = ValueNotifier<GeoFirePoint?>(widget.station.address.location);
-    _phoneNumbers = ValueNotifier<List<String>>(widget.station.phoneNumbers);
+    _location = ValueNotifier<GeoFirePoint?>(widget.model.address.location);
+    _phoneNumbers = ValueNotifier<List<String>>(widget.model.phoneNumbers);
     // TODO: fix technicians
     _technicians = ValueNotifier<List<ProfileModel>>([]);
 
@@ -75,7 +75,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
         _loading = true;
       });
       var updateRequest = StationUpdateRequest(
-        id: widget.station.ref.id,
+        id: widget.model.ref.id,
         name: _nameController.text,
         address: AddressModel(
           raw: _addressController.text,
@@ -89,7 +89,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
       try {
         await StationRepository.instance
             .update(updateRequest);
-        widget.onUpdated?.call(widget.station.copyWith(
+        widget.onUpdated?.call(widget.model.copyWith(
           name: _nameController.text,
           address: AddressModel(
             raw: _addressController.text,
@@ -175,7 +175,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                   snap: true,
                   stretch: true,
                   stretchTriggerOffset: 100,
-                  flexibleSpace: widget.station.photoUrl == null
+                  flexibleSpace: widget.model.photoUrl == null
                       ? null
                       : FlexibleSpaceBar(
                           background: Stack(
@@ -184,7 +184,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      widget.station.photoUrl!,
+                                      widget.model.photoUrl!,
                                     ),
                                     fit: BoxFit.cover,
                                   ),

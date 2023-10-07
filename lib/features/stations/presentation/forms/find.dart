@@ -10,7 +10,7 @@ import '../../domain/request/requests.dart';
 /// [FindStationForm] is a form to update a new user
 class FindStationForm extends StatefulWidget {
   final String id;
-  final StationModel? station;
+  final StationModel? model;
   final VoidCallback? onCancel;
   final void Function(StationModel? station)? onFinded;
   final List<Widget> actions;
@@ -19,7 +19,7 @@ class FindStationForm extends StatefulWidget {
     this.onFinded,
     this.onCancel,
     required this.id,
-    required this.station,
+    required this.model,
     this.actions = const [],
   }) : super(key: key);
 
@@ -36,7 +36,7 @@ class _FindStationFormState extends State<FindStationForm> {
   @override
   void initState() {
     super.initState();
-    station = widget.station;
+    station = widget.model;
     if (station == null) {
       find();
     }

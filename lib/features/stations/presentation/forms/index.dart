@@ -1,7 +1,6 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:lib/lib.dart';
 import 'package:recase/recase.dart';
 import 'package:shared/features/stations/domain/repositories/station_repository_interface.dart';
 import 'package:shared/features/stations/presentation/forms/find.dart';
@@ -490,7 +489,7 @@ class ManageStationsViewState<M extends StationModel>
       constraints: const BoxConstraints(maxWidth: 500),
       child: UpdateStationForm(
         ref: station.ref.toString(),
-        station: station,
+        model: station,
         onUpdated: (station) {
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
             SnackBar(
@@ -589,7 +588,7 @@ class ManageStationsViewState<M extends StationModel>
       constraints: const BoxConstraints(maxWidth: 500),
       child: FindStationForm(
         id: model.ref.id,
-        station: model,
+        model: model,
         actions: [
           // edit
           IconButton(
