@@ -20,6 +20,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "algeria",
+      "rootUri": "file:///Users/mohamad/Desktop/projects/packages/algeria",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "analyzer",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/analyzer-6.2.0",
       "packageUri": "lib/",
@@ -195,7 +201,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-ef1b7c58db101e3abf31c3d24cb37669fa45b068/",
+      "rootUri": "file:///Users/mohamad/Desktop/projects/core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -524,6 +530,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "flutter_map",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_map-6.0.0-dev.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "flutter_plugin_android_lifecycle",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16",
       "packageUri": "lib/",
@@ -722,6 +734,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "latlong2",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/latlong2-0.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "lib",
       "rootUri": "file:///Users/mohamad/.pub-cache/git/lib-1bc2a52f8b4f4141b1eae2f8e5c9c533bbaf4ddf/",
       "packageUri": "lib/",
@@ -732,6 +750,12 @@
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "lists",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/lists-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "logging",
@@ -814,6 +838,12 @@
     {
       "name": "meta",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/meta-1.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "mgrs_dart",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/mgrs_dart-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -938,8 +968,20 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "polylabel",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/polylabel-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
       "name": "pool",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/pool-1.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "proj4dart",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/proj4dart-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1196,6 +1238,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "unicode",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/unicode-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "universal_html",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/universal_html-2.2.4",
       "packageUri": "lib/",
@@ -1352,6 +1400,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "wkt_parser",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/wkt_parser-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/xdg_directories-1.0.3",
       "packageUri": "lib/",
@@ -1388,7 +1442,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-10-07T16:19:27.901696Z",
+  "generated": "2023-10-07T16:20:15.902875Z",
   "generator": "pub",
   "generatorVersion": "3.2.0-198.0.dev"
 }
