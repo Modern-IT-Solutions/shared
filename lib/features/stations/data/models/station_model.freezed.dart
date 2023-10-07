@@ -34,7 +34,7 @@ mixin _$StationModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $StationModelCopyWith<$Res> {
       Map<String, ProfileModel> technicians,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   $AddressModelCopyWith<$Res> get address;
 }
@@ -166,7 +166,7 @@ abstract class _$$StationModelImplCopyWith<$Res>
       Map<String, ProfileModel> technicians,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   @override
   $AddressModelCopyWith<$Res> get address;
@@ -258,7 +258,7 @@ class _$StationModelImpl implements _StationModel {
       required final Map<String, ProfileModel> technicians,
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
-      @TimestampDateTimeSerializer() this.deletedAt})
+      @NullableTimestampDateTimeSerializer() this.deletedAt})
       : _phoneNumbers = phoneNumbers,
         _owners = owners,
         _technicians = technicians;
@@ -309,7 +309,7 @@ class _$StationModelImpl implements _StationModel {
   @TimestampDateTimeSerializer()
   final DateTime updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   final DateTime? deletedAt;
 
   @override
@@ -383,7 +383,7 @@ abstract class _StationModel implements StationModel {
           required final Map<String, ProfileModel> technicians,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
-          @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
+          @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
       _$StationModelImpl;
 
   factory _StationModel.fromJson(Map<String, dynamic> json) =
@@ -413,7 +413,7 @@ abstract class _StationModel implements StationModel {
   @TimestampDateTimeSerializer()
   DateTime get updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt;
   @override
   @JsonKey(ignore: true)
