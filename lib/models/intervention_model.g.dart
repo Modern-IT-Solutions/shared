@@ -18,14 +18,12 @@ _$InterventionModelImpl _$$InterventionModelImplFromJson(
       intervener:
           ProfileModel.fromJson(json['intervener'] as Map<String, dynamic>),
       nextInterventionDate: const TimestampDateTimeSerializer()
-          .fromJson(json['nextInterventionDate']),
+          .fromJson(json['nextInterventionDate'] as Timestamp?),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
-      createdAt:
-          const TimestampDateTimeSerializer().fromJson(json['createdAt']),
-      updatedAt:
-          const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
-      deletedAt:
-          const TimestampDateTimeSerializer().fromJson(json['deletedAt']),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      deletedAt: const TimestampDateTimeSerializer()
+          .fromJson(json['deletedAt'] as Timestamp?),
     );
 
 Map<String, dynamic> _$$InterventionModelImplToJson(
@@ -38,16 +36,13 @@ Map<String, dynamic> _$$InterventionModelImplToJson(
       'attachments': instance.attachments,
       'type': _$InterventionTypeEnumMap[instance.type]!,
       'intervener': instance.intervener.toJson(),
-      'nextInterventionDate': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.nextInterventionDate,
-          const TimestampDateTimeSerializer().toJson),
+      'nextInterventionDate': const TimestampDateTimeSerializer()
+          .toJson(instance.nextInterventionDate),
       'metadata': instance.metadata,
-      'createdAt':
-          const TimestampDateTimeSerializer().toJson(instance.createdAt),
-      'updatedAt':
-          const TimestampDateTimeSerializer().toJson(instance.updatedAt),
-      'deletedAt': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.deletedAt, const TimestampDateTimeSerializer().toJson),
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
+      'deletedAt':
+          const TimestampDateTimeSerializer().toJson(instance.deletedAt),
     };
 
 const _$InterventionStatusEnumMap = {
@@ -61,9 +56,3 @@ const _$InterventionTypeEnumMap = {
   InterventionType.onSite: 'onSite',
   InterventionType.byPhone: 'byPhone',
 };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

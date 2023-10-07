@@ -32,12 +32,10 @@ _$DepositRequestModelImpl _$$DepositRequestModelImplFromJson(
               json['transaction'] as Map<String, dynamic>),
       method: $enumDecode(_$PaymentMethodEnumMap, json['method']),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
-      createdAt:
-          const TimestampDateTimeSerializer().fromJson(json['createdAt']),
-      updatedAt:
-          const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
-      deletedAt:
-          const TimestampDateTimeSerializer().fromJson(json['deletedAt']),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      deletedAt: const TimestampDateTimeSerializer()
+          .fromJson(json['deletedAt'] as Timestamp?),
     );
 
 Map<String, dynamic> _$$DepositRequestModelImplToJson(
@@ -61,12 +59,10 @@ Map<String, dynamic> _$$DepositRequestModelImplToJson(
       'transaction': instance.transaction?.toJson(),
       'method': _$PaymentMethodEnumMap[instance.method]!,
       'metadata': instance.metadata,
-      'createdAt':
-          const TimestampDateTimeSerializer().toJson(instance.createdAt),
-      'updatedAt':
-          const TimestampDateTimeSerializer().toJson(instance.updatedAt),
-      'deletedAt': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.deletedAt, const TimestampDateTimeSerializer().toJson),
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
+      'deletedAt':
+          const TimestampDateTimeSerializer().toJson(instance.deletedAt),
     };
 
 const _$DepositRequestStatusEnumMap = {
@@ -84,9 +80,3 @@ const _$PaymentMethodEnumMap = {
   PaymentMethod.cash: 'cash',
   PaymentMethod.other: 'other',
 };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

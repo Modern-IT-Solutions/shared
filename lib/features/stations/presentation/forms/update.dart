@@ -98,7 +98,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
           email: _emailController.text,
           photoUrl: _photoUrlController.text,
           phoneNumbers: _phoneNumbers.value,
-          technicians: [],// _technicians.value,
+          technicians: {},// _technicians.value,
         ));
       }
       // FirebaseFunctionsException

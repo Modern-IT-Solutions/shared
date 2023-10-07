@@ -12,9 +12,8 @@ _$EventPreferenceImpl _$$EventPreferenceImplFromJson(
           EventType.info,
       action: json['action'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
-      date: const TimestampDateTimeSerializer().fromJson(json['date']),
-      createdAt:
-          const TimestampDateTimeSerializer().fromJson(json['createdAt']),
+      date: DateTime.parse(json['date'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$EventPreferenceImplToJson(
@@ -26,9 +25,8 @@ Map<String, dynamic> _$$EventPreferenceImplToJson(
       'type': _$EventTypeEnumMap[instance.type]!,
       'action': instance.action,
       'metadata': instance.metadata,
-      'date': const TimestampDateTimeSerializer().toJson(instance.date),
-      'createdAt':
-          const TimestampDateTimeSerializer().toJson(instance.createdAt),
+      'date': instance.date.toIso8601String(),
+      'createdAt': instance.createdAt.toIso8601String(),
     };
 
 const _$EventTypeEnumMap = {

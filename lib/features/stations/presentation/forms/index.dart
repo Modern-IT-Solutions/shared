@@ -266,8 +266,8 @@ class ManageStationsViewState<M extends StationModel>
                                           child: Wrap(
                                             spacing: 5,
                                             children: [
-                                              for (dynamic technician
-                                                  in stationRecord.technicians)
+                                              for (var technician
+                                                  in stationRecord.technicians.values)
                                                 SizedBox(
                                                   width: 25,
                                                   height: 40,
