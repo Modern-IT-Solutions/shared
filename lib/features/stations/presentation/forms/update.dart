@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
+import 'package:core/features/users/presentation/forms/update_profile.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -27,17 +28,28 @@ class UpdateStationForm extends StatefulWidget {
 class _UpdateStationFormState extends State<UpdateStationForm> {
   final _formKey = GlobalKey<FormState>();
 
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _photoUrlController;
+  late var request = StationUpdateRequest(
+    id: widget.model.ref.id,
+    name: widget.model.name,
+    address: widget.model.address ?? AddressModel(raw: ""),
+    email: widget.model.email ?? "",
+    photoUrl: widget.model.photoUrl,
+    phoneNumbers: widget.model.phoneNumbers,
+    technicians: widget.model.technicians,
+    owners: widget.model.owners,
+  );
 
-  late final TextEditingController _phoneTmpController;
+  // late final TextEditingController _nameController;
+  // late final TextEditingController _emailController;
+  // late final TextEditingController _addressController;
+  // late final TextEditingController _photoUrlController;
 
-  late final ValueNotifier<GeoFirePoint?> _location;
-  late final ValueNotifier<List<String>> _phoneNumbers;
-  late final ValueNotifier<Map<String, ProfileModel>> _technicians;
-  late final ValueNotifier<Map<String, ProfileModel>> _owners;
+  final TextEditingController _phoneTmpController = TextEditingController();
+
+  // late final ValueNotifier<GeoFirePoint?> _location;
+  // late final ValueNotifier<List<String>> _phoneNumbers;
+  // late final ValueNotifier<Map<String, ProfileModel>> _technicians;
+  // late final ValueNotifier<Map<String, ProfileModel>> _owners;
 
   bool _loading = false;
   late String? _error;
@@ -46,19 +58,6 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.model.name);
-    _emailController = TextEditingController(text: widget.model.email);
-    _addressController = TextEditingController(text: widget.model.address.raw);
-    _photoUrlController = TextEditingController(text: widget.model.photoUrl);
-
-    _phoneTmpController = TextEditingController();
-
-    _location = ValueNotifier<GeoFirePoint?>(widget.model.address.location);
-    _phoneNumbers = ValueNotifier<List<String>>(widget.model.phoneNumbers);
-    // TODO: fix technicians
-    _technicians = ValueNotifier<Map<String, ProfileModel>>(widget.model.technicians);
-    _owners = ValueNotifier<Map<String, ProfileModel>>(widget.model.owners);
-
     _error = null;
     _errors = {};
   }
@@ -70,32 +69,17 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
         _error = null;
         _loading = true;
       });
-      var updateRequest = StationUpdateRequest(
-        id: widget.model.ref.id,
-        name: _nameController.text,
-        address: AddressModel(
-          raw: _addressController.text,
-          location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),
-        ),
-        email: _emailController.text,
-        photoUrl: _photoUrlController.text,
-        phoneNumbers: _phoneNumbers.value,
-        technicians: _technicians.value,
-        owners: _owners.value,
-      );
+
       try {
-        await StationRepository.instance.update(updateRequest);
+        await StationRepository.instance.update(request);
         widget.onUpdated?.call(widget.model.copyWith(
-          name: _nameController.text,
-          address: AddressModel(
-            raw: _addressController.text,
-            location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),
-          ),
-          email: _emailController.text,
-          photoUrl: _photoUrlController.text,
-          phoneNumbers: _phoneNumbers.value,
-          technicians: _technicians.value,
-          owners: _owners.value,
+          name: request.name ?? widget.model.name,
+          address: request.address ?? widget.model.address,
+          email: request.email ?? widget.model.email,
+          photoUrl: request.photoUrl ?? widget.model.photoUrl,
+          phoneNumbers: request.phoneNumbers ?? widget.model.phoneNumbers,
+          technicians: request.technicians ?? widget.model.technicians,
+          owners: request.owners ?? widget.model.owners,
         ));
       }
       // FirebaseFunctionsException
@@ -201,55 +185,46 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               ),
                               Align(
                                 alignment: Alignment.bottomCenter,
-                                child: ListenableBuilder(
-                                    listenable: _photoUrlController,
-                                    builder: (context, _) {
-                                      return
-                                          // container for photo url circle with wite boreder and shadow
-                                          Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Colors.white,
-                                                width: 3,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black.withOpacity(0.5),
-                                                  blurRadius: 5,
-                                                  offset: const Offset(0, 4),
-                                                ),
-                                              ],
-                                            ),
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage: NetworkImage(
-                                                _photoUrlController.text,
-                                              ),
-                                            ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 3,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.5),
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 4),
                                           ),
-                                          const SizedBox(height: 12),
-                                          ListenableBuilder(
-                                            listenable: _photoUrlController,
-                                            builder: (context, _) {
-                                              return Text(
-                                                _nameController.text,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          const SizedBox(height: 12),
                                         ],
-                                      );
-                                    }),
+                                      ),
+                                      child: CircleAvatar(
+                                        radius: 30,
+                                        backgroundImage: request.photoUrl == null
+                                            ? null
+                                            : NetworkImage(
+                                                request.photoUrl!,
+                                              ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      request.name!,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -290,7 +265,10 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
 
                             AppTextFormField(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _nameController,
+                              initialValue: request.name,
+                              onChanged: (v) {
+                                request.name = v;
+                              },
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
                               ]),
@@ -308,7 +286,10 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             /// phone number
                             AppTextFormField.upload(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _photoUrlController,
+                              initialValue: request.photoUrl,
+                              onChanged: (v) {
+                                request.photoUrl = v;
+                              },
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.url()
                               ]),
@@ -325,7 +306,10 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             /// email
                             AppTextFormField(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _emailController,
+                              initialValue: request.email,
+                              onChanged: (v) {
+                                request.email = v;
+                              },
                               validator: FormBuilderValidators.compose([
                                 // FormBuilderValidators.required(),
                                 FormBuilderValidators.email(),
@@ -338,27 +322,6 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 helperText: 'can be null, but must be valid if provided',
                               ),
                             ),
-                            const SizedBox(height: 10),
-
-                            /// password
-                            AppTextFormField(
-                              margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _addressController,
-                              validator: (v) {
-                                if (v?.isNotEmpty != true) {
-                                  return 'address is required';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                errorText: _errors['address'],
-                                prefixIcon: const Icon(FluentIcons.location_24_regular),
-                                label: const Text('Address'),
-                                alignLabelWithHint: true,
-                                helperText: 'required',
-                              ),
-                            ),
-
                             const SizedBox(height: 10),
                             // / phone number
                             Row(
@@ -416,8 +379,8 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                     ),
                                     onPressed: () {
                                       if (_phoneTmpController.text.isNotEmpty) {
-                                        _phoneNumbers.value = [
-                                          ..._phoneNumbers.value,
+                                        request.phoneNumbers = [
+                                          ...request.phoneNumbers!,
                                           '+213' + _phoneTmpController.text
                                         ];
                                         _phoneTmpController.clear();
@@ -432,28 +395,117 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             ),
                             Wrap(
                               children: [
-                                ValueListenableBuilder<List<String>>(
-                                  valueListenable: _phoneNumbers,
-                                  builder: (context, value, child) {
-                                    return Wrap(
-                                      children: [
-                                        for (var phone in value)
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Chip(
-                                              label: Text(phone),
-                                              onDeleted: () {
-                                                _phoneNumbers.value = [
-                                                  ..._phoneNumbers.value..remove(phone)
-                                                ];
-                                              },
-                                            ),
-                                          ),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                for (var phone in request.phoneNumbers ?? [])
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Chip(
+                                      label: Text(phone),
+                                      onDeleted: () {
+                                        // _phoneNumbers.value = [
+                                        //   ..._phoneNumbers.value..remove(phone)
+                                        // ];
+                                        setState(() {
+                                          request.phoneNumbers = [
+                                            ...request.phoneNumbers!..remove(phone)
+                                          ];
+                                        });
+                                      },
+                                    ),
+                                  ),
                               ],
+                            ),
+
+                            const Divider(),
+                            // address
+                            const ListTile(
+                              leading: Icon(FluentIcons.location_24_regular),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Address"),
+                              enabled: false,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: AppTextFormField(
+                                      key:  Key((request.address?.state).toString()),
+                                      initialValue: (request.address?.state),
+                                      onTap: (v) async {
+                                        var state = await showStatePicker(context);
+                                        if (state != v) {
+                                          setState(() {
+                                            request.address = request.address?.copyWith(city: null);
+                                          });
+                                        }
+                                        print(state);
+                                        if (state != null) {
+                                          setState(() {
+                                            request.address = request.address?.copyWith(state: state.toLowerCase());
+                                          });
+                                        }
+                                      },
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                      ]),
+                                      decoration: InputDecoration(
+                                        errorText: _errors['state'],
+                                        prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                        label: const Text('State'),
+                                        alignLabelWithHint: true,
+                                        helperText: 'The state of the address, required *',
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: AppTextFormField(
+                                      key:  Key((request.address?.city).toString()),
+                                      initialValue: (request.address?.city),
+                                      onTap: (value) async {
+                                        var city = await showCityPicker(context, state: request.address?.state);
+                                        if (city != null) {
+                                          setState(() {
+                                            request.address = request.address?.copyWith(
+                                              city: city["commune_name_ascii"].toString().toLowerCase(),
+                                            );
+                                          });
+                                        }
+                                      },
+                                      enabled: request.address?.state != null,
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                      ]),
+                                      decoration: InputDecoration(
+                                        errorText: _errors['city'],
+                                        prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                        label: const Text('City'),
+                                        alignLabelWithHint: true,
+                                        helperText: 'The city of the address, required *',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // raw
+                            AppTextFormField(
+                              initialValue: request.address?.raw,
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              onChanged: (v) async {
+                                request.address = request.address?.copyWith(raw: v);
+                              },
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              decoration: InputDecoration(
+                                errorText: _errors['raw'],
+                                prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                label: const Text('Raw'),
+                                alignLabelWithHint: true,
+                                helperText: 'The raw address, required *',
+                              ),
                             ),
                             const Divider(),
                             ListTile(
@@ -474,18 +526,28 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       fixed: true,
                                     )
                                   ]);
-                                  profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
+                                  // profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
+                                  profiles?.removeWhere((element) => request.technicians!.containsKey(element.ref.id));
                                   if (profiles != null) {
-                                    _technicians.value = {
-                                      ..._technicians.value,
-                                      ...Map.fromEntries(
-                                        profiles.map(
-                                          (e) => MapEntry(e.ref.id, e),
+                                    // _technicians.value = {
+                                    //   ..._technicians.value,
+                                    //   ...Map.fromEntries(
+                                    //     profiles.map(
+                                    //       (e) => MapEntry(e.ref.id, e),
+                                    //     ),
+                                    //   ),
+                                    // };
+                                    // // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                                    // _technicians.notifyListeners();
+                                    setState(() {
+                                      request.technicians = {
+                                        ...request.technicians!..addEntries(
+                                          profiles.map(
+                                            (e) => MapEntry(e.ref.id, e),
+                                          ),
                                         ),
-                                      ),
-                                    };
-                                    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                                    _technicians.notifyListeners();
+                                      };
+                                    });
                                   }
                                   // var technicians = await showDialog<Map<String, ProfileModel>>(
                                   //   context: context,
@@ -499,12 +561,11 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<Map<String, ProfileModel>>(
-                              valueListenable: _technicians,
-                              builder: (context, value, child) {
-                                return Column(
+                            Column(
                                   children: [
-                                    for (var tech in value.values)
+                                    for (var tech in 
+                                    request.technicians!.values.toList()
+                                    )
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 24),
                                         child: ListTile(
@@ -524,17 +585,20 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                           trailing: IconButton(
                                             icon: const Icon(FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _technicians.value = {
-                                                ..._technicians.value,
-                                              }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                              // _technicians.value = {
+                                              //   ..._technicians.value,
+                                              // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                              setState(() {
+                                                request.technicians = {
+                                                  ...request.technicians!..removeWhere((key, value) => value.ref.id == tech.ref.id)
+                                                };
+                                              });
                                             },
                                           ),
                                         ),
                                       ),
                                   ],
-                                );
-                              },
-                            ),
+                                ),
                             const Divider(),
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -554,27 +618,36 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       fixed: true,
                                     )
                                   ]);
-                                  profiles?.removeWhere((element) => _owners.value.containsKey(element.ref.id));
+                                  // profiles?.removeWhere((element) => _owners.value.containsKey(element.ref.id));
+                                  profiles?.removeWhere((element) => request.owners!.containsKey(element.ref.id));
                                   if (profiles != null) {
-                                    _owners.value = {
-                                      ..._owners.value,
-                                      ...Map.fromEntries(
-                                        profiles.map(
-                                          (e) => MapEntry(e.ref.id, e),
+                                    // _owners.value = {
+                                    //   ..._owners.value,
+                                    //   ...Map.fromEntries(
+                                    //     profiles.map(
+                                    //       (e) => MapEntry(e.ref.id, e),
+                                    //     ),
+                                    //   ),
+                                    // };
+                                    // _owners.notifyListeners();
+                                    setState(() {
+                                      request.owners = {
+                                        ...request.owners!..addEntries(
+                                          profiles.map(
+                                            (e) => MapEntry(e.ref.id, e),
+                                          ),
                                         ),
-                                      ),
-                                    };
-                                    _owners.notifyListeners();
+                                      };
+                                    });
                                   }
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<Map<String, ProfileModel>>(
-                              valueListenable: _owners,
-                              builder: (context, value, child) {
-                                return Column(
+                            Column(
                                   children: [
-                                    for (var owner in value.values)
+                                    for (var owner in 
+                                    request.owners!.values.toList()
+                                    )
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 24),
                                         child: ListTile(
@@ -594,17 +667,20 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                           trailing: IconButton(
                                             icon: const Icon(FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _owners.value = {
-                                                ..._owners.value,
-                                              }..removeWhere((key, value) => value.ref.id == owner.ref.id);
+                                              // _owners.value = {
+                                              //   ..._owners.value,
+                                              // }..removeWhere((key, value) => value.ref.id == owner.ref.id);
+                                              setState(() {
+                                                request.owners = {
+                                                  ...request.owners!..removeWhere((key, value) => value.ref.id == owner.ref.id)
+                                                };
+                                              });
                                             },
                                           ),
                                         ),
                                       ),
                                   ],
-                                );
-                              },
-                            ),
+                                ),
                             // Padding(
                             //   padding: const EdgeInsets.symmetric(horizontal: 12),
                             //   child: SwitchListTile(

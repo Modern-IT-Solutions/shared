@@ -1,14 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
+import 'package:core/features/users/presentation/forms/create_profile.dart';
+import 'package:core/features/users/presentation/forms/update_profile.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
 import 'package:lib/lib.dart';
 import 'package:muskey/muskey.dart';
-import 'package:recase/recase.dart';
 import 'package:shared/shared.dart';
 import '../../data/models/station_model.dart';
 import '../../data/repositories/repository.dart';
@@ -16,13 +16,10 @@ import '../../domain/request/requests.dart';
 
 /// [CreateStationForm] is a form to create a new user
 class CreateStationForm extends StatefulWidget {
+  final String? ref;
   final VoidCallback? onCancel;
   final Null Function(StationModel station)? onCreated;
-  const CreateStationForm({
-    Key? key,
-    this.onCreated,
-    this.onCancel,
-  }) : super(key: key);
+  const CreateStationForm({Key? key, this.onCreated, this.onCancel,  this.ref}) : super(key: key);
 
   @override
   State<CreateStationForm> createState() => _CreateStationFormState();
@@ -31,17 +28,27 @@ class CreateStationForm extends StatefulWidget {
 class _CreateStationFormState extends State<CreateStationForm> {
   final _formKey = GlobalKey<FormState>();
 
-  // final ValueNotifier<Function?> _photoUploadTriger = ValueNotifier(null);
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _photoUrlController;
+  late var request = StationCreateRequest(
+    name: "",
+    address:  AddressModel(raw: ""),
+    email: "",
+    photoUrl: "",
+    phoneNumbers: [],
+    technicians: {},
+    owners: {},
+  );
 
-  late final TextEditingController _phoneTmpController;
+  // late final TextEditingController _nameController;
+  // late final TextEditingController _emailController;
+  // late final TextEditingController _addressController;
+  // late final TextEditingController _photoUrlController;
 
-  late final ValueNotifier<GeoFirePoint?> _location;
-  late final ValueNotifier<List<String>> _phoneNumbers;
-  late final ValueNotifier<Map<String,ProfileModel>> _technicians;
+  final TextEditingController _phoneTmpController = TextEditingController();
+
+  // late final ValueNotifier<GeoFirePoint?> _location;
+  // late final ValueNotifier<List<String>> _phoneNumbers;
+  // late final ValueNotifier<Map<String, ProfileModel>> _technicians;
+  // late final ValueNotifier<Map<String, ProfileModel>> _owners;
 
   bool _loading = false;
   late String? _error;
@@ -50,17 +57,6 @@ class _CreateStationFormState extends State<CreateStationForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _emailController = TextEditingController();
-    _addressController = TextEditingController();
-    _photoUrlController = TextEditingController();
-
-    _phoneTmpController = TextEditingController();
-
-    _location = ValueNotifier<GeoFirePoint?>(null);
-    _phoneNumbers = ValueNotifier<List<String>>([]);
-    _technicians = ValueNotifier<Map<String,ProfileModel>>({});
-
     _error = null;
     _errors = {};
   }
@@ -72,43 +68,15 @@ class _CreateStationFormState extends State<CreateStationForm> {
         _error = null;
         _loading = true;
       });
-      var createRequest = StationCreateRequest(
-        name: _nameController.text,
-        address: AddressModel(
-          raw: _addressController.text,
-          location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),
-        ),
-        email: _emailController.text,
-        photoUrl: _photoUrlController.text,
-        phoneNumbers: _phoneNumbers.value,
-        technicians: _technicians.value,
-      );
+
       try {
-        widget.onCreated
-            ?.call(await StationRepository.instance.create(createRequest));
+        var model = await StationRepository.instance.create(request);
+        widget.onCreated?.call(model);
       }
       // FirebaseFunctionsException
       on FirebaseFunctionsException catch (e) {
         setState(() {
           _error = e.message;
-          if (e.details != null &&
-              e.details['code'].toString().contains('phone')) {
-            _errors['phone'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().contains('email')) {
-            _errors['email'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().contains('password')) {
-            _errors['password'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().toLowerCase().contains('name')) {
-            _errors['name'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().toLowerCase().contains('photo')) {
-            _errors['photo'] = e.details['message'];
-          } else {
-            _error = e.message;
-          }
         });
       } catch (e) {
         setState(() {
@@ -169,39 +137,28 @@ class _CreateStationFormState extends State<CreateStationForm> {
           Expanded(
             child: CustomScrollView(
               slivers: [
-                ListenableBuilder(
-                    listenable: Listenable.merge([
-                      _photoUrlController,
-                      _nameController,
-                    ]),
-                    builder: (context, _) {
-                      return SliverAppBar(
-                        pinned: true,
-                        expandedHeight: 200,
-                        floating: true,
-                        excludeHeaderSemantics: true,
-                        forceElevated: true,
-                        primary: true,
-                        snap: true,
-                        stretch: true,
-                        stretchTriggerOffset: 100,
-                        flexibleSpace: FlexibleSpaceBar(
+                SliverAppBar(
+                  pinned: true,
+                  expandedHeight: 200,
+                  floating: true,
+                  excludeHeaderSemantics: true,
+                  forceElevated: true,
+                  primary: true,
+                  snap: true,
+                  stretch: true,
+                  stretchTriggerOffset: 100,
+                  flexibleSpace: request.photoUrl == null
+                      ? null
+                      : FlexibleSpaceBar(
                           background: Stack(
                             children: [
-                              Positioned(
-                                left: 0,
-                                right: 0,
-                                child: CachedNetworkImage(
-                                  imageUrl: _photoUrlController.text,
-                                  errorWidget: (context, url, error) => Image(
-                                    image:
-                                        AssetImage("ColorImageProvider.petals.url"),
-                                        fit: BoxFit.cover,
-                                  ),
-                                  placeholder: (context, url) => Image(
-                                    image:
-                                        AssetImage("ColorImageProvider.leaves.url"),
-                                        fit: BoxFit.cover,
+                              Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      request.photoUrl!,
+                                    ),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -209,9 +166,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      Theme.of(context)
-                                          .scaffoldBackgroundColor
-                                          .withOpacity(0.8),
+                                      Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                                       Colors.transparent,
                                     ],
                                     begin: Alignment.topCenter,
@@ -235,8 +190,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                         ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.5),
+                                            color: Colors.black.withOpacity(0.5),
                                             blurRadius: 5,
                                             offset: const Offset(0, 4),
                                           ),
@@ -244,27 +198,18 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                       ),
                                       child: CircleAvatar(
                                         radius: 30,
-                                        backgroundImage: NetworkImage(
-                                          _photoUrlController.text,
-                                        ),
-                                        // child: IconButton(
-                                        //   onPressed: ()=>_photoUploadTriger.value?.call(),
-                                        //   icon: Icon(
-                                        //     FluentIcons.camera_24_regular,
-                                        //     color: Colors.white,
-                                        //   ),
-                                        // ),
+                                        backgroundImage: request.photoUrl == null
+                                            ? null
+                                            : NetworkImage(
+                                                request.photoUrl!,
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(height: 12),
                                     Text(
-                                      _nameController.text.isEmpty?
-                                      '[Station Name]'
-                                      : _nameController.text.titleCase,
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(
-                                          _nameController.text.isEmpty ? 0.5 : 1,
-                                        ),
+                                      request.name!,
+                                      style: const TextStyle(
+                                        color: Colors.white,
                                         fontSize: 16,
                                       ),
                                     ),
@@ -275,20 +220,19 @@ class _CreateStationFormState extends State<CreateStationForm> {
                             ],
                           ),
                         ),
-                        title: const Text('Create Station'),
-                        leading: const BackButton(),
-                        actions: [
-                          TextButton.icon(
-                            onPressed: () async {
-                              await _submit();
-                            },
-                            label: const Text('Create'),
-                            icon: const Icon(FluentIcons.checkmark_24_regular),
-                          ),
-                          const SizedBox(width: 12),
-                        ],
-                      );
-                    }),
+                  title: const Text('Create Station'),
+                  leading: const BackButton(),
+                  actions: [
+                    TextButton.icon(
+                      onPressed: () async {
+                        await _submit();
+                      },
+                      label: const Text('Create'),
+                      icon: const Icon(FluentIcons.checkmark_24_regular),
+                    ),
+                    const SizedBox(width: 12),
+                  ],
+                ),
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
@@ -304,8 +248,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
 
                             const ListTile(
                               leading: Icon(FluentIcons.gas_pump_24_regular),
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 24),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
                               visualDensity: VisualDensity(vertical: -3),
                               title: Text("Station Information"),
                               enabled: false,
@@ -313,16 +256,16 @@ class _CreateStationFormState extends State<CreateStationForm> {
 
                             AppTextFormField(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _nameController,
-                              // fileUploadTriger: _photoUploadTriger,
+                              initialValue: request.name,
+                              onChanged: (v) {
+                                request.name = v;
+                              },
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
                               ]),
                               decoration: InputDecoration(
                                 errorText: _errors['name'],
-                                prefixIcon: const SizedBox(
-                                    child: Icon(
-                                        FluentIcons.person_24_regular)),
+                                prefixIcon: const SizedBox(child: Icon(FluentIcons.person_24_regular)),
                                 label: const Text('Name'),
                                 alignLabelWithHint: true,
                                 helperText: 'The name of the user, required *',
@@ -334,13 +277,16 @@ class _CreateStationFormState extends State<CreateStationForm> {
                             /// phone number
                             AppTextFormField.upload(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _photoUrlController,
-                              validator: FormBuilderValidators.compose(
-                                  [FormBuilderValidators.url()]),
+                              initialValue: request.photoUrl,
+                              onChanged: (v) {
+                                request.photoUrl = v;
+                              },
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.url()
+                              ]),
                               decoration: InputDecoration(
                                 errorText: _errors['photoUrl'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.image_28_regular),
+                                prefixIcon: const Icon(FluentIcons.image_28_regular),
                                 label: const Text('Photo url'),
                                 alignLabelWithHint: true,
                                 helperText: 'direct link to the photo',
@@ -351,43 +297,22 @@ class _CreateStationFormState extends State<CreateStationForm> {
                             /// email
                             AppTextFormField(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _emailController,
+                              initialValue: request.email,
+                              onChanged: (v) {
+                                request.email = v;
+                              },
                               validator: FormBuilderValidators.compose([
                                 // FormBuilderValidators.required(),
                                 FormBuilderValidators.email(),
                               ]),
                               decoration: InputDecoration(
                                 errorText: _errors['email'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.mail_24_regular),
+                                prefixIcon: const Icon(FluentIcons.mail_24_regular),
                                 label: const Text('Email'),
                                 alignLabelWithHint: true,
-                                helperText:
-                                    'can be null, but must be valid if provided',
+                                helperText: 'can be null, but must be valid if provided',
                               ),
                             ),
-                            const SizedBox(height: 10),
-
-                            /// password
-                            AppTextFormField(
-                              margin: const EdgeInsets.symmetric(horizontal: 24),
-                              controller: _addressController,
-                              validator: (v) {
-                                if (v?.isNotEmpty != true) {
-                                  return 'address is required';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                errorText: _errors['address'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.location_24_regular),
-                                label: const Text('Address'),
-                                alignLabelWithHint: true,
-                                helperText: 'required',
-                              ),
-                            ),
-
                             const SizedBox(height: 10),
                             // / phone number
                             Row(
@@ -399,14 +324,15 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                     controller: _phoneTmpController,
                                     inputFormatters: [
                                       MuskeyFormatter(
-                                        masks: ['#########'],
+                                        masks: [
+                                          '#########'
+                                        ],
                                         overflow: OverflowBehavior.forbidden(),
                                       )
                                     ],
                                     validator: (v) {
                                       if (v == null || v.isEmpty) return null;
-                                      var valicator =
-                                          FormBuilderValidators.compose([
+                                      var valicator = FormBuilderValidators.compose([
                                         // FormBuilderValidators.required(),
                                         FormBuilderValidators.numeric(),
                                         FormBuilderValidators.equalLength(9),
@@ -421,8 +347,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                         ),
                                       ),
                                       errorText: _errors['phone'],
-                                      prefixIcon: const Icon(
-                                          FluentIcons.phone_24_regular),
+                                      prefixIcon: const Icon(FluentIcons.phone_24_regular),
                                       prefixText: "+213",
                                       label: const Text('Phone Number'),
                                       alignLabelWithHint: true,
@@ -445,8 +370,8 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                     ),
                                     onPressed: () {
                                       if (_phoneTmpController.text.isNotEmpty) {
-                                        _phoneNumbers.value = [
-                                          ..._phoneNumbers.value,
+                                        request.phoneNumbers = [
+                                          ...request.phoneNumbers!,
                                           '+213' + _phoneTmpController.text
                                         ];
                                         _phoneTmpController.clear();
@@ -461,99 +386,292 @@ class _CreateStationFormState extends State<CreateStationForm> {
                             ),
                             Wrap(
                               children: [
-                                ValueListenableBuilder<List<String>>(
-                                  valueListenable: _phoneNumbers,
-                                  builder: (context, value, child) {
-                                    return Wrap(
-                                      children: [
-                                        for (var phone in value)
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Chip(
-                                              label: Text(phone),
-                                              onDeleted: () {
-                                                _phoneNumbers.value = [
-                                                  ..._phoneNumbers.value
-                                                    ..remove(phone)
-                                                ];
-                                              },
-                                            ),
-                                          ),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                for (var phone in request.phoneNumbers ?? [])
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Chip(
+                                      label: Text(phone),
+                                      onDeleted: () {
+                                        // _phoneNumbers.value = [
+                                        //   ..._phoneNumbers.value..remove(phone)
+                                        // ];
+                                        setState(() {
+                                          request.phoneNumbers = [
+                                            ...request.phoneNumbers!..remove(phone)
+                                          ];
+                                        });
+                                      },
+                                    ),
+                                  ),
                               ],
+                            ),
+
+                            const Divider(),
+                            // address
+                            const ListTile(
+                              leading: Icon(FluentIcons.location_24_regular),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Address"),
+                              enabled: false,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: AppTextFormField(
+                                      key:  Key((request.address?.state).toString()),
+                                      initialValue: (request.address?.state),
+                                      onTap: (v) async {
+                                        var state = await showStatePicker(context);
+                                        if (state != v) {
+                                          setState(() {
+                                            request.address = request.address.copyWith(city: null);
+                                          });
+                                        }
+                                        print(state);
+                                        if (state != null) {
+                                          setState(() {
+                                            request.address = request.address.copyWith(state: state.toLowerCase());
+                                          });
+                                        }
+                                      },
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                      ]),
+                                      decoration: InputDecoration(
+                                        errorText: _errors['state'],
+                                        prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                        label: const Text('State'),
+                                        alignLabelWithHint: true,
+                                        helperText: 'The state of the address, required *',
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: AppTextFormField(
+                                      key:  Key((request.address?.city).toString()),
+                                      initialValue: (request.address?.city),
+                                      onTap: (value) async {
+                                        var city = await showCityPicker(context, state: request.address?.state);
+                                        if (city != null) {
+                                          setState(() {
+                                            request.address = request.address.copyWith(
+                                              city: city["commune_name_ascii"].toString().toLowerCase(),
+                                            );
+                                          });
+                                        }
+                                      },
+                                      enabled: request.address?.state != null,
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                      ]),
+                                      decoration: InputDecoration(
+                                        errorText: _errors['city'],
+                                        prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                        label: const Text('City'),
+                                        alignLabelWithHint: true,
+                                        helperText: 'The city of the address, required *',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // raw
+                            AppTextFormField(
+                              initialValue: request.address?.raw,
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              onChanged: (v) async {
+                                request.address = request.address.copyWith(raw: v);
+                              },
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              decoration: InputDecoration(
+                                errorText: _errors['raw'],
+                                prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                label: const Text('Raw'),
+                                alignLabelWithHint: true,
+                                helperText: 'The raw address, required *',
+                              ),
                             ),
                             const Divider(),
                             ListTile(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 24),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
                               visualDensity: const VisualDensity(vertical: -3),
                               title: const Text("Technicians"),
                               enabled: false,
                               trailing: IconButton(
                                 icon: const Icon(FluentIcons.add_24_regular),
                                 onPressed: () async {
-                                  var technicians =
-                                      await showDialog<Map<String,ProfileModel>>(
-                                    context: context,
-                                    builder: (context) {
-                                      return SelectTechniciansDialog(
-                                          selected: _technicians.value);
-                                    },
-                                  );
-                                  if (technicians != null) {
-                                    _technicians.value = technicians;
+                                  var profiles = await showProfilesPickerDialog(context, filters: [
+                                    IndexViewFilter(
+                                      name: "Technicians",
+                                      active: true,
+                                      local: (model) => model.roles.contains(Role("technician")),
+                                      remote: (query) => query.where("roles", arrayContains: "technician"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ]);
+                                  // profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
+                                  profiles?.removeWhere((element) => request.technicians!.containsKey(element.ref.id));
+                                  if (profiles != null) {
+                                    // _technicians.value = {
+                                    //   ..._technicians.value,
+                                    //   ...Map.fromEntries(
+                                    //     profiles.map(
+                                    //       (e) => MapEntry(e.ref.id, e),
+                                    //     ),
+                                    //   ),
+                                    // };
+                                    // // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                                    // _technicians.notifyListeners();
+                                    setState(() {
+                                      request.technicians = {
+                                        ...request.technicians!..addEntries(
+                                          profiles.map(
+                                            (e) => MapEntry(e.ref.id, e),
+                                          ),
+                                        ),
+                                      };
+                                    });
                                   }
+                                  // var technicians = await showDialog<Map<String, ProfileModel>>(
+                                  //   context: context,
+                                  //   builder: (context) {
+                                  //     return SelectTechniciansDialog(selected: _technicians.value);
+                                  //   },
+                                  // );
+                                  // if (technicians != null) {
+                                  //   _technicians.value = technicians;
+                                  // }
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<Map<String,ProfileModel>>(
-                              valueListenable: _technicians,
-                              builder: (context, value, child) {
-                                return Column(
+                            Column(
                                   children: [
-                                    for (var tech in value.values)
+                                    for (var tech in 
+                                    request.technicians!.values.toList()
+                                    )
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(horizontal: 24),
                                         child: ListTile(
-                                          contentPadding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                           onTap: () async {
                                             //
                                           },
                                           leading: CircleAvatar(
-                                            backgroundImage:
-                                                tech.photoUrl == null
-                                                    ? null
-                                                    : NetworkImage(
-                                                        tech.photoUrl ?? '',
-                                                      ),
-                                            child: tech.photoUrl != null
+                                            backgroundImage: tech.photoUrl.isEmpty
                                                 ? null
-                                                : const Icon(FluentIcons
-                                                    .person_24_regular),
+                                                : NetworkImage(
+                                                    tech.photoUrl,
+                                                  ),
+                                            child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
                                           ),
-                                          title: Text(tech.displayName ?? ''),
+                                          title: Text(tech.displayName),
                                           trailing: IconButton(
-                                            icon: const Icon(
-                                                FluentIcons.delete_24_regular),
+                                            icon: const Icon(FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _technicians.value =  {
-                                                ..._technicians.value
-                                                  ..remove(tech.uid)
-                                              };
+                                              // _technicians.value = {
+                                              //   ..._technicians.value,
+                                              // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                              setState(() {
+                                                request.technicians = {
+                                                  ...request.technicians!..removeWhere((key, value) => value.ref.id == tech.ref.id)
+                                                };
+                                              });
                                             },
                                           ),
                                         ),
                                       ),
                                   ],
-                                );
-                              },
+                                ),
+                            const Divider(),
+                            ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: const VisualDensity(vertical: -3),
+                              title: const Text("Owners"),
+                              enabled: false,
+                              trailing: IconButton(
+                                icon: const Icon(FluentIcons.add_24_regular),
+                                onPressed: () async {
+                                  var profiles = await showProfilesPickerDialog(context, filters: [
+                                    IndexViewFilter(
+                                      name: "Clients",
+                                      active: true,
+                                      local: (model) => model.roles.contains(Role("client")),
+                                      remote: (query) => query.where("roles", arrayContains: "client"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ]);
+                                  // profiles?.removeWhere((element) => _owners.value.containsKey(element.ref.id));
+                                  profiles?.removeWhere((element) => request.owners!.containsKey(element.ref.id));
+                                  if (profiles != null) {
+                                    // _owners.value = {
+                                    //   ..._owners.value,
+                                    //   ...Map.fromEntries(
+                                    //     profiles.map(
+                                    //       (e) => MapEntry(e.ref.id, e),
+                                    //     ),
+                                    //   ),
+                                    // };
+                                    // _owners.notifyListeners();
+                                    setState(() {
+                                      request.owners = {
+                                        ...request.owners!..addEntries(
+                                          profiles.map(
+                                            (e) => MapEntry(e.ref.id, e),
+                                          ),
+                                        ),
+                                      };
+                                    });
+                                  }
+                                },
+                              ),
                             ),
-                            const SizedBox(height: 10),
+                            Column(
+                                  children: [
+                                    for (var owner in 
+                                    request.owners!.values.toList()
+                                    )
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                                        child: ListTile(
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                          onTap: () async {
+                                            //
+                                          },
+                                          leading: CircleAvatar(
+                                            backgroundImage: owner.photoUrl.isEmpty
+                                                ? null
+                                                : NetworkImage(
+                                                    owner.photoUrl,
+                                                  ),
+                                            child: owner.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                          ),
+                                          title: Text(owner.displayName),
+                                          trailing: IconButton(
+                                            icon: const Icon(FluentIcons.delete_24_regular),
+                                            onPressed: () {
+                                              // _owners.value = {
+                                              //   ..._owners.value,
+                                              // }..removeWhere((key, value) => value.ref.id == owner.ref.id);
+                                              setState(() {
+                                                request.owners = {
+                                                  ...request.owners!..removeWhere((key, value) => value.ref.id == owner.ref.id)
+                                                };
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
                             // Padding(
                             //   padding: const EdgeInsets.symmetric(horizontal: 12),
                             //   child: SwitchListTile(

@@ -15,6 +15,7 @@ Future<StationModel?> showCreateStationModelDailog(BuildContext context) async {
   var child = Container(
     constraints: const BoxConstraints(maxWidth: 500),
     child: CreateStationForm(
+      ref: "",
       onCreated: (model) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
           SnackBar(

@@ -40,8 +40,7 @@ class ManageStationsView<M extends StationModel> extends ModelMnanagerView<M> {
   State<ManageStationsView> createState() => ManageStationsViewState<M>();
 }
 
-class ManageStationsViewState<M extends StationModel>
-    extends State<ManageStationsView> with ModelMnanagerViewMixin<M> {
+class ManageStationsViewState<M extends StationModel> extends State<ManageStationsView> with ModelMnanagerViewMixin<M> {
   var searchType = ValueNotifier(StationsSearchType.name);
 
   @override
@@ -55,8 +54,7 @@ class ManageStationsViewState<M extends StationModel>
   Future<void> load() async {
     loading.value = true;
     try {
-      models.value =
-          await widget.repository.list(ListRequest()) as ListResult<M>;
+      models.value = await widget.repository.list(ListRequest()) as ListResult<M>;
     } catch (e) {
       print(e);
     }
@@ -114,8 +112,7 @@ class ManageStationsViewState<M extends StationModel>
                   Expanded(
                     child: AppTextFormField.min(
                       enabled: !loading.value,
-                      onSubmitted: (String value) =>
-                          search(value, searchType.value),
+                      onSubmitted: (String value) => search(value, searchType.value),
                       controller: searchController,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(FluentIcons.search_24_regular),
@@ -131,18 +128,14 @@ class ManageStationsViewState<M extends StationModel>
                                       FluentIcons.filter_24_regular,
                                     ),
                                     onPressed: () => controller.open(),
-                                    label:
-                                        Text(searchType.value.name.titleCase),
+                                    label: Text(searchType.value.name.titleCase),
                                   );
                                 },
                                 menuChildren: [
                                   for (var type in StationsSearchType.values)
                                     MenuItemButton(
                                       leadingIcon: Icon(type.icon),
-                                      trailingIcon: searchType.value == type
-                                          ? const Icon(
-                                              FluentIcons.checkmark_24_regular)
-                                          : null,
+                                      trailingIcon: searchType.value == type ? const Icon(FluentIcons.checkmark_24_regular) : null,
                                       onPressed: searchType.value == type
                                           ? null
                                           : () {
@@ -196,57 +189,33 @@ class ManageStationsViewState<M extends StationModel>
                             SizedBox(),
                           ]),
                         ),
-                        loading.value
-                            ? LinearProgressIndicator(minHeight: 2)
-                            : const Divider(height: 2),
+                        loading.value ? LinearProgressIndicator(minHeight: 2) : const Divider(height: 2),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             if (models.value != null)
-                              for (StationModel stationRecord
-                                  in filteredStations)
+                              for (StationModel stationRecord in filteredStations)
                                 InkWell(
-                                  highlightColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                                  focusColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                                  hoverColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
+                                  highlightColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  focusColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  hoverColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8),
                                   onTap: () {
-                                    showDetailsModelDailog(
-                                        context, stationRecord);
+                                    showDetailsModelDailog(context, stationRecord);
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                                     child: FlexTableItem(
                                       children: [
                                         CircleAvatar(
                                           radius: 15,
                                           child: stationRecord.photoUrl == null
                                               ? Text(
-                                                  stationRecord.name
-                                                              ?.isNotEmpty ==
-                                                          true
-                                                      ? stationRecord.name![0]
-                                                          .toUpperCase()
-                                                      : "?",
-                                                  style: const TextStyle(
-                                                      fontSize: 18),
+                                                  stationRecord.name?.isNotEmpty == true ? stationRecord.name![0].toUpperCase() : "?",
+                                                  style: const TextStyle(fontSize: 18),
                                                 )
                                               : null,
-                                          backgroundImage:
-                                              stationRecord.photoUrl == null
-                                                  ? null
-                                                  : NetworkImage(
-                                                      stationRecord.photoUrl!),
+                                          backgroundImage: stationRecord.photoUrl == null ? null : NetworkImage(stationRecord.photoUrl!),
                                         ),
                                         Text(
                                           stationRecord.name ?? "No name",
@@ -254,8 +223,7 @@ class ManageStationsViewState<M extends StationModel>
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         Text(
-                                          stationRecord.address.toString() ??
-                                              "No phone",
+                                          stationRecord.address.toString() ?? "No phone",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -265,8 +233,7 @@ class ManageStationsViewState<M extends StationModel>
                                           child: Wrap(
                                             spacing: 5,
                                             children: [
-                                              for (var technician
-                                                  in stationRecord.technicians.values)
+                                              for (var technician in stationRecord.technicians.values)
                                                 SizedBox(
                                                   width: 25,
                                                   height: 40,
@@ -278,48 +245,26 @@ class ManageStationsViewState<M extends StationModel>
                                                         child: Container(
                                                           height: 40,
                                                           width: 40,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
                                                             border: Border.all(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .background,
+                                                              color: Theme.of(context).colorScheme.background,
                                                               width: 2,
                                                             ),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .primaryContainer,
+                                                            color: Theme.of(context).colorScheme.primaryContainer,
 
                                                             /// if technician.photoUrl is not null and not empty show the image
-                                                            image: technician
-                                                                            .photoUrl !=
-                                                                        null &&
-                                                                    technician
-                                                                        .photoUrl!
-                                                                        .isNotEmpty
+                                                            image: technician.photoUrl != null && technician.photoUrl!.isNotEmpty
                                                                 ? DecorationImage(
-                                                                    image: NetworkImage(
-                                                                        technician
-                                                                            .photoUrl!),
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                    image: NetworkImage(technician.photoUrl!),
+                                                                    fit: BoxFit.cover,
                                                                   )
                                                                 : null,
                                                           ),
                                                           child: Center(
                                                             child: Text(
-                                                              technician
-                                                                  .displayName![
-                                                                      0]
-                                                                  .toUpperCase(),
-                                                              style:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          18),
+                                                              technician.displayName![0].toUpperCase(),
+                                                              style: const TextStyle(fontSize: 18),
                                                             ),
                                                           ),
                                                         ),
@@ -336,8 +281,7 @@ class ManageStationsViewState<M extends StationModel>
                                         //   onPressed: () {},
                                         // ),
                                         MenuAnchor(
-                                          builder:
-                                              (context, controller, child) {
+                                          builder: (context, controller, child) {
                                             return IconButton(
                                               onPressed: () {
                                                 if (controller.isOpen) {
@@ -355,38 +299,28 @@ class ManageStationsViewState<M extends StationModel>
                                             ),
                                             MenuItemButton(
                                               onPressed: () {},
-                                              leadingIcon: const Icon(
-                                                  FluentIcons
-                                                      .person_tag_28_regular),
+                                              leadingIcon: const Icon(FluentIcons.person_tag_28_regular),
                                               child: Text('change roles'),
                                             ),
                                             Divider(),
                                             MenuItemButton(
                                               onPressed: () {
-                                                showUpdateModelDailog(
-                                                    context, stationRecord);
+                                                showUpdateModelDailog(context, stationRecord);
                                               },
-                                              leadingIcon: const Icon(
-                                                  FluentIcons.edit_28_regular),
+                                              leadingIcon: const Icon(FluentIcons.edit_28_regular),
                                               child: Text('Edit'),
                                             ),
                                             MenuItemButton(
                                               onPressed: () {
-                                                showDeleteModelDailog(
-                                                    context, stationRecord);
+                                                showDeleteModelDailog(context, stationRecord);
                                               },
                                               leadingIcon: Icon(
                                                 FluentIcons.delete_28_regular,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .error,
+                                                color: Theme.of(context).colorScheme.error,
                                               ),
                                               child: Text(
                                                 'Remove',
-                                                style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .error),
+                                                style: TextStyle(color: Theme.of(context).colorScheme.error),
                                               ),
                                             ),
                                             SizedBox(
@@ -404,13 +338,10 @@ class ManageStationsViewState<M extends StationModel>
                                   margin: EdgeInsets.all(24.0),
                                   height: 20,
                                   width: 20,
-                                  child: CircularProgressIndicator.adaptive(
-                                      strokeWidth: 2),
+                                  child: CircularProgressIndicator.adaptive(strokeWidth: 2),
                                 ),
                               ),
-                            if (models.value != null &&
-                                models.value!.items.isEmpty &&
-                                !loading.value)
+                            if (models.value != null && models.value!.items.isEmpty && !loading.value)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -450,16 +381,17 @@ class ManageStationsViewState<M extends StationModel>
         onCreated: (station) {
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
             SnackBar(
-                behavior: SnackBarBehavior.floating,
-                width: 400.0,
-                content: Text('Station ${station.name} updated'),
-                action: SnackBarAction(
-                  label: 'Show',
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    showUpdateModelDailog(context, station);
-                  },
-                )),
+              behavior: SnackBarBehavior.floating,
+              width: 400.0,
+              content: Text('Station ${station.name} updated'),
+              action: SnackBarAction(
+                label: 'Show',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  showUpdateModelDailog(context, station);
+                },
+              ),
+            ),
           );
           Navigator.of(context).pop();
           load();
@@ -483,8 +415,7 @@ class ManageStationsViewState<M extends StationModel>
   }
 
   // update station
-  Future<void> showUpdateModelDailog(
-      BuildContext context, StationModel station) async {
+  Future<void> showUpdateModelDailog(BuildContext context, StationModel station) async {
     var child = Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: UpdateStationForm(
@@ -526,15 +457,13 @@ class ManageStationsViewState<M extends StationModel>
   }
 
   // delete station, a simple dialog with a text and two buttons
-  Future<void> showDeleteModelDailog(
-      BuildContext context, StationModel model) async {
+  Future<void> showDeleteModelDailog(BuildContext context, StationModel model) async {
     bool _loading = false;
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm delete'),
-        content: Text(
-            'this action cannot be undone, are you sure you want to continue?'),
+        content: Text('this action cannot be undone, are you sure you want to continue?'),
         actions: [
           TextButton(
             onPressed: () {
@@ -560,8 +489,7 @@ class ManageStationsViewState<M extends StationModel>
                               action: SnackBarAction(
                                 label: 'Close',
                                 onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                 },
                               )),
                         );
@@ -572,9 +500,7 @@ class ManageStationsViewState<M extends StationModel>
                         _loading = false;
                       });
                     },
-              child: _loading
-                  ? CircularProgressIndicator.adaptive()
-                  : const Text('Delete'),
+              child: _loading ? CircularProgressIndicator.adaptive() : const Text('Delete'),
             );
           }),
         ],
