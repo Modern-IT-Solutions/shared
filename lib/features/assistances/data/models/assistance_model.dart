@@ -27,7 +27,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
     required DateTime createdAt,
     @TimestampDateTimeSerializer()
     required DateTime updatedAt,
-    @TimestampDateTimeSerializer()
+    @NullableTimestampDateTimeSerializer()
     DateTime? deletedAt,
   }) = _AssistanceModel;
 

@@ -18,13 +18,7 @@ class UpdateStationForm extends StatefulWidget {
   final StationModel model;
   final VoidCallback? onCancel;
   final Null Function(StationModel station)? onUpdated;
-  const UpdateStationForm(
-      {Key? key,
-      this.onUpdated,
-      this.onCancel,
-      required this.model,
-      required this.ref})
-      : super(key: key);
+  const UpdateStationForm({Key? key, this.onUpdated, this.onCancel, required this.model, required this.ref}) : super(key: key);
 
   @override
   State<UpdateStationForm> createState() => _UpdateStationFormState();
@@ -42,7 +36,8 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
 
   late final ValueNotifier<GeoFirePoint?> _location;
   late final ValueNotifier<List<String>> _phoneNumbers;
-  late final ValueNotifier<List<ProfileModel>> _technicians;
+  late final ValueNotifier<Map<String, ProfileModel>> _technicians;
+  late final ValueNotifier<Map<String, ProfileModel>> _owners;
 
   bool _loading = false;
   late String? _error;
@@ -61,7 +56,8 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
     _location = ValueNotifier<GeoFirePoint?>(widget.model.address.location);
     _phoneNumbers = ValueNotifier<List<String>>(widget.model.phoneNumbers);
     // TODO: fix technicians
-    _technicians = ValueNotifier<List<ProfileModel>>([]);
+    _technicians = ValueNotifier<Map<String, ProfileModel>>(widget.model.technicians);
+    _owners = ValueNotifier<Map<String, ProfileModel>>(widget.model.owners);
 
     _error = null;
     _errors = {};
@@ -79,26 +75,27 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
         name: _nameController.text,
         address: AddressModel(
           raw: _addressController.text,
-          location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),  
+          location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),
         ),
         email: _emailController.text,
         photoUrl: _photoUrlController.text,
         phoneNumbers: _phoneNumbers.value,
         technicians: _technicians.value,
+        owners: _owners.value,
       );
       try {
-        await StationRepository.instance
-            .update(updateRequest);
+        await StationRepository.instance.update(updateRequest);
         widget.onUpdated?.call(widget.model.copyWith(
           name: _nameController.text,
           address: AddressModel(
             raw: _addressController.text,
-            location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),  
+            location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),
           ),
           email: _emailController.text,
           photoUrl: _photoUrlController.text,
           phoneNumbers: _phoneNumbers.value,
-          technicians: {},// _technicians.value,
+          technicians: _technicians.value,
+          owners: _owners.value,
         ));
       }
       // FirebaseFunctionsException
@@ -194,9 +191,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      Theme.of(context)
-                                          .scaffoldBackgroundColor
-                                          .withOpacity(0.8),
+                                      Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                                       Colors.transparent,
                                     ],
                                     begin: Alignment.topCenter,
@@ -213,10 +208,8 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                           // container for photo url circle with wite boreder and shadow
                                           Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
@@ -227,8 +220,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                               ),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
+                                                  color: Colors.black.withOpacity(0.5),
                                                   blurRadius: 5,
                                                   offset: const Offset(0, 4),
                                                 ),
@@ -290,8 +282,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
 
                             const ListTile(
                               leading: Icon(FluentIcons.gas_pump_24_regular),
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 24),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
                               visualDensity: VisualDensity(vertical: -3),
                               title: Text("Station Information"),
                               enabled: false,
@@ -305,9 +296,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               ]),
                               decoration: InputDecoration(
                                 errorText: _errors['name'],
-                                prefixIcon: const SizedBox(
-                                    child: Icon(
-                                        FluentIcons.person_24_regular)),
+                                prefixIcon: const SizedBox(child: Icon(FluentIcons.person_24_regular)),
                                 label: const Text('Name'),
                                 alignLabelWithHint: true,
                                 helperText: 'The name of the user, required *',
@@ -320,12 +309,12 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             AppTextFormField.upload(
                               margin: const EdgeInsets.symmetric(horizontal: 24),
                               controller: _photoUrlController,
-                              validator: FormBuilderValidators.compose(
-                                  [FormBuilderValidators.url()]),
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.url()
+                              ]),
                               decoration: InputDecoration(
                                 errorText: _errors['photoUrl'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.image_28_regular),
+                                prefixIcon: const Icon(FluentIcons.image_28_regular),
                                 label: const Text('Photo url'),
                                 alignLabelWithHint: true,
                                 helperText: 'direct link to the photo',
@@ -343,12 +332,10 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               ]),
                               decoration: InputDecoration(
                                 errorText: _errors['email'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.mail_24_regular),
+                                prefixIcon: const Icon(FluentIcons.mail_24_regular),
                                 label: const Text('Email'),
                                 alignLabelWithHint: true,
-                                helperText:
-                                    'can be null, but must be valid if provided',
+                                helperText: 'can be null, but must be valid if provided',
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -365,8 +352,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               },
                               decoration: InputDecoration(
                                 errorText: _errors['address'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.location_24_regular),
+                                prefixIcon: const Icon(FluentIcons.location_24_regular),
                                 label: const Text('Address'),
                                 alignLabelWithHint: true,
                                 helperText: 'required',
@@ -384,14 +370,15 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                     controller: _phoneTmpController,
                                     inputFormatters: [
                                       MuskeyFormatter(
-                                        masks: ['#########'],
+                                        masks: [
+                                          '#########'
+                                        ],
                                         overflow: OverflowBehavior.forbidden(),
                                       )
                                     ],
                                     validator: (v) {
                                       if (v == null || v.isEmpty) return null;
-                                      var valicator =
-                                          FormBuilderValidators.compose([
+                                      var valicator = FormBuilderValidators.compose([
                                         // FormBuilderValidators.required(),
                                         FormBuilderValidators.numeric(),
                                         FormBuilderValidators.equalLength(9),
@@ -406,8 +393,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                         ),
                                       ),
                                       errorText: _errors['phone'],
-                                      prefixIcon: const Icon(
-                                          FluentIcons.phone_24_regular),
+                                      prefixIcon: const Icon(FluentIcons.phone_24_regular),
                                       prefixText: "+213",
                                       label: const Text('Phone Number'),
                                       alignLabelWithHint: true,
@@ -458,8 +444,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                               label: Text(phone),
                                               onDeleted: () {
                                                 _phoneNumbers.value = [
-                                                  ..._phoneNumbers.value
-                                                    ..remove(phone)
+                                                  ..._phoneNumbers.value..remove(phone)
                                                 ];
                                               },
                                             ),
@@ -472,64 +457,76 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             ),
                             const Divider(),
                             ListTile(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 24),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
                               visualDensity: const VisualDensity(vertical: -3),
                               title: const Text("Technicians"),
                               enabled: false,
                               trailing: IconButton(
                                 icon: const Icon(FluentIcons.add_24_regular),
                                 onPressed: () async {
-                                  var technicians =
-                                      await showDialog<List<ProfileModel>>(
-                                    context: context,
-                                    builder: (context) {
-                                      return SelectTechniciansDialog(
-                                          selected: _technicians.value);
-                                    },
-                                  );
-                                  if (technicians != null) {
-                                    _technicians.value = technicians;
+                                  var profiles = await showProfilesPickerDialog(context, filters: [
+                                    IndexViewFilter(
+                                      name: "Technicians",
+                                      active: true,
+                                      local: (model) => model.roles.contains(Role("technician")),
+                                      remote: (query) => query.where("roles", arrayContains: "technician"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ]);
+                                  profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
+                                  if (profiles != null) {
+                                    _technicians.value = {
+                                      ..._technicians.value,
+                                      ...Map.fromEntries(
+                                        profiles.map(
+                                          (e) => MapEntry(e.ref.id, e),
+                                        ),
+                                      ),
+                                    };
+                                    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                                    _technicians.notifyListeners();
                                   }
+                                  // var technicians = await showDialog<Map<String, ProfileModel>>(
+                                  //   context: context,
+                                  //   builder: (context) {
+                                  //     return SelectTechniciansDialog(selected: _technicians.value);
+                                  //   },
+                                  // );
+                                  // if (technicians != null) {
+                                  //   _technicians.value = technicians;
+                                  // }
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<List<ProfileModel>>(
+                            ValueListenableBuilder<Map<String, ProfileModel>>(
                               valueListenable: _technicians,
                               builder: (context, value, child) {
                                 return Column(
                                   children: [
-                                    for (var tech in value)
+                                    for (var tech in value.values)
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(horizontal: 24),
                                         child: ListTile(
-                                          contentPadding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                           onTap: () async {
                                             //
                                           },
                                           leading: CircleAvatar(
-                                            backgroundImage:
-                                                tech.photoUrl.isEmpty
-                                                    ? null
-                                                    : NetworkImage(
-                                                        tech.photoUrl,
-                                                      ),
-                                            child: tech.photoUrl != null
+                                            backgroundImage: tech.photoUrl.isEmpty
                                                 ? null
-                                                : const Icon(FluentIcons
-                                                    .person_24_regular),
+                                                : NetworkImage(
+                                                    tech.photoUrl,
+                                                  ),
+                                            child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
                                           ),
                                           title: Text(tech.displayName),
                                           trailing: IconButton(
-                                            icon: const Icon(
-                                                FluentIcons.delete_24_regular),
+                                            icon: const Icon(FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _technicians.value = [
-                                                ..._technicians.value
-                                                  ..remove(tech)
-                                              ];
+                                              _technicians.value = {
+                                                ..._technicians.value,
+                                              }..removeWhere((key, value) => value.ref.id == tech.ref.id);
                                             },
                                           ),
                                         ),
@@ -538,7 +535,76 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 );
                               },
                             ),
-                            const SizedBox(height: 10),
+                            const Divider(),
+                            ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: const VisualDensity(vertical: -3),
+                              title: const Text("Owners"),
+                              enabled: false,
+                              trailing: IconButton(
+                                icon: const Icon(FluentIcons.add_24_regular),
+                                onPressed: () async {
+                                  var profiles = await showProfilesPickerDialog(context, filters: [
+                                    IndexViewFilter(
+                                      name: "Clients",
+                                      active: true,
+                                      local: (model) => model.roles.contains(Role("client")),
+                                      remote: (query) => query.where("roles", arrayContains: "client"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ]);
+                                  profiles?.removeWhere((element) => _owners.value.containsKey(element.ref.id));
+                                  if (profiles != null) {
+                                    _owners.value = {
+                                      ..._owners.value,
+                                      ...Map.fromEntries(
+                                        profiles.map(
+                                          (e) => MapEntry(e.ref.id, e),
+                                        ),
+                                      ),
+                                    };
+                                    _owners.notifyListeners();
+                                  }
+                                },
+                              ),
+                            ),
+                            ValueListenableBuilder<Map<String, ProfileModel>>(
+                              valueListenable: _owners,
+                              builder: (context, value, child) {
+                                return Column(
+                                  children: [
+                                    for (var owner in value.values)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                                        child: ListTile(
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                          onTap: () async {
+                                            //
+                                          },
+                                          leading: CircleAvatar(
+                                            backgroundImage: owner.photoUrl.isEmpty
+                                                ? null
+                                                : NetworkImage(
+                                                    owner.photoUrl,
+                                                  ),
+                                            child: owner.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                          ),
+                                          title: Text(owner.displayName),
+                                          trailing: IconButton(
+                                            icon: const Icon(FluentIcons.delete_24_regular),
+                                            onPressed: () {
+                                              _owners.value = {
+                                                ..._owners.value,
+                                              }..removeWhere((key, value) => value.ref.id == owner.ref.id);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
                             // Padding(
                             //   padding: const EdgeInsets.symmetric(horizontal: 12),
                             //   child: SwitchListTile(

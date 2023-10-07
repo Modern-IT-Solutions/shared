@@ -41,7 +41,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
 
   late final ValueNotifier<GeoFirePoint?> _location;
   late final ValueNotifier<List<String>> _phoneNumbers;
-  late final ValueNotifier<List<ProfileModel>> _technicians;
+  late final ValueNotifier<Map<String,ProfileModel>> _technicians;
 
   bool _loading = false;
   late String? _error;
@@ -59,7 +59,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
 
     _location = ValueNotifier<GeoFirePoint?>(null);
     _phoneNumbers = ValueNotifier<List<String>>([]);
-    _technicians = ValueNotifier<List<ProfileModel>>([]);
+    _technicians = ValueNotifier<Map<String,ProfileModel>>({});
 
     _error = null;
     _errors = {};
@@ -496,7 +496,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                 icon: const Icon(FluentIcons.add_24_regular),
                                 onPressed: () async {
                                   var technicians =
-                                      await showDialog<List<ProfileModel>>(
+                                      await showDialog<Map<String,ProfileModel>>(
                                     context: context,
                                     builder: (context) {
                                       return SelectTechniciansDialog(
@@ -509,12 +509,12 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<List<ProfileModel>>(
+                            ValueListenableBuilder<Map<String,ProfileModel>>(
                               valueListenable: _technicians,
                               builder: (context, value, child) {
                                 return Column(
                                   children: [
-                                    for (var tech in value)
+                                    for (var tech in value.values)
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 24),
@@ -541,10 +541,10 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                             icon: const Icon(
                                                 FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _technicians.value = [
+                                              _technicians.value =  {
                                                 ..._technicians.value
-                                                  ..remove(tech)
-                                              ];
+                                                  ..remove(tech.uid)
+                                              };
                                             },
                                           ),
                                         ),

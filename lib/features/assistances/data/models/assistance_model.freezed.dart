@@ -35,7 +35,7 @@ mixin _$AssistanceModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +62,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
       InterventionModel? intervention,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   $StationModelCopyWith<$Res> get station;
   $ProfileModelCopyWith<$Res>? get reviewer;
@@ -200,7 +200,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
       InterventionModel? intervention,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   @override
   $StationModelCopyWith<$Res> get station;
@@ -302,7 +302,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       required this.intervention,
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
-      @TimestampDateTimeSerializer() this.deletedAt})
+      @NullableTimestampDateTimeSerializer() this.deletedAt})
       : _technicians = technicians,
         _attachments = attachments;
 
@@ -347,7 +347,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   @TimestampDateTimeSerializer()
   final DateTime updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   final DateTime? deletedAt;
 
   @override
@@ -426,7 +426,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           required final InterventionModel? intervention,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
-          @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
+          @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
       _$AssistanceModelImpl;
 
   factory _AssistanceModel.fromJson(Map<String, dynamic> json) =
@@ -458,7 +458,7 @@ abstract class _AssistanceModel implements AssistanceModel {
   @TimestampDateTimeSerializer()
   DateTime get updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt;
   @override
   @JsonKey(ignore: true)

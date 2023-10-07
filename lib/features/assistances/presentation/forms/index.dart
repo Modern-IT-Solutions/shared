@@ -1,5 +1,4 @@
 import 'package:feather_icons/feather_icons.dart';
-import 'package:lib/lib.dart';
 import 'package:shared/features/assistances/presentation/forms/find.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';

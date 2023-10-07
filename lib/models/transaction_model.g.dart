@@ -27,8 +27,8 @@ _$TransactionModelImpl _$$TransactionModelImplFromJson(
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
       updatedAt:
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
-      deletedAt:
-          const TimestampDateTimeSerializer().fromJson(json['deletedAt']),
+      deletedAt: const NullableTimestampDateTimeSerializer()
+          .fromJson(json['deletedAt'] as Timestamp?),
     );
 
 Map<String, dynamic> _$$TransactionModelImplToJson(
@@ -51,8 +51,8 @@ Map<String, dynamic> _$$TransactionModelImplToJson(
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
       'updatedAt':
           const TimestampDateTimeSerializer().toJson(instance.updatedAt),
-      'deletedAt': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.deletedAt, const TimestampDateTimeSerializer().toJson),
+      'deletedAt': const NullableTimestampDateTimeSerializer()
+          .toJson(instance.deletedAt),
     };
 
 const _$TransactionStatusEnumMap = {
@@ -68,9 +68,3 @@ const _$TransactionTypeEnumMap = {
   TransactionType.refund: 'refund',
   TransactionType.transfer: 'transfer',
 };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

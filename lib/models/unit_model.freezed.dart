@@ -40,7 +40,7 @@ mixin _$UnitModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -70,7 +70,7 @@ abstract class $UnitModelCopyWith<$Res> {
       UnitSubjectModel subject,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   $UnitStatisticsModelCopyWith<$Res> get statistics;
   $ProfileModelCopyWith<$Res> get teacher;
@@ -224,7 +224,7 @@ abstract class _$$UnitModelImplCopyWith<$Res>
       UnitSubjectModel subject,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   @override
   $UnitStatisticsModelCopyWith<$Res> get statistics;
@@ -350,7 +350,7 @@ class _$UnitModelImpl implements _UnitModel {
       required this.subject,
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
-      @TimestampDateTimeSerializer() this.deletedAt})
+      @NullableTimestampDateTimeSerializer() this.deletedAt})
       : _fields = fields;
 
   factory _$UnitModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -400,7 +400,7 @@ class _$UnitModelImpl implements _UnitModel {
   @TimestampDateTimeSerializer()
   final DateTime updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   final DateTime? deletedAt;
 
   @override
@@ -491,7 +491,7 @@ abstract class _UnitModel implements UnitModel {
           required final UnitSubjectModel subject,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
-          @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
+          @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
       _$UnitModelImpl;
 
   factory _UnitModel.fromJson(Map<String, dynamic> json) =
@@ -532,7 +532,7 @@ abstract class _UnitModel implements UnitModel {
   @TimestampDateTimeSerializer()
   DateTime get updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt;
   @override
   @JsonKey(ignore: true)

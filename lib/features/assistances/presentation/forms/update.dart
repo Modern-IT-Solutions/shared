@@ -43,7 +43,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
 
   late final ValueNotifier<GeoFirePoint?> _location;
   late final ValueNotifier<List<String>> _phoneNumbers;
-  late final ValueNotifier<List<ProfileModel>> _technicians;
+  late final ValueNotifier<Map<String,ProfileModel>> _technicians;
 
   bool _loading = false;
   late String? _error;
@@ -61,7 +61,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
 
     _location = ValueNotifier<GeoFirePoint?>(widget.assistance.station.address.location);
     _phoneNumbers = ValueNotifier<List<String>>(widget.assistance.station.phoneNumbers);
-    _technicians = ValueNotifier<List<ProfileModel>>(widget.assistance.technicians.values.toList());
+    _technicians = ValueNotifier<Map<String,ProfileModel>>(widget.assistance.technicians);
 
     _error = null;
     _errors = {};
@@ -479,7 +479,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                 icon: Icon(FluentIcons.add_24_regular),
                                 onPressed: () async {
                                   var technicians =
-                                      await showDialog<List<ProfileModel>>(
+                                      await showDialog<Map<String,ProfileModel>>(
                                     context: context,
                                     builder: (context) {
                                       return SelectTechniciansDialog(
@@ -492,12 +492,12 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<List<ProfileModel>>(
+                            ValueListenableBuilder<Map<String,ProfileModel>>(
                               valueListenable: _technicians,
                               builder: (context, value, child) {
                                 return Column(
                                   children: [
-                                    for (var tech in value)
+                                    for (var tech in value.values)
                                       Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 24),
@@ -524,10 +524,10 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                             icon: Icon(
                                                 FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _technicians.value = [
+                                              _technicians.value = {
                                                 ..._technicians.value
-                                                  ..remove(tech)
-                                              ];
+                                                  ..remove(tech.uid)
+                                              };
                                             },
                                           ),
                                         ),

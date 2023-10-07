@@ -25,7 +25,8 @@ class TransactionModel with _$TransactionModel implements Model {
     String? details,
     @TimestampDateTimeSerializer() required DateTime createdAt,
     @TimestampDateTimeSerializer() required DateTime updatedAt,
-    @TimestampDateTimeSerializer() DateTime? deletedAt,
+    
+  @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
   }) = _TransactionModel;
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) => _$TransactionModelFromJson(json);

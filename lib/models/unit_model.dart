@@ -33,7 +33,7 @@ class UnitModel with _$UnitModel implements Model {
     required DateTime createdAt,
     @TimestampDateTimeSerializer()
     required DateTime updatedAt,
-    @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
     DateTime? deletedAt,
   }) = _UnitModel; 
 

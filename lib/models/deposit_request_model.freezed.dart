@@ -46,7 +46,7 @@ mixin _$DepositRequestModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -82,7 +82,7 @@ abstract class $DepositRequestModelCopyWith<$Res> {
       Map<String, dynamic> metadata,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   $ProfileModelCopyWith<$Res> get profile;
   $TransactionModelCopyWith<$Res>? get transaction;
@@ -261,7 +261,7 @@ abstract class _$$DepositRequestModelImplCopyWith<$Res>
       Map<String, dynamic> metadata,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   @override
   $ProfileModelCopyWith<$Res> get profile;
@@ -415,7 +415,7 @@ class _$DepositRequestModelImpl implements _DepositRequestModel {
       final Map<String, dynamic> metadata = const {},
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
-      @TimestampDateTimeSerializer() this.deletedAt})
+      @NullableTimestampDateTimeSerializer() this.deletedAt})
       : _attachments = attachments,
         _metadata = metadata;
 
@@ -495,7 +495,7 @@ class _$DepositRequestModelImpl implements _DepositRequestModel {
   @TimestampDateTimeSerializer()
   final DateTime updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   final DateTime? deletedAt;
 
   @override
@@ -606,7 +606,7 @@ abstract class _DepositRequestModel implements DepositRequestModel {
           final Map<String, dynamic> metadata,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
-          @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
+          @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
       _$DepositRequestModelImpl;
 
   factory _DepositRequestModel.fromJson(Map<String, dynamic> json) =
@@ -656,7 +656,7 @@ abstract class _DepositRequestModel implements DepositRequestModel {
   @TimestampDateTimeSerializer()
   DateTime get updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt;
   @override
   @JsonKey(ignore: true)

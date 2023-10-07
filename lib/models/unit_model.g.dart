@@ -30,8 +30,8 @@ _$UnitModelImpl _$$UnitModelImplFromJson(Map<String, dynamic> json) =>
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
       updatedAt:
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
-      deletedAt:
-          const TimestampDateTimeSerializer().fromJson(json['deletedAt']),
+      deletedAt: const NullableTimestampDateTimeSerializer()
+          .fromJson(json['deletedAt'] as Timestamp?),
     );
 
 Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
@@ -53,17 +53,11 @@ Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
       'updatedAt':
           const TimestampDateTimeSerializer().toJson(instance.updatedAt),
-      'deletedAt': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.deletedAt, const TimestampDateTimeSerializer().toJson),
+      'deletedAt': const NullableTimestampDateTimeSerializer()
+          .toJson(instance.deletedAt),
     };
 
 const _$UnitVisibilityEnumMap = {
   UnitVisibility.visible: 'visible',
   UnitVisibility.hidden: 'hidden',
 };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

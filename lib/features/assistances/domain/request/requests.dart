@@ -21,7 +21,7 @@ class AssistanceCreateRequest<T extends AssistanceModel> extends CreateRequest<T
   /// The email of the assistance.
   String? email;
   /// The technicians of the assistance.
-  List<ProfileModel> technicians;
+  Map<String,ProfileModel> technicians;
 
   AssistanceCreateRequest({
     super.id,
@@ -31,7 +31,7 @@ class AssistanceCreateRequest<T extends AssistanceModel> extends CreateRequest<T
     this.photoUrl,
     this.phoneNumbers = const [],
     this.email,
-    this.technicians = const [],
+    this.technicians = const {},
   });
   
   @override
@@ -44,7 +44,8 @@ class AssistanceCreateRequest<T extends AssistanceModel> extends CreateRequest<T
       'photoUrl': photoUrl,
       'phoneNumbers': phoneNumbers,
       'email': email,
-      'technicians': technicians?.map((x) => x.toJson()).toList(),
+      'technicians': technicians?. // must be Map<String,Map<String,dynamic>>
+        map((key, value) => MapEntry(key, value.toJson())),
     };
   }
 
@@ -158,7 +159,7 @@ class AssistanceUpdateRequest<T extends AssistanceModel> extends UpdateRequest<T
   /// The email of the assistance.
   String? email;
   /// The technicians of the assistance.
-  List<ProfileModel>? technicians;
+  Map<String,ProfileModel>? technicians;
 
   get data => toMap();
 
@@ -182,7 +183,9 @@ class AssistanceUpdateRequest<T extends AssistanceModel> extends UpdateRequest<T
       'photoUrl': photoUrl,
       'phoneNumbers': phoneNumbers,
       'email': email,
-      'technicians': technicians?.map((x) => x.toJson()).toList(),
+      'technicians': technicians?.// must be Map<String, Map<String, dynamic>>
+        map((key, value) => MapEntry(key, value.toJson())),
+        
     };
   }
   }

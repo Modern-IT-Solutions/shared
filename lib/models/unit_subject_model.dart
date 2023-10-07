@@ -15,7 +15,7 @@ class UnitSubjectModel with _$UnitSubjectModel implements Model {
     required DateTime createdAt,
     @TimestampDateTimeSerializer()
     required DateTime updatedAt,
-    @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
     DateTime? deletedAt,
   }) = _UnitSubjectModel;
 

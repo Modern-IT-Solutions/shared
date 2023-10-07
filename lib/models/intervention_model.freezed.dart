@@ -26,18 +26,18 @@ mixin _$InterventionModel {
   DateTime get date => throw _privateConstructorUsedError;
   String get description =>
       throw _privateConstructorUsedError; // required List<AttachmentModel> attachments,
-  List<dynamic> get attachments => throw _privateConstructorUsedError;
+  List<AttachmentModel> get attachments => throw _privateConstructorUsedError;
   InterventionType get type => throw _privateConstructorUsedError;
   ProfileModel get intervener =>
       throw _privateConstructorUsedError; // next intervention date
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get nextInterventionDate => throw _privateConstructorUsedError;
   Map<String, dynamic> get metadata => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,14 +57,14 @@ abstract class $InterventionModelCopyWith<$Res> {
       InterventionStatus status,
       DateTime date,
       String description,
-      List<dynamic> attachments,
+      List<AttachmentModel> attachments,
       InterventionType type,
       ProfileModel intervener,
-      @TimestampDateTimeSerializer() DateTime? nextInterventionDate,
+      @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
       Map<String, dynamic> metadata,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   $ProfileModelCopyWith<$Res> get intervener;
 }
@@ -115,7 +115,7 @@ class _$InterventionModelCopyWithImpl<$Res, $Val extends InterventionModel>
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<AttachmentModel>,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -169,14 +169,14 @@ abstract class _$$InterventionModelImplCopyWith<$Res>
       InterventionStatus status,
       DateTime date,
       String description,
-      List<dynamic> attachments,
+      List<AttachmentModel> attachments,
       InterventionType type,
       ProfileModel intervener,
-      @TimestampDateTimeSerializer() DateTime? nextInterventionDate,
+      @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
       Map<String, dynamic> metadata,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
-      @TimestampDateTimeSerializer() DateTime? deletedAt});
+      @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
 
   @override
   $ProfileModelCopyWith<$Res> get intervener;
@@ -226,7 +226,7 @@ class __$$InterventionModelImplCopyWithImpl<$Res>
       attachments: null == attachments
           ? _value._attachments
           : attachments // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<AttachmentModel>,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -267,14 +267,14 @@ class _$InterventionModelImpl implements _InterventionModel {
       required this.status,
       required this.date,
       required this.description,
-      required final List<dynamic> attachments,
+      required final List<AttachmentModel> attachments,
       required this.type,
       required this.intervener,
-      @TimestampDateTimeSerializer() required this.nextInterventionDate,
+      @NullableTimestampDateTimeSerializer() this.nextInterventionDate,
       final Map<String, dynamic> metadata = const {},
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
-      @TimestampDateTimeSerializer() this.deletedAt})
+      @NullableTimestampDateTimeSerializer() this.deletedAt})
       : _attachments = attachments,
         _metadata = metadata;
 
@@ -291,10 +291,10 @@ class _$InterventionModelImpl implements _InterventionModel {
   @override
   final String description;
 // required List<AttachmentModel> attachments,
-  final List<dynamic> _attachments;
+  final List<AttachmentModel> _attachments;
 // required List<AttachmentModel> attachments,
   @override
-  List<dynamic> get attachments {
+  List<AttachmentModel> get attachments {
     if (_attachments is EqualUnmodifiableListView) return _attachments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_attachments);
@@ -306,7 +306,7 @@ class _$InterventionModelImpl implements _InterventionModel {
   final ProfileModel intervener;
 // next intervention date
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   final DateTime? nextInterventionDate;
   final Map<String, dynamic> _metadata;
   @override
@@ -324,7 +324,7 @@ class _$InterventionModelImpl implements _InterventionModel {
   @TimestampDateTimeSerializer()
   final DateTime updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   final DateTime? deletedAt;
 
   @override
@@ -396,15 +396,15 @@ abstract class _InterventionModel implements InterventionModel {
           required final InterventionStatus status,
           required final DateTime date,
           required final String description,
-          required final List<dynamic> attachments,
+          required final List<AttachmentModel> attachments,
           required final InterventionType type,
           required final ProfileModel intervener,
-          @TimestampDateTimeSerializer()
-          required final DateTime? nextInterventionDate,
+          @NullableTimestampDateTimeSerializer()
+          final DateTime? nextInterventionDate,
           final Map<String, dynamic> metadata,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
-          @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
+          @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
       _$InterventionModelImpl;
 
   factory _InterventionModel.fromJson(Map<String, dynamic> json) =
@@ -420,13 +420,13 @@ abstract class _InterventionModel implements InterventionModel {
   @override
   String get description;
   @override // required List<AttachmentModel> attachments,
-  List<dynamic> get attachments;
+  List<AttachmentModel> get attachments;
   @override
   InterventionType get type;
   @override
   ProfileModel get intervener;
   @override // next intervention date
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get nextInterventionDate;
   @override
   Map<String, dynamic> get metadata;
@@ -437,7 +437,7 @@ abstract class _InterventionModel implements InterventionModel {
   @TimestampDateTimeSerializer()
   DateTime get updatedAt;
   @override
-  @TimestampDateTimeSerializer()
+  @NullableTimestampDateTimeSerializer()
   DateTime? get deletedAt;
   @override
   @JsonKey(ignore: true)

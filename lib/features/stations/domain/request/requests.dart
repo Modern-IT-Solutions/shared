@@ -18,7 +18,8 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
   /// The email of the station.
   String? email;
   /// The technicians of the station.
-  List<ProfileModel> technicians;
+  Map<String,ProfileModel> technicians;
+  Map<String,ProfileModel> owners;
 
   StationCreateRequest({
     super.id,
@@ -27,7 +28,8 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
     this.photoUrl,
     this.phoneNumbers = const [],
     this.email,
-    this.technicians = const [],
+    this.technicians = const {},
+    this.owners = const {},
   });
   
   @override
@@ -44,7 +46,10 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
     'photoUrl': photoUrl,
     'phoneNumbers': phoneNumbers,
     'email': email,
-    'technicians': technicians.map((x) => x.toJson()).toList(),
+    'technicians': technicians. // must be Map<String, Map<String, dynamic>>
+      map((key, value) => MapEntry(key, value.toJson())),
+    'owners': owners. // must be Map<String, Map<String, dynamic>>
+      map((key, value) => MapEntry(key, value.toJson())),
   };
 
 
@@ -155,7 +160,8 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
   /// The email of the station.
   String? email;
   /// The technicians of the station.
-  List<ProfileModel>? technicians;
+  Map<String, ProfileModel>? technicians;
+  Map<String, ProfileModel>? owners;
 
   get data => toMap();
 
@@ -167,6 +173,7 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
     this.phoneNumbers,
     this.email,
     this.technicians,
+    this.owners,
   });
   
   @override
@@ -177,7 +184,10 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
       'photoUrl': photoUrl,
       'phoneNumbers': phoneNumbers,
       'email': email,
-      'technicians': technicians?.map((x) => x.toJson()).toList(),
+      'technicians': technicians?. // must be Map<String, Map<String, dynamic>>
+        map((key, value) => MapEntry(key, value.toJson())),
+      'owners': owners?. // must be Map<String, Map<String, dynamic>>
+        map((key, value) => MapEntry(key, value.toJson())),
     };
   }
   }
