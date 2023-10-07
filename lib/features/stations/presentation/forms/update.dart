@@ -77,7 +77,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
       var updateRequest = StationUpdateRequest(
         id: widget.station.ref.id,
         name: _nameController.text,
-        address: Address(
+        address: AddressModel(
           raw: _addressController.text,
           location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),  
         ),
@@ -91,7 +91,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
             .update(updateRequest);
         widget.onUpdated?.call(widget.station.copyWith(
           name: _nameController.text,
-          address: Address(
+          address: AddressModel(
             raw: _addressController.text,
             location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),  
           ),

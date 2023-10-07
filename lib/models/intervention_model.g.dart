@@ -17,13 +17,16 @@ _$InterventionModelImpl _$$InterventionModelImplFromJson(
       type: $enumDecode(_$InterventionTypeEnumMap, json['type']),
       intervener:
           ProfileModel.fromJson(json['intervener'] as Map<String, dynamic>),
-      nextInterventionDate: const TimestampDateTimeSerializer()
-          .fromJson(json['nextInterventionDate'] as Timestamp?),
+      nextInterventionDate: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['nextInterventionDate'],
+          const TimestampDateTimeSerializer().fromJson),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      deletedAt: const TimestampDateTimeSerializer()
-          .fromJson(json['deletedAt'] as Timestamp?),
+      createdAt: const TimestampDateTimeSerializer()
+          .fromJson(json['createdAt'] as Timestamp),
+      updatedAt: const TimestampDateTimeSerializer()
+          .fromJson(json['updatedAt'] as Timestamp),
+      deletedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['deletedAt'], const TimestampDateTimeSerializer().fromJson),
     );
 
 Map<String, dynamic> _$$InterventionModelImplToJson(
@@ -36,13 +39,16 @@ Map<String, dynamic> _$$InterventionModelImplToJson(
       'attachments': instance.attachments,
       'type': _$InterventionTypeEnumMap[instance.type]!,
       'intervener': instance.intervener.toJson(),
-      'nextInterventionDate': const TimestampDateTimeSerializer()
-          .toJson(instance.nextInterventionDate),
+      'nextInterventionDate': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.nextInterventionDate,
+          const TimestampDateTimeSerializer().toJson),
       'metadata': instance.metadata,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
-      'deletedAt':
-          const TimestampDateTimeSerializer().toJson(instance.deletedAt),
+      'createdAt':
+          const TimestampDateTimeSerializer().toJson(instance.createdAt),
+      'updatedAt':
+          const TimestampDateTimeSerializer().toJson(instance.updatedAt),
+      'deletedAt': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.deletedAt, const TimestampDateTimeSerializer().toJson),
     };
 
 const _$InterventionStatusEnumMap = {
@@ -56,3 +62,15 @@ const _$InterventionTypeEnumMap = {
   InterventionType.onSite: 'onSite',
   InterventionType.byPhone: 'byPhone',
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

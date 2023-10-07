@@ -74,7 +74,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
       });
       var createRequest = StationCreateRequest(
         name: _nameController.text,
-        address: Address(
+        address: AddressModel(
           raw: _addressController.text,
           location: _location.value ?? const GeoFirePoint(GeoPoint(0, 0)),
         ),

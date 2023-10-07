@@ -26,10 +26,12 @@ _$UnitModelImpl _$$UnitModelImplFromJson(Map<String, dynamic> json) =>
       teacher: ProfileModel.fromJson(json['teacher'] as Map<String, dynamic>),
       subject:
           UnitSubjectModel.fromJson(json['subject'] as Map<String, dynamic>),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      deletedAt: const TimestampDateTimeSerializer()
-          .fromJson(json['deletedAt'] as Timestamp?),
+      createdAt: const TimestampDateTimeSerializer()
+          .fromJson(json['createdAt'] as Timestamp),
+      updatedAt: const TimestampDateTimeSerializer()
+          .fromJson(json['updatedAt'] as Timestamp),
+      deletedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['deletedAt'], const TimestampDateTimeSerializer().fromJson),
     );
 
 Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
@@ -47,13 +49,27 @@ Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
       'visibility': _$UnitVisibilityEnumMap[instance.visibility]!,
       'teacher': instance.teacher.toJson(),
       'subject': instance.subject.toJson(),
-      'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
-      'deletedAt':
-          const TimestampDateTimeSerializer().toJson(instance.deletedAt),
+      'createdAt':
+          const TimestampDateTimeSerializer().toJson(instance.createdAt),
+      'updatedAt':
+          const TimestampDateTimeSerializer().toJson(instance.updatedAt),
+      'deletedAt': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.deletedAt, const TimestampDateTimeSerializer().toJson),
     };
 
 const _$UnitVisibilityEnumMap = {
   UnitVisibility.visible: 'visible',
   UnitVisibility.hidden: 'hidden',
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

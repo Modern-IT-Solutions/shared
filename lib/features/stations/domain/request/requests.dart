@@ -9,7 +9,7 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
   /// The name of the station.
   String name;
   /// The address of the station.
-  Address address;
+  AddressModel address;
 
   /// The photoUrl of the station.
   String? photoUrl;
@@ -147,7 +147,7 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
   /// The name of the station.
   String? name;
   /// The address of the station.
-  Address? address;
+  AddressModel? address;
   /// The photoUrl of the station.
   String? photoUrl;
   /// The phone numbers of the station.

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 /// [StationModel] is a class that represents a station
 
+import 'package:core/models/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/shared.dart';
@@ -18,10 +19,10 @@ class StationModel with _$StationModel implements Model {
     required String photoUrl,
     String? email,
     required List<String> phoneNumbers,
-    // owner
+    // owner 
     required Map<String,ProfileModel> owners,
     required Map<String,ProfileModel> technicians,
-    required Address address,
+    required AddressModel address,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
     @TimestampDateTimeSerializer()

@@ -29,7 +29,7 @@ mixin _$StationModel {
   Map<String, ProfileModel> get owners => throw _privateConstructorUsedError;
   Map<String, ProfileModel> get technicians =>
       throw _privateConstructorUsedError;
-  Address get address => throw _privateConstructorUsedError;
+  AddressModel get address => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
@@ -57,12 +57,12 @@ abstract class $StationModelCopyWith<$Res> {
       List<String> phoneNumbers,
       Map<String, ProfileModel> owners,
       Map<String, ProfileModel> technicians,
-      Address address,
+      AddressModel address,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @TimestampDateTimeSerializer() DateTime? deletedAt});
 
-  $AddressCopyWith<$Res> get address;
+  $AddressModelCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -122,7 +122,7 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as Address,
+              as AddressModel,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -140,8 +140,8 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
+  $AddressModelCopyWith<$Res> get address {
+    return $AddressModelCopyWith<$Res>(_value.address, (value) {
       return _then(_value.copyWith(address: value) as $Val);
     });
   }
@@ -163,13 +163,13 @@ abstract class _$$StationModelImplCopyWith<$Res>
       List<String> phoneNumbers,
       Map<String, ProfileModel> owners,
       Map<String, ProfileModel> technicians,
-      Address address,
+      AddressModel address,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @TimestampDateTimeSerializer() DateTime? deletedAt});
 
   @override
-  $AddressCopyWith<$Res> get address;
+  $AddressModelCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -227,7 +227,7 @@ class __$$StationModelImplCopyWithImpl<$Res>
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as Address,
+              as AddressModel,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -302,7 +302,7 @@ class _$StationModelImpl implements _StationModel {
   }
 
   @override
-  final Address address;
+  final AddressModel address;
   @override
   @TimestampDateTimeSerializer()
   final DateTime createdAt;
@@ -381,7 +381,7 @@ abstract class _StationModel implements StationModel {
           required final List<String> phoneNumbers,
           required final Map<String, ProfileModel> owners,
           required final Map<String, ProfileModel> technicians,
-          required final Address address,
+          required final AddressModel address,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
           @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
@@ -406,7 +406,7 @@ abstract class _StationModel implements StationModel {
   @override
   Map<String, ProfileModel> get technicians;
   @override
-  Address get address;
+  AddressModel get address;
   @override
   @TimestampDateTimeSerializer()
   DateTime get createdAt;
