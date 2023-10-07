@@ -289,7 +289,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                             children: [
                                               for (var technician
                                                   in assistanceRecord
-                                                      .technicians)
+                                                      .technicians.values)
                                                 SizedBox(
                                                   width: 25,
                                                   height: 40,

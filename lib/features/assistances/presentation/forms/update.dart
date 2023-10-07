@@ -61,7 +61,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
 
     _location = ValueNotifier<GeoFirePoint?>(widget.assistance.station.address.location);
     _phoneNumbers = ValueNotifier<List<String>>(widget.assistance.station.phoneNumbers);
-    _technicians = ValueNotifier<List<ProfileModel>>(widget.assistance.technicians);
+    _technicians = ValueNotifier<List<ProfileModel>>(widget.assistance.technicians.values.toList());
 
     _error = null;
     _errors = {};
