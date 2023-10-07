@@ -27,8 +27,6 @@ class InterventionModel with _$InterventionModel implements Model {
     required InterventionType type,
     required ProfileModel intervener,
     // next intervention date
-    @NullableTimestampDateTimeSerializer()
-    DateTime? nextInterventionDate,
     @Default({}) Map<String,dynamic> metadata,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
