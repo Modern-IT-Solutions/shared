@@ -23,7 +23,8 @@ mixin _$AssistanceModel {
   @ModelRefSerializer()
   ModelRef get ref => throw _privateConstructorUsedError;
   StationModel get station => throw _privateConstructorUsedError;
-  List<ProfileModel> get technicians => throw _privateConstructorUsedError;
+  Map<String, ProfileModel> get technicians =>
+      throw _privateConstructorUsedError;
   AssistanceStatus get status => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   String get note => throw _privateConstructorUsedError;
@@ -52,7 +53,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
       StationModel station,
-      List<ProfileModel> technicians,
+      Map<String, ProfileModel> technicians,
       AssistanceStatus status,
       DateTime date,
       String note,
@@ -106,7 +107,7 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
       technicians: null == technicians
           ? _value.technicians
           : technicians // ignore: cast_nullable_to_non_nullable
-              as List<ProfileModel>,
+              as Map<String, ProfileModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -190,7 +191,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
       StationModel station,
-      List<ProfileModel> technicians,
+      Map<String, ProfileModel> technicians,
       AssistanceStatus status,
       DateTime date,
       String note,
@@ -245,7 +246,7 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
       technicians: null == technicians
           ? _value._technicians
           : technicians // ignore: cast_nullable_to_non_nullable
-              as List<ProfileModel>,
+              as Map<String, ProfileModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -292,7 +293,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   _$AssistanceModelImpl(
       {@ModelRefSerializer() required this.ref,
       required this.station,
-      required final List<ProfileModel> technicians,
+      required final Map<String, ProfileModel> technicians,
       required this.status,
       required this.date,
       required this.note,
@@ -313,12 +314,12 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   final ModelRef ref;
   @override
   final StationModel station;
-  final List<ProfileModel> _technicians;
+  final Map<String, ProfileModel> _technicians;
   @override
-  List<ProfileModel> get technicians {
-    if (_technicians is EqualUnmodifiableListView) return _technicians;
+  Map<String, ProfileModel> get technicians {
+    if (_technicians is EqualUnmodifiableMapView) return _technicians;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_technicians);
+    return EqualUnmodifiableMapView(_technicians);
   }
 
   @override
@@ -416,7 +417,7 @@ abstract class _AssistanceModel implements AssistanceModel {
   factory _AssistanceModel(
           {@ModelRefSerializer() required final ModelRef ref,
           required final StationModel station,
-          required final List<ProfileModel> technicians,
+          required final Map<String, ProfileModel> technicians,
           required final AssistanceStatus status,
           required final DateTime date,
           required final String note,
@@ -437,7 +438,7 @@ abstract class _AssistanceModel implements AssistanceModel {
   @override
   StationModel get station;
   @override
-  List<ProfileModel> get technicians;
+  Map<String, ProfileModel> get technicians;
   @override
   AssistanceStatus get status;
   @override

@@ -7,9 +7,9 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
     _$AssistanceModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
       station: StationModel.fromJson(json['station'] as Map<String, dynamic>),
-      technicians: (json['technicians'] as List<dynamic>)
-          .map((e) => ProfileModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      technicians: (json['technicians'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
+      ),
       status: $enumDecode(_$AssistanceStatusEnumMap, json['status']),
       date: DateTime.parse(json['date'] as String),
       note: json['note'] as String,
@@ -36,7 +36,8 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
     <String, dynamic>{
       'ref': const ModelRefSerializer().toJson(instance.ref),
       'station': instance.station.toJson(),
-      'technicians': instance.technicians.map((e) => e.toJson()).toList(),
+      'technicians':
+          instance.technicians.map((k, e) => MapEntry(k, e.toJson())),
       'status': _$AssistanceStatusEnumMap[instance.status]!,
       'date': instance.date.toIso8601String(),
       'note': instance.note,
