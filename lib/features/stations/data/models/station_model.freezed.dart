@@ -26,10 +26,10 @@ mixin _$StationModel {
   String get photoUrl => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   List<String> get phoneNumbers => throw _privateConstructorUsedError; // owner
+  AddressModel get address => throw _privateConstructorUsedError;
   Map<String, ProfileModel> get owners => throw _privateConstructorUsedError;
   Map<String, ProfileModel> get technicians =>
       throw _privateConstructorUsedError;
-  AddressModel get address => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
@@ -55,9 +55,9 @@ abstract class $StationModelCopyWith<$Res> {
       String photoUrl,
       String? email,
       List<String> phoneNumbers,
+      AddressModel address,
       Map<String, ProfileModel> owners,
       Map<String, ProfileModel> technicians,
-      AddressModel address,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @TimestampDateTimeSerializer() DateTime? deletedAt});
@@ -83,9 +83,9 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
     Object? photoUrl = null,
     Object? email = freezed,
     Object? phoneNumbers = null,
+    Object? address = null,
     Object? owners = null,
     Object? technicians = null,
-    Object? address = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? deletedAt = freezed,
@@ -111,6 +111,10 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
           ? _value.phoneNumbers
           : phoneNumbers // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel,
       owners: null == owners
           ? _value.owners
           : owners // ignore: cast_nullable_to_non_nullable
@@ -119,10 +123,6 @@ class _$StationModelCopyWithImpl<$Res, $Val extends StationModel>
           ? _value.technicians
           : technicians // ignore: cast_nullable_to_non_nullable
               as Map<String, ProfileModel>,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -161,9 +161,9 @@ abstract class _$$StationModelImplCopyWith<$Res>
       String photoUrl,
       String? email,
       List<String> phoneNumbers,
+      AddressModel address,
       Map<String, ProfileModel> owners,
       Map<String, ProfileModel> technicians,
-      AddressModel address,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @TimestampDateTimeSerializer() DateTime? deletedAt});
@@ -188,9 +188,9 @@ class __$$StationModelImplCopyWithImpl<$Res>
     Object? photoUrl = null,
     Object? email = freezed,
     Object? phoneNumbers = null,
+    Object? address = null,
     Object? owners = null,
     Object? technicians = null,
-    Object? address = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? deletedAt = freezed,
@@ -216,6 +216,10 @@ class __$$StationModelImplCopyWithImpl<$Res>
           ? _value._phoneNumbers
           : phoneNumbers // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel,
       owners: null == owners
           ? _value._owners
           : owners // ignore: cast_nullable_to_non_nullable
@@ -224,10 +228,6 @@ class __$$StationModelImplCopyWithImpl<$Res>
           ? _value._technicians
           : technicians // ignore: cast_nullable_to_non_nullable
               as Map<String, ProfileModel>,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -253,9 +253,9 @@ class _$StationModelImpl implements _StationModel {
       required this.photoUrl,
       this.email,
       required final List<String> phoneNumbers,
+      required this.address,
       required final Map<String, ProfileModel> owners,
       required final Map<String, ProfileModel> technicians,
-      required this.address,
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
       @TimestampDateTimeSerializer() this.deletedAt})
@@ -284,8 +284,9 @@ class _$StationModelImpl implements _StationModel {
   }
 
 // owner
+  @override
+  final AddressModel address;
   final Map<String, ProfileModel> _owners;
-// owner
   @override
   Map<String, ProfileModel> get owners {
     if (_owners is EqualUnmodifiableMapView) return _owners;
@@ -302,8 +303,6 @@ class _$StationModelImpl implements _StationModel {
   }
 
   @override
-  final AddressModel address;
-  @override
   @TimestampDateTimeSerializer()
   final DateTime createdAt;
   @override
@@ -315,7 +314,7 @@ class _$StationModelImpl implements _StationModel {
 
   @override
   String toString() {
-    return 'StationModel(ref: $ref, name: $name, photoUrl: $photoUrl, email: $email, phoneNumbers: $phoneNumbers, owners: $owners, technicians: $technicians, address: $address, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'StationModel(ref: $ref, name: $name, photoUrl: $photoUrl, email: $email, phoneNumbers: $phoneNumbers, address: $address, owners: $owners, technicians: $technicians, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -330,10 +329,10 @@ class _$StationModelImpl implements _StationModel {
             (identical(other.email, email) || other.email == email) &&
             const DeepCollectionEquality()
                 .equals(other._phoneNumbers, _phoneNumbers) &&
+            (identical(other.address, address) || other.address == address) &&
             const DeepCollectionEquality().equals(other._owners, _owners) &&
             const DeepCollectionEquality()
                 .equals(other._technicians, _technicians) &&
-            (identical(other.address, address) || other.address == address) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -351,9 +350,9 @@ class _$StationModelImpl implements _StationModel {
       photoUrl,
       email,
       const DeepCollectionEquality().hash(_phoneNumbers),
+      address,
       const DeepCollectionEquality().hash(_owners),
       const DeepCollectionEquality().hash(_technicians),
-      address,
       createdAt,
       updatedAt,
       deletedAt);
@@ -379,9 +378,9 @@ abstract class _StationModel implements StationModel {
           required final String photoUrl,
           final String? email,
           required final List<String> phoneNumbers,
+          required final AddressModel address,
           required final Map<String, ProfileModel> owners,
           required final Map<String, ProfileModel> technicians,
-          required final AddressModel address,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
           @TimestampDateTimeSerializer() final DateTime? deletedAt}) =
@@ -402,11 +401,11 @@ abstract class _StationModel implements StationModel {
   @override
   List<String> get phoneNumbers;
   @override // owner
+  AddressModel get address;
+  @override
   Map<String, ProfileModel> get owners;
   @override
   Map<String, ProfileModel> get technicians;
-  @override
-  AddressModel get address;
   @override
   @TimestampDateTimeSerializer()
   DateTime get createdAt;

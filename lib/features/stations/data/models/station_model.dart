@@ -17,19 +17,19 @@ class StationModel with _$StationModel implements Model {
     required ModelRef ref,
     required String name,
     required String photoUrl,
-    String? email,
+    String? email, 
     required List<String> phoneNumbers,
     // owner 
+    required AddressModel address,
     required Map<String,ProfileModel> owners,
     required Map<String,ProfileModel> technicians,
-    required AddressModel address,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
     @TimestampDateTimeSerializer()
     required DateTime updatedAt,
     @TimestampDateTimeSerializer()
     DateTime? deletedAt,
-  }) = _StationModel;
+  }) = _StationModel; 
 
   factory StationModel.fromJson(Map<String, dynamic> json) => _$StationModelFromJson(json);
   static ModelDescription<StationModel> get description => ModelDescription<StationModel>(

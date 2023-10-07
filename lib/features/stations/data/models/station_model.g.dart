@@ -15,19 +15,19 @@ _$StationModelImpl _$$StationModelImplFromJson(Map<String, dynamic> json) =>
       phoneNumbers: (json['phoneNumbers'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
       owners: (json['owners'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
       ),
       technicians: (json['technicians'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
       ),
-      address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
-      createdAt: const TimestampDateTimeSerializer()
-          .fromJson(json['createdAt'] as Timestamp),
-      updatedAt: const TimestampDateTimeSerializer()
-          .fromJson(json['updatedAt'] as Timestamp),
-      deletedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['deletedAt'], const TimestampDateTimeSerializer().fromJson),
+      createdAt:
+          const TimestampDateTimeSerializer().fromJson(json['createdAt']),
+      updatedAt:
+          const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
+      deletedAt:
+          const TimestampDateTimeSerializer().fromJson(json['deletedAt']),
     );
 
 Map<String, dynamic> _$$StationModelImplToJson(_$StationModelImpl instance) =>
@@ -37,23 +37,17 @@ Map<String, dynamic> _$$StationModelImplToJson(_$StationModelImpl instance) =>
       'photoUrl': instance.photoUrl,
       'email': instance.email,
       'phoneNumbers': instance.phoneNumbers,
+      'address': instance.address.toJson(),
       'owners': instance.owners.map((k, e) => MapEntry(k, e.toJson())),
       'technicians':
           instance.technicians.map((k, e) => MapEntry(k, e.toJson())),
-      'address': instance.address.toJson(),
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
       'updatedAt':
           const TimestampDateTimeSerializer().toJson(instance.updatedAt),
-      'deletedAt': _$JsonConverterToJson<Timestamp, DateTime>(
+      'deletedAt': _$JsonConverterToJson<dynamic, DateTime>(
           instance.deletedAt, const TimestampDateTimeSerializer().toJson),
     };
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,

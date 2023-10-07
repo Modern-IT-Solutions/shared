@@ -12,10 +12,9 @@ _$EventPreferenceImpl _$$EventPreferenceImplFromJson(
           EventType.info,
       action: json['action'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
-      date: const TimestampDateTimeSerializer()
-          .fromJson(json['date'] as Timestamp),
-      createdAt: const TimestampDateTimeSerializer()
-          .fromJson(json['createdAt'] as Timestamp),
+      date: const TimestampDateTimeSerializer().fromJson(json['date']),
+      createdAt:
+          const TimestampDateTimeSerializer().fromJson(json['createdAt']),
     );
 
 Map<String, dynamic> _$$EventPreferenceImplToJson(
