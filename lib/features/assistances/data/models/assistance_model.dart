@@ -75,7 +75,7 @@ enum AssistanceStatus {
   pending(Colors.orange),
 
   /// The request assistance is in review.
-  inReview(Colors.lightGreenAccent),
+  inReview(Colors.green),
 
   /// The request assistance is resolved.
   resolved(Colors.blueAccent),

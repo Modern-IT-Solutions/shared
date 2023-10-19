@@ -511,7 +511,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
       constraints: const BoxConstraints(maxWidth: 500),
       child: UpdateAssistanceForm(
         ref: assistance.ref.toString(),
-        assistance: assistance,
+        model: assistance,
         onUpdated: (assistance) {
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
             SnackBar(

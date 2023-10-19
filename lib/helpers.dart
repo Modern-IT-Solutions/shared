@@ -1,25 +1,16 @@
-
-
-import 'dart:io';
-
-import 'package:core/features/users/data/models/profile_model.dart';
 import 'package:core/core.dart';
-import 'package:core/services/defaults/firebase/database.dart';
-import 'package:core/services/defaults/preferences.dart';
-import 'package:core/services/defaults/theme.dart';
-import 'package:core/services/services.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:lib/utils/platforms.dart';
 export 'package:lib/utils/platforms.dart';
 
 import 'models/event_preference.dart';
 import 'models/slider_item_model.dart';
 import 'services/security.dart';
+import 'dart:math';
 
 SecurityService getSecurity() {
   return Services.instance.get<SecurityService>()!;
 }
-
 
 extension ProfileModelxPreferences on ProfileModel {
   Map<String, dynamic>? get preferences {
@@ -35,7 +26,6 @@ enum Feature {
 }
 
 extension PreferencesEx on PreferencesService {
-
   bool get allowScreenRecording {
     if (Platforms.isIOS && iosAllowScreenRecording != null) {
       return iosAllowScreenRecording!;
@@ -155,7 +145,7 @@ extension PreferencesEx on PreferencesService {
     if (Platforms.isAndroid && androidByPassSecurity != null) {
       return androidByPassSecurity!;
     }
-    var v =getOption<bool>('bypassSecurity', defaults: false)!;
+    var v = getOption<bool>('bypassSecurity', defaults: false)!;
     return v;
   }
 
@@ -391,24 +381,24 @@ extension PreferencesEx on PreferencesService {
         ];
   }
 
-  
   List<SliderItem> get sliders {
     final sliders = preferences['slides']?.values.map((e) {
-      return SliderItem.fromJson(e);
-    }).toList() ?? [];
-      
+          return SliderItem.fromJson(e);
+        }).toList() ??
+        [];
+
     return sliders;
   }
 
   List<EventPreference> get events {
     final events = preferences['events']?.values.map((e) {
-      return EventPreference.fromJson(e);
-    }).toList() ?? [];
-      
+          return EventPreference.fromJson(e);
+        }).toList() ??
+        [];
+
     return events;
   }
 }
-
 
 /// extension on [Role]
 class Roles {
@@ -420,17 +410,17 @@ class Roles {
 
   // values
   static List<Role> get values => [
-    Role('admin'),
-    if (FirebaseAuth.instance.app.options.projectId == 'zed-academy-a9e43') ...[
-      Role('student'),
-      Role('teacher'),
-      Role('parent'),
-      Role('support'),
-    ] else if (FirebaseAuth.instance.app.options.projectId == 'tadakholati-9032e')  ...[
-      Role('technician'),
-      Role('client'),
-    ] else if (FirebaseAuth.instance.app.options.projectId == 'ironparkapp')  ...[
-      Role('client'),
-    ],
-  ];
+        Role('admin'),
+        if (FirebaseAuth.instance.app.options.projectId == 'zed-academy-a9e43') ...[
+          Role('student'),
+          Role('teacher'),
+          Role('parent'),
+          Role('support'),
+        ] else if (FirebaseAuth.instance.app.options.projectId == 'tadakholati-9032e') ...[
+          Role('technician'),
+          Role('client'),
+        ] else if (FirebaseAuth.instance.app.options.projectId == 'ironparkapp') ...[
+          Role('client'),
+        ],
+      ];
 }

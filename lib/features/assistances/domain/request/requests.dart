@@ -3,6 +3,10 @@
 
 import 'package:core/core.dart';
 import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
+import 'package:shared/features/stations/data/models/station_model.dart';
+import 'package:shared/models/attachment_model.dart';
+import 'package:shared/models/intervention_model.dart';
+import 'package:shared/models/unit_model.dart';
 
 import '../../data/models/assistance_model.dart';
 
@@ -145,47 +149,81 @@ class AssistanceCreateRequest<T extends AssistanceModel> extends CreateRequest<T
   //     techniciansUids.hashCode;
   // }
 }
-class AssistanceUpdateRequest<T extends AssistanceModel> extends UpdateRequest<T> {
-  /// The name of the assistance.
-  String? name;
-  /// The address of the assistance.
-  String? address;
-  /// The location of the assistance.
-  GeoFirePoint? location;
-  /// The photoUrl of the assistance.
-  String? photoUrl;
-  /// The phone numbers of the assistance.
-  List<String>? phoneNumbers;
-  /// The email of the assistance.
-  String? email;
-  /// The technicians of the assistance.
-  Map<String,ProfileModel>? technicians;
 
-  get data => toMap();
+
+    // @ModelRefSerializer()
+    // required ModelRef ref,
+    // required StationModel station,
+    // required Map<String,ProfileModel> technicians,
+    // required AssistanceStatus status,
+    // required DateTime date,
+    // required String note,
+    // required List<AttachmentModel> attachments,
+    // required ProfileModel? reviewer,
+    // required InterventionModel? intervention,
+    // @NullableTimestampDateTimeSerializer()
+    // DateTime? nextInterventionDate,
+    // @TimestampDateTimeSerializer()
+    // required DateTime createdAt,
+    // @TimestampDateTimeSerializer()
+    // required DateTime updatedAt,
+    // @NullableTimestampDateTimeSerializer()
+    // DateTime? deletedAt,
+
+class AssistanceUpdateRequest<T extends AssistanceModel> {
+  ModelRef ref;
+  StationModel? station;
+  Map<String,ProfileModel>? technicians;
+  AssistanceStatus? status;
+  DateTime? date;
+  String? note;
+  List<AttachmentModel>? attachments;
+  ProfileModel? reviewer;
+  InterventionModel? intervention;
+  DateTime? nextInterventionDate;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? deletedAt;
+  ModelVisibility? visibility;
+  
+
+  Map<String, dynamic> get data => toMap();
 
   AssistanceUpdateRequest({
-    required super.id,
-    this.name,
-    this.address,
-    this.location,
-    this.photoUrl,
-    this.phoneNumbers,
-    this.email,
+    required this.ref,
+    this.station, 
     this.technicians,
+    this.status,
+    this.date,
+    this.note,
+    this.attachments,
+    this.reviewer,
+    this.intervention,
+    this.nextInterventionDate,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.visibility,
   });
   
   @override
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
-      'address': address,
-      'location': location?.data,
-      'photoUrl': photoUrl,
-      'phoneNumbers': phoneNumbers,
-      'email': email,
-      'technicians': technicians?.// must be Map<String, Map<String, dynamic>>
+      'ref': ref.path,
+      'station': station?.toJson(),
+      'technicians': technicians?. // must be Map<String,Map<String,dynamic>>
         map((key, value) => MapEntry(key, value.toJson())),
-        
+      'status': status?.name,
+      'date': date,
+      'note': note,
+      'attachments': attachments?.map((x) => x.toJson()).toList(),
+      'reviewer': reviewer?.toJson(),
+      'intervention': intervention?.toJson(),
+      'nextInterventionDate': nextInterventionDate,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'deletedAt': deletedAt,
+      'visibility': visibility?.name,
     };
   }
   }

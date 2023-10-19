@@ -1,31 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:core/core.dart';
+import 'package:core/features/users/presentation/dailogs.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
-import 'package:lib/lib.dart';
-import 'package:muskey/muskey.dart';
+import 'package:recase/recase.dart';
 import 'package:shared/features/assistances/data/models/assistance_model.dart';
+import 'package:shared/features/stations/presentation/forms/dailogs.dart';
+import 'package:shared/models/unit_model.dart';
 import 'package:shared/shared.dart';
+import 'package:intl/intl.dart';
 
-import '../../data/repositories/repository.dart';
 import '../../domain/request/requests.dart';
 
 /// [UpdateAssistanceForm] is a form to update a new user
 class UpdateAssistanceForm extends StatefulWidget {
   final String ref;
-  final AssistanceModel assistance;
+  final AssistanceModel? model;
   final VoidCallback? onCancel;
-  final Null Function(AssistanceModel assistance)? onUpdated;
-  const UpdateAssistanceForm(
-      {Key? key,
-      this.onUpdated,
-      this.onCancel,
-      required this.assistance,
-      required this.ref})
-      : super(key: key);
+  final Null Function(AssistanceModel station)? onUpdated;
+  final Null Function(AssistanceModel station)? onCreated;
+  const UpdateAssistanceForm({Key? key, this.onUpdated, this.onCreated, this.onCancel, required this.model, required this.ref}) : super(key: key);
 
   @override
   State<UpdateAssistanceForm> createState() => _UpdateAssistanceFormState();
@@ -34,16 +28,34 @@ class UpdateAssistanceForm extends StatefulWidget {
 class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
   final _formKey = GlobalKey<FormState>();
 
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _photoUrlController;
+  late var request = AssistanceUpdateRequest(
+    ref: widget.model?.ref ?? ModelRef(widget.ref),
+    attachments: widget.model?.attachments,
+    date: widget.model?.date,
+    intervention: widget.model?.intervention,
+    nextInterventionDate: widget.model?.nextInterventionDate,
+    note: widget.model?.note,
+    reviewer: widget.model?.reviewer,
+    station: widget.model?.station,
+    status: widget.model?.status,
+    technicians: widget.model?.technicians,
+    createdAt: widget.model?.createdAt ?? DateTime.now(),
+    deletedAt: widget.model?.deletedAt,
+    updatedAt: widget.model?.updatedAt ?? DateTime.now(),
+    visibility: ModelVisibility.visible,
+  );
 
-  late final TextEditingController _phoneTmpController;
+  // late final TextEditingController _nameController;
+  // late final TextEditingController _emailController;
+  // late final TextEditingController _addressController;
+  // late final TextEditingController _photoUrlController;
 
-  late final ValueNotifier<GeoFirePoint?> _location;
-  late final ValueNotifier<List<String>> _phoneNumbers;
-  late final ValueNotifier<Map<String,ProfileModel>> _technicians;
+  final TextEditingController _phoneTmpController = TextEditingController();
+
+  // late final ValueNotifier<GeoFirePoint?> _location;
+  // late final ValueNotifier<List<String>> _phoneNumbers;
+  // late final ValueNotifier<Map<String, ProfileModel>> _technicians;
+  // late final ValueNotifier<Map<String, ProfileModel>> _owners;
 
   bool _loading = false;
   late String? _error;
@@ -52,17 +64,6 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.assistance.station.name);
-    _emailController = TextEditingController(text: widget.assistance.station.email);
-    _addressController = TextEditingController(text: widget.assistance.station.address.raw);
-    _photoUrlController = TextEditingController(text: widget.assistance.station.photoUrl);
-
-    _phoneTmpController = TextEditingController();
-
-    _location = ValueNotifier<GeoFirePoint?>(widget.assistance.station.address.location);
-    _phoneNumbers = ValueNotifier<List<String>>(widget.assistance.station.phoneNumbers);
-    _technicians = ValueNotifier<Map<String,ProfileModel>>(widget.assistance.technicians);
-
     _error = null;
     _errors = {};
   }
@@ -74,30 +75,35 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
         _error = null;
         _loading = true;
       });
-      var updateRequest = AssistanceUpdateRequest(
-        id: widget.assistance.ref.id,
-        name: _nameController.text,
-        address: _addressController.text,
-        email: _emailController.text,
-        location: _location.value ?? GeoFirePoint(GeoPoint(0, 0)),
-        photoUrl: _photoUrlController.text,
-        phoneNumbers: _phoneNumbers.value,
-        technicians: _technicians.value,
-      );
+      var data = {
+        ...request.data,
+      };
+
       try {
-        await AssistanceRepository.instance
-            .update(updateRequest);
-        widget.onUpdated?.call(widget.assistance
-        // .copyWith(
-        //   name: _nameController.text,
-        //   address: _addressController.text,
-        //   email: _emailController.text,
-        //   location: _location.value ?? GeoFirePoint(GeoPoint(0, 0)),
-        //   photoUrl: _photoUrlController.text,
-        //   phoneNumbers: _phoneNumbers.value,
-        //   technicians: _technicians.value,
-        // )
-        );
+        if (widget.model != null) {
+          await updateDocument(path: request.ref.path, data: data);
+          widget.onUpdated?.call(widget.model!.copyWith(
+            ref: request.ref,
+            attachments: request.attachments ?? widget.model?.attachments ?? [],
+            date: request.date ?? widget.model!.date,
+            intervention: request.intervention ?? widget.model?.intervention,
+            nextInterventionDate: request.nextInterventionDate ?? widget.model?.nextInterventionDate,
+            note: request.note ?? widget.model?.note ?? "",
+            reviewer: request.reviewer ?? widget.model?.reviewer,
+            station: request.station ?? widget.model!.station,
+            status: request.status ?? widget.model!.status,
+            technicians: request.technicians ?? widget.model!.technicians,
+            createdAt: request.createdAt ?? widget.model?.createdAt ?? DateTime.now(),
+            deletedAt: request.deletedAt ?? widget.model?.deletedAt,
+            updatedAt: request.updatedAt ?? widget.model?.updatedAt ?? DateTime.now(),
+          ));
+        } else if (widget.ref.nullIfEmpty != null) {
+          var item = AssistanceModel.fromJson(data);
+          await setDocument(path: request.ref.path, data: data);
+          widget.onCreated?.call(item);
+        } else {
+          throw Exception('CODE:IAE, ref is empty, can not create new item without ref ');
+        }
       }
       // FirebaseFunctionsException
       on FirebaseFunctionsException catch (e) {
@@ -108,7 +114,6 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
         setState(() {
           _error = e.toString();
         });
-        rethrow;
       }
 
       setState(() {
@@ -126,23 +131,23 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
           // show error if not null, in box with red background rounded corners and icon and dismiss button
           if (_error != null)
             Container(
-              padding: EdgeInsets.all(12),
-              margin: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
+              margin: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.red[100],
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     FluentIcons.people_error_24_regular,
                     color: Colors.red,
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       _error!,
-                      style: TextStyle(color: Colors.red),
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
                   IconButton(
@@ -151,7 +156,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                         _error = null;
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       FluentIcons.dismiss_24_regular,
                       color: Colors.red,
                     ),
@@ -164,113 +169,27 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  pinned: true,
-                  expandedHeight: 200,
-                  floating: true,
-                  excludeHeaderSemantics: true,
-                  forceElevated: true,
-                  primary: true,
-                  snap: true,
-                  stretch: true,
-                  stretchTriggerOffset: 100,
-                  flexibleSpace: widget.assistance.station.photoUrl == null
-                      ? null
-                      : FlexibleSpaceBar(
-                          background: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      widget.assistance.station.photoUrl!,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Theme.of(context)
-                                          .scaffoldBackgroundColor
-                                          .withOpacity(0.8),
-                                      Colors.transparent,
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: ListenableBuilder(
-                                    listenable: _photoUrlController,
-                                    builder: (context, _) {
-                                      return
-                                          // container for photo url circle with wite boreder and shadow
-                                          Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Colors.white,
-                                                width: 3,
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                  blurRadius: 5,
-                                                  offset: Offset(0, 4),
-                                                ),
-                                              ],
-                                            ),
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage: NetworkImage(
-                                                _photoUrlController.text,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 12),
-                                          ListenableBuilder(
-                                            listenable: _photoUrlController,
-                                            builder: (context, _) {
-                                              return Text(
-                                                _nameController.text,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          const SizedBox(height: 12),
-                                        ],
-                                      );
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ),
-                  title: Text('Update Assistance'),
+                  // pinned: true,
+                  // expandedHeight: 200,
+                  // floating: true,
+                  // excludeHeaderSemantics: true,
+                  // forceElevated: true,
+                  // primary: true,
+                  // snap: true,
+                  // stretch: true,
+                  // stretchTriggerOffset: 100,
+                  backgroundColor: Colors.transparent,
+                  title: const Text('Submit Assistance'),
                   leading: const BackButton(),
                   actions: [
                     TextButton.icon(
                       onPressed: () async {
                         await _submit();
                       },
-                      label: Text('Update'),
-                      icon: Icon(FluentIcons.checkmark_24_regular),
+                      label: const Text('Submit'),
+                      icon: const Icon(FluentIcons.checkmark_24_regular),
                     ),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                   ],
                 ),
                 SliverFillRemaining(
@@ -278,265 +197,259 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   child: Center(
                     child: ConstrainedBox(
                       /// max width is 600
-                      constraints: BoxConstraints(maxWidth: 600),
+                      constraints: const BoxConstraints(maxWidth: 600),
                       child: Form(
                         key: _formKey,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
 
-                            ListTile(
+                            const ListTile(
                               leading: Icon(FluentIcons.gas_pump_24_regular),
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 24),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
                               visualDensity: VisualDensity(vertical: -3),
                               title: Text("Assistance Information"),
                               enabled: false,
                             ),
-
-                            AppTextFormField(
-                              margin: EdgeInsets.symmetric(horizontal: 24),
-                              controller: _nameController,
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(),
-                              ]),
-                              decoration: InputDecoration(
-                                errorText: _errors['name'],
-                                prefixIcon: SizedBox(
-                                    child: const Icon(
-                                        FluentIcons.person_24_regular)),
-                                label: Text('Name'),
-                                alignLabelWithHint: true,
-                                helperText: 'The name of the user, required *',
+                            ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: Theme.of(context).colorScheme.background,
+                                backgroundImage: request.station?.photoUrl.nullIfEmpty == null ? null : NetworkImage(request.station!.photoUrl),
+                                child: request.station?.photoUrl.nullIfEmpty != null ? null : Text(request.station!.name.firstCharOrNull),
                               ),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text(request.station?.name ?? "Station"),
+                              subtitle: Text(request.station?.address.raw ?? "Address"),
+                              onTap: () {
+                                showDetailsStationModelDailog(context, request.station!);
+                              },
                             ),
-
-                            const SizedBox(height: 10),
-
-                            /// phone number
-                            AppTextFormField.upload(
-                              margin: EdgeInsets.symmetric(horizontal: 24),
-                              controller: _photoUrlController,
-                              validator: FormBuilderValidators.compose(
-                                  [FormBuilderValidators.url()]),
-                              decoration: InputDecoration(
-                                errorText: _errors['photoUrl'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.image_28_regular),
-                                label: Text('Photo url'),
-                                alignLabelWithHint: true,
-                                helperText: 'direct link to the photo',
+                            // reviewer
+                            if (request.reviewer != null)
+                              ListTile(
+                                leading: const Icon(FluentIcons.person_24_regular),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                                visualDensity: const VisualDensity(vertical: -3),
+                                title: Text(request.reviewer!.displayName),
+                                subtitle: Text("Reviewer"),
+                                onTap: () {
+                                  showDetailsProfileModelDailog(context, request.reviewer!);
+                                },
+                              )
+                            else const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Text("No Reviewer"),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-
-                            /// email
+                            // date
+                            
                             AppTextFormField(
-                              margin: EdgeInsets.symmetric(horizontal: 24),
-                              controller: _emailController,
-                              validator: FormBuilderValidators.compose([
-                                // FormBuilderValidators.required(),
-                                FormBuilderValidators.email(),
-                              ]),
-                              decoration: InputDecoration(
-                                errorText: _errors['email'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.mail_24_regular),
-                                label: Text('Email'),
-                                alignLabelWithHint: true,
-                                helperText:
-                                    'can be null, but must be valid if provided',
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-
-                            /// password
-                            AppTextFormField(
-                              margin: EdgeInsets.symmetric(horizontal: 24),
-                              controller: _addressController,
+                              mode: AppTextFormFieldMode.dateTime,
+                              initialValue: request.date?.toIso8601String(),
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              onChanged: (v) async {
+                                request.date = DateTime.tryParse(v);
+                              },
                               validator: (v) {
-                                if (v?.isNotEmpty != true) {
-                                  return 'address is required';
+                                if (v == null || v.isEmpty) {
+                                  return "Date is required";
                                 }
                                 return null;
                               },
                               decoration: InputDecoration(
-                                errorText: _errors['address'],
-                                prefixIcon:
-                                    const Icon(FluentIcons.location_24_regular),
-                                label: Text('Address'),
+                                errorText: _errors['date'],
+                                prefixIcon: const Icon(FluentIcons.location_24_regular),
+                                label: const Text('Date *'),
                                 alignLabelWithHint: true,
-                                helperText: 'required',
+                                helperText: 'Date of the assistance',
                               ),
                             ),
 
-                            const SizedBox(height: 10),
-                            // / phone number
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(width: 24),
-                                Flexible(
-                                  child: AppTextFormField(
-                                    controller: _phoneTmpController,
-                                    inputFormatters: [
-                                      MuskeyFormatter(
-                                        masks: ['#########'],
-                                        overflow: OverflowBehavior.forbidden(),
-                                      )
-                                    ],
-                                    validator: (v) {
-                                      if (v == null || v.isEmpty) return null;
-                                      var valicator =
-                                          FormBuilderValidators.compose([
-                                        // FormBuilderValidators.required(),
-                                        FormBuilderValidators.numeric(),
-                                        FormBuilderValidators.equalLength(9),
-                                      ]);
-                                      return valicator(v);
-                                    },
-                                    decoration: InputDecoration(
-                                      // border radius only for the left side
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.horizontal(
-                                          left: Radius.circular(40),
-                                        ),
+
+                            Divider(),
+
+                            Badge(
+                              label: Text("NEW"),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                child: MenuAnchor(
+                                  menuChildren: <Widget>[
+                                    for (final item in AssistanceStatus.values)
+                                      MenuItemButton(
+                                        leadingIcon: request.visibility == item ? const Icon(FluentIcons.checkmark_24_regular) : const Icon(FluentIcons.clear_formatting_24_regular),
+                                        child: Text(item.name.titleCase),
+                                        onPressed: request.status == item
+                                            ? null
+                                            : () => setState(
+                                                  () {
+                                                    request.status = item;
+                                                  },
+                                                ),
                                       ),
-                                      errorText: _errors['phone'],
-                                      prefixIcon: const Icon(
-                                          FluentIcons.phone_24_regular),
-                                      prefixText: "+213",
-                                      label: Text('Phone Number'),
-                                      alignLabelWithHint: true,
-                                      helperText: 'must be 9 digits, without 0',
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                  child: FilledButton.icon(
-                                    // radius only for the left side
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.horizontal(
-                                            right: Radius.circular(40),
-                                          ),
-                                        ),
+                                  ],
+                                  builder: (BuildContext context, MenuController controller, Widget? child) {
+                                    return ListTile(
+                                      leading: const Icon(FluentIcons.people_team_24_regular),
+                                      contentPadding: EdgeInsets.only(left: 12),
+                                      visualDensity: VisualDensity(vertical: -3),
+                                      title: Text(request.status!.name.titleCase),
+                                      subtitle: Text("Select Status"),
+                                      trailing: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                                        child: const Icon(FluentIcons.chevron_down_24_regular),
                                       ),
-                                    ),
-                                    onPressed: () {
-                                      if (_phoneTmpController.text.isNotEmpty) {
-                                        _phoneNumbers.value = [
-                                          ..._phoneNumbers.value,
-                                          '+213' + _phoneTmpController.text
-                                        ];
-                                        _phoneTmpController.clear();
-                                      }
-                                    },
-                                    label: Text('Add'),
-                                    icon: Icon(FluentIcons.add_24_regular),
-                                  ),
-                                ),
-                                SizedBox(width: 24),
-                              ],
-                            ),
-                            Wrap(
-                              children: [
-                                ValueListenableBuilder<List<String>>(
-                                  valueListenable: _phoneNumbers,
-                                  builder: (context, value, child) {
-                                    return Wrap(
-                                      children: [
-                                        for (var phone in value)
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Chip(
-                                              label: Text(phone),
-                                              onDeleted: () {
-                                                _phoneNumbers.value = [
-                                                  ..._phoneNumbers.value
-                                                    ..remove(phone)
-                                                ];
-                                              },
-                                            ),
-                                          ),
-                                      ],
+                                      onTap: () {
+                                        if (controller.isOpen) {
+                                          controller.close();
+                                        } else {
+                                          controller.open();
+                                        }
+                                      },
                                     );
                                   },
                                 ),
-                              ],
+                              ),
                             ),
                             Divider(),
+
+
                             ListTile(
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 24),
-                              visualDensity: VisualDensity(vertical: -3),
-                              title: Text("Technicians"),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: const VisualDensity(vertical: -3),
+                              title: const Text("Technicians"),
                               enabled: false,
                               trailing: IconButton(
-                                icon: Icon(FluentIcons.add_24_regular),
+                                icon: const Icon(FluentIcons.add_24_regular),
                                 onPressed: () async {
-                                  var technicians =
-                                      await showDialog<Map<String,ProfileModel>>(
-                                    context: context,
-                                    builder: (context) {
-                                      return SelectTechniciansDialog(
-                                          selected: _technicians.value);
-                                    },
-                                  );
-                                  if (technicians != null) {
-                                    _technicians.value = technicians;
+                                  var profiles = await showProfilesPickerDialog(context, filters: [
+                                    IndexViewFilter(
+                                      name: "Technicians",
+                                      active: true,
+                                      local: (model) => model.roles.contains(Role("technician")),
+                                      remote: (query) => query.where("roles", arrayContains: "technician"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ]);
+                                  // profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
+                                  profiles?.removeWhere((element) => request.technicians!.containsKey(element.ref.id));
+                                  if (profiles != null) {
+                                    // _technicians.value = {
+                                    //   ..._technicians.value,
+                                    //   ...Map.fromEntries(
+                                    //     profiles.map(
+                                    //       (e) => MapEntry(e.ref.id, e),
+                                    //     ),
+                                    //   ),
+                                    // };
+                                    // // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                                    // _technicians.notifyListeners();
+                                    setState(() {
+                                      request.technicians = {
+                                        ...request.technicians!,
+                                      }..addEntries(
+                                          profiles.map(
+                                            (e) => MapEntry(e.ref.id, e),
+                                          ),
+                                        );
+                                    });
                                   }
+                                  // var technicians = await showDialog<Map<String, ProfileModel>>(
+                                  //   context: context,
+                                  //   builder: (context) {
+                                  //     return SelectTechniciansDialog(selected: _technicians.value);
+                                  //   },
+                                  // );
+                                  // if (technicians != null) {
+                                  //   _technicians.value = technicians;
+                                  // }
                                 },
                               ),
                             ),
-                            ValueListenableBuilder<Map<String,ProfileModel>>(
-                              valueListenable: _technicians,
-                              builder: (context, value, child) {
-                                return Column(
+                            Column(
                                   children: [
-                                    for (var tech in value.values)
+                                    for (var tech in 
+                                    request.technicians!.values.toList()
+                                    )
                                       Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(horizontal: 24),
                                         child: ListTile(
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                           onTap: () async {
-                                            //
+                                            // 
                                           },
                                           leading: CircleAvatar(
-                                            backgroundImage:
-                                                tech.photoUrl == null
-                                                    ? null
-                                                    : NetworkImage(
-                                                        tech.photoUrl ?? '',
-                                                      ),
-                                            child: tech.photoUrl != null
+                                            backgroundImage: tech.photoUrl.isEmpty
                                                 ? null
-                                                : Icon(FluentIcons
-                                                    .person_24_regular),
+                                                : NetworkImage(
+                                                    tech.photoUrl,
+                                                  ),
+                                            child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
                                           ),
-                                          title: Text(tech.displayName ?? ''),
+                                          title: Text(tech.displayName),
                                           trailing: IconButton(
-                                            icon: Icon(
-                                                FluentIcons.delete_24_regular),
+                                            icon: const Icon(FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              _technicians.value = {
-                                                ..._technicians.value
-                                                  ..remove(tech.uid)
-                                              };
+                                              // _technicians.value = {
+                                              //   ..._technicians.value,
+                                              // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                              setState(() {
+                                                request.technicians = { 
+                                                  ...request.technicians!..removeWhere((key, value) => value.ref.id == tech.ref.id)
+                                                };
+                                              });
                                             },
                                           ),
                                         ),
                                       ),
                                   ],
-                                );
-                              },
+                                ),
+                            
+                            // intervention is model
+                            Divider(),
+                            const ListTile(
+                              leading: Icon(FluentIcons.gas_pump_24_regular),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Intervention Information"),
+                              enabled: false,
                             ),
-                            const SizedBox(height: 10),
+                            if (request.intervention != null)
+                            Card(
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              child: ListTile(
+                                leading: const Icon(FluentIcons.gas_pump_24_regular),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                                visualDensity: const VisualDensity(vertical: -3),
+                                title: Text(request.intervention!.description ?? "No description"),
+                                subtitle: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(request.intervention!.type.name),
+                                    Divider(),
+                                    Text("Intervated at: "+DateFormat.yMMMMEEEEd().format(request.intervention!.date)),
+                                    Divider(),
+                                    Text("Created at: "+DateFormat.yMMMMEEEEd().format(request.intervention!.createdAt)),
+                                    Text("Updated at: "+DateFormat.yMMMMEEEEd().format(request.intervention!.updatedAt)),
+                                  ],
+                                ),
+                                onTap: () {
+                                  // showDetailsInterventionModelDailog(context, request.intervention!);
+                                },
+                              ),
+                            )
+                            else const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Text("No Intervention"),
+                                ),
+                              ),
+                                const SizedBox(height: 20,),
+
                             // Padding(
                             //   padding: const EdgeInsets.symmetric(horizontal: 12),
                             //   child: SwitchListTile(
@@ -548,18 +461,6 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             //     value: _disabled,
                             //     onChanged: (e) => setState(() {
                             //       _disabled = e;
-                            //     }),
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-                            //   child: SwitchListTile(
-                            //     contentPadding: EdgeInsets.only(left: 12),
-                            //     visualDensity: VisualDensity(vertical: -3),
-                            //     title: Text('Email Verified'),
-                            //     value: _emailVerified,
-                            //     onChanged: (e) => setState(() {
-                            //       _emailVerified = e;
                             //     }),
                             //   ),
                             // ),

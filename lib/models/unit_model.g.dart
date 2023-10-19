@@ -21,8 +21,8 @@ _$UnitModelImpl _$$UnitModelImplFromJson(Map<String, dynamic> json) =>
       statistics: UnitStatisticsModel.fromJson(
           json['statistics'] as Map<String, dynamic>),
       visibility:
-          $enumDecodeNullable(_$UnitVisibilityEnumMap, json['visibility']) ??
-              UnitVisibility.visible,
+          $enumDecodeNullable(_$ModelVisibilityEnumMap, json['visibility']) ??
+              ModelVisibility.visible,
       teacher: ProfileModel.fromJson(json['teacher'] as Map<String, dynamic>),
       subject:
           UnitSubjectModel.fromJson(json['subject'] as Map<String, dynamic>),
@@ -46,7 +46,7 @@ Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
       'price': instance.price,
       'title': instance.title,
       'statistics': instance.statistics.toJson(),
-      'visibility': _$UnitVisibilityEnumMap[instance.visibility]!,
+      'visibility': _$ModelVisibilityEnumMap[instance.visibility]!,
       'teacher': instance.teacher.toJson(),
       'subject': instance.subject.toJson(),
       'createdAt':
@@ -57,7 +57,7 @@ Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
           .toJson(instance.deletedAt),
     };
 
-const _$UnitVisibilityEnumMap = {
-  UnitVisibility.visible: 'visible',
-  UnitVisibility.hidden: 'hidden',
+const _$ModelVisibilityEnumMap = {
+  ModelVisibility.visible: 'visible',
+  ModelVisibility.hidden: 'hidden',
 };

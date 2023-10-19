@@ -33,7 +33,7 @@ mixin _$UnitModel {
   String get title => throw _privateConstructorUsedError;
   UnitStatisticsModel get statistics =>
       throw _privateConstructorUsedError; // visibility
-  UnitVisibility get visibility => throw _privateConstructorUsedError;
+  ModelVisibility get visibility => throw _privateConstructorUsedError;
   ProfileModel get teacher => throw _privateConstructorUsedError;
   UnitSubjectModel get subject => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
@@ -65,7 +65,7 @@ abstract class $UnitModelCopyWith<$Res> {
       double price,
       String title,
       UnitStatisticsModel statistics,
-      UnitVisibility visibility,
+      ModelVisibility visibility,
       ProfileModel teacher,
       UnitSubjectModel subject,
       @TimestampDateTimeSerializer() DateTime createdAt,
@@ -151,7 +151,7 @@ class _$UnitModelCopyWithImpl<$Res, $Val extends UnitModel>
       visibility: null == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
-              as UnitVisibility,
+              as ModelVisibility,
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -219,7 +219,7 @@ abstract class _$$UnitModelImplCopyWith<$Res>
       double price,
       String title,
       UnitStatisticsModel statistics,
-      UnitVisibility visibility,
+      ModelVisibility visibility,
       ProfileModel teacher,
       UnitSubjectModel subject,
       @TimestampDateTimeSerializer() DateTime createdAt,
@@ -306,7 +306,7 @@ class __$$UnitModelImplCopyWithImpl<$Res>
       visibility: null == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
-              as UnitVisibility,
+              as ModelVisibility,
       teacher: null == teacher
           ? _value.teacher
           : teacher // ignore: cast_nullable_to_non_nullable
@@ -345,7 +345,7 @@ class _$UnitModelImpl implements _UnitModel {
       required this.price,
       required this.title,
       required this.statistics,
-      this.visibility = UnitVisibility.visible,
+      this.visibility = ModelVisibility.visible,
       required this.teacher,
       required this.subject,
       @TimestampDateTimeSerializer() required this.createdAt,
@@ -388,7 +388,7 @@ class _$UnitModelImpl implements _UnitModel {
 // visibility
   @override
   @JsonKey()
-  final UnitVisibility visibility;
+  final ModelVisibility visibility;
   @override
   final ProfileModel teacher;
   @override
@@ -486,7 +486,7 @@ abstract class _UnitModel implements UnitModel {
           required final double price,
           required final String title,
           required final UnitStatisticsModel statistics,
-          final UnitVisibility visibility,
+          final ModelVisibility visibility,
           required final ProfileModel teacher,
           required final UnitSubjectModel subject,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
@@ -520,7 +520,7 @@ abstract class _UnitModel implements UnitModel {
   @override
   UnitStatisticsModel get statistics;
   @override // visibility
-  UnitVisibility get visibility;
+  ModelVisibility get visibility;
   @override
   ProfileModel get teacher;
   @override

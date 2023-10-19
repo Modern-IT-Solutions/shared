@@ -541,12 +541,12 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                     // _technicians.notifyListeners();
                                     setState(() {
                                       request.technicians = {
-                                        ...request.technicians!..addEntries(
+                                        ...request.technicians!,
+                                      }..addEntries(
                                           profiles.map(
                                             (e) => MapEntry(e.ref.id, e),
                                           ),
-                                        ),
-                                      };
+                                        );
                                     });
                                   }
                                   // var technicians = await showDialog<Map<String, ProfileModel>>(
@@ -632,12 +632,12 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                     // _owners.notifyListeners();
                                     setState(() {
                                       request.owners = {
-                                        ...request.owners!..addEntries(
+                                        ...request.owners!,
+                                      }..addEntries(
                                           profiles.map(
                                             (e) => MapEntry(e.ref.id, e),
                                           ),
-                                        ),
-                                      };
+                                        );
                                     });
                                   }
                                 },
