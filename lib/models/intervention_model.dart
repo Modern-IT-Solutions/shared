@@ -1,5 +1,8 @@
 
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:shared/features/stations/data/models/station_model.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -46,24 +49,31 @@ class InterventionModel with _$InterventionModel implements Model {
 
 enum InterventionStatus {
   /// The intervention is pending.
-  pending,
+  pending(Colors.orange),
 
   /// The intervention is in progress
-  accepted,
+  accepted(Colors.blue),
 
   /// The intervention is completed.
-  completed,
+  completed(Colors.green),
 
   /// The intervention is canceled.
-  canceled,
+  canceled(Colors.red);
+
+  /// [color] is the color of the status.
+  final Color color;
+  const InterventionStatus(this.color);
 }
 
 /// [InterventionType] is enum that represents the type of the intervention.
 /// it contains : [onSite], [byPhone]
 enum InterventionType {
   /// The intervention is on site.
-  onSite,
+  onSite(Icons.location_on),
 
   /// The intervention is by phone.
-  byPhone,
+  byPhone(Icons.phone);
+
+  const InterventionType(this.icon);
+  final IconData icon;
 }
