@@ -18,6 +18,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
     required StationModel station,
     required Map<String,ProfileModel> technicians,
     required AssistanceStatus status,
+    @TimestampDateTimeSerializer()
     required DateTime date,
     required String note,
     required List<AttachmentModel> attachments,

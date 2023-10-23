@@ -15,7 +15,7 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
         (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
       ),
       status: $enumDecode(_$AssistanceStatusEnumMap, json['status']),
-      date: DateTime.parse(json['date'] as String),
+      date: const TimestampDateTimeSerializer().fromJson(json['date']),
       note: json['note'] as String,
       attachments: (json['attachments'] as List<dynamic>)
           .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
@@ -45,7 +45,7 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
       'technicians':
           instance.technicians.map((k, e) => MapEntry(k, e.toJson())),
       'status': _$AssistanceStatusEnumMap[instance.status]!,
-      'date': instance.date.toIso8601String(),
+      'date': const TimestampDateTimeSerializer().toJson(instance.date),
       'note': instance.note,
       'attachments': instance.attachments.map((e) => e.toJson()).toList(),
       'reviewer': instance.reviewer?.toJson(),

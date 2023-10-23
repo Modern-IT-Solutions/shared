@@ -26,6 +26,7 @@ mixin _$AssistanceModel {
   Map<String, ProfileModel> get technicians =>
       throw _privateConstructorUsedError;
   AssistanceStatus get status => throw _privateConstructorUsedError;
+  @TimestampDateTimeSerializer()
   DateTime get date => throw _privateConstructorUsedError;
   String get note => throw _privateConstructorUsedError;
   List<AttachmentModel> get attachments => throw _privateConstructorUsedError;
@@ -57,7 +58,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
       StationModel station,
       Map<String, ProfileModel> technicians,
       AssistanceStatus status,
-      DateTime date,
+      @TimestampDateTimeSerializer() DateTime date,
       String note,
       List<AttachmentModel> attachments,
       ProfileModel? reviewer,
@@ -201,7 +202,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
       StationModel station,
       Map<String, ProfileModel> technicians,
       AssistanceStatus status,
-      DateTime date,
+      @TimestampDateTimeSerializer() DateTime date,
       String note,
       List<AttachmentModel> attachments,
       ProfileModel? reviewer,
@@ -309,7 +310,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       required this.station,
       required final Map<String, ProfileModel> technicians,
       required this.status,
-      required this.date,
+      @TimestampDateTimeSerializer() required this.date,
       required this.note,
       required final List<AttachmentModel> attachments,
       required this.reviewer,
@@ -340,6 +341,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   @override
   final AssistanceStatus status;
   @override
+  @TimestampDateTimeSerializer()
   final DateTime date;
   @override
   final String note;
@@ -440,7 +442,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           required final StationModel station,
           required final Map<String, ProfileModel> technicians,
           required final AssistanceStatus status,
-          required final DateTime date,
+          @TimestampDateTimeSerializer() required final DateTime date,
           required final String note,
           required final List<AttachmentModel> attachments,
           required final ProfileModel? reviewer,
@@ -465,6 +467,7 @@ abstract class _AssistanceModel implements AssistanceModel {
   @override
   AssistanceStatus get status;
   @override
+  @TimestampDateTimeSerializer()
   DateTime get date;
   @override
   String get note;

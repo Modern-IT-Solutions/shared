@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 import 'package:shared/features/assistances/data/models/assistance_model.dart';
 import 'package:shared/features/stations/presentation/forms/dailogs.dart';
+import 'package:shared/models/attachment_model.dart';
 import 'package:shared/models/unit_model.dart';
 import 'package:shared/shared.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../domain/request/requests.dart';
 
@@ -226,6 +228,14 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                 showDetailsStationModelDailog(context, request.station!);
                               },
                             ),
+                            Divider(),
+                            const ListTile(
+                              leading: Icon(FluentIcons.person_24_regular),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Current reviewer"),
+                              enabled: false,
+                            ),
                             // reviewer
                             if (request.reviewer != null)
                               ListTile(
@@ -238,15 +248,24 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                   showDetailsProfileModelDailog(context, request.reviewer!);
                                 },
                               )
-                            else const Center(
+                            else
+                              const Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(12),
                                   child: Text("No Reviewer"),
                                 ),
                               ),
-                            // date
-                            
+
+                            Divider(),
+                            const ListTile(
+                              leading: Icon(FluentIcons.shield_error_24_regular),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Problem details"),
+                              enabled: false,
+                            ),
                             AppTextFormField(
+                              enabled: false,
                               mode: AppTextFormFieldMode.dateTime,
                               initialValue: request.date?.toIso8601String(),
                               margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -259,62 +278,94 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
-                                errorText: _errors['date'],
-                                prefixIcon: const Icon(FluentIcons.location_24_regular),
-                                label: const Text('Date *'),
-                                alignLabelWithHint: true,
-                                helperText: 'Date of the assistance',
-                              ),
+                              decoration: InputDecoration(errorText: _errors['date'], prefixIcon: const Icon(FluentIcons.calendar_32_regular), label: const Text('Time of the problem'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
                             ),
-
-
+                            AppTextFormField(
+                              enabled: false,
+                              initialValue: request.note,
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              onChanged: (v) async {
+                                request.note = v;
+                              },
+                              decoration: InputDecoration(errorText: _errors['note'], prefixIcon: const Icon(FluentIcons.note_24_regular), label: const Text('Client note'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
+                            ),
                             Divider(),
-
-                            Badge(
-                              label: Text("NEW"),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
-                                child: MenuAnchor(
-                                  menuChildren: <Widget>[
-                                    for (final item in AssistanceStatus.values)
-                                      MenuItemButton(
-                                        leadingIcon: request.visibility == item ? const Icon(FluentIcons.checkmark_24_regular) : const Icon(FluentIcons.clear_formatting_24_regular),
-                                        child: Text(item.name.titleCase),
-                                        onPressed: request.status == item
-                                            ? null
-                                            : () => setState(
-                                                  () {
-                                                    request.status = item;
-                                                  },
-                                                ),
-                                      ),
-                                  ],
-                                  builder: (BuildContext context, MenuController controller, Widget? child) {
-                                    return ListTile(
-                                      leading: const Icon(FluentIcons.people_team_24_regular),
-                                      contentPadding: EdgeInsets.only(left: 12),
-                                      visualDensity: VisualDensity(vertical: -3),
-                                      title: Text(request.status!.name.titleCase),
-                                      subtitle: Text("Select Status"),
-                                      trailing: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                                        child: const Icon(FluentIcons.chevron_down_24_regular),
-                                      ),
-                                      onTap: () {
-                                        if (controller.isOpen) {
-                                          controller.close();
-                                        } else {
-                                          controller.open();
-                                        }
-                                      },
-                                    );
+                            const ListTile(
+                              leading: Icon(FluentIcons.document_20_regular),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Attachments"),
+                              enabled: false,
+                            ),
+                            for (AttachmentModel item in request.attachments ?? [])
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 24),
+                                child: ListTile(
+                                  leading: const Icon(FluentIcons.document_20_regular),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                                  visualDensity: const VisualDensity(vertical: -3),
+                                  title: Text(item.name ?? "Attachment"),
+                                  subtitle: Text(item.mimeType ?? "Unknown"),
+                                  onTap: () async {
+                                    try {
+                                      await launchUrlString(item.src);
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(e.toString()),
+                                        ),
+                                      );
+                                    }
                                   },
                                 ),
                               ),
+                            Divider(),
+                            const ListTile(
+                              leading: Icon(FluentIcons.status_24_regular),
+                              visualDensity: VisualDensity(vertical: -3),
+                              title: Text("Current status"),
+                              enabled: false,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              child: MenuAnchor(
+                                menuChildren: <Widget>[
+                                  for (final item in AssistanceStatus.values)
+                                    MenuItemButton(
+                                      leadingIcon: request.visibility == item ? const Icon(FluentIcons.checkmark_24_regular) : const Icon(FluentIcons.clear_formatting_24_regular),
+                                      child: Text(item.name.titleCase),
+                                      onPressed: request.status == item
+                                          ? null
+                                          : () => setState(
+                                                () {
+                                                  request.status = item;
+                                                },
+                                              ),
+                                    ),
+                                ],
+                                builder: (BuildContext context, MenuController controller, Widget? child) {
+                                  return ListTile(
+                                    leading: const Icon(FluentIcons.people_team_24_regular),
+                                    contentPadding: EdgeInsets.only(left: 12),
+                                    visualDensity: VisualDensity(vertical: -3),
+                                    title: Text(request.status!.name.titleCase),
+                                    subtitle: Text("Select Status"),
+                                    trailing: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      child: const Icon(FluentIcons.chevron_down_24_regular),
+                                    ),
+                                    onTap: () {
+                                      if (controller.isOpen) {
+                                        controller.close();
+                                      } else {
+                                        controller.open();
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                             Divider(),
-
 
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -370,44 +421,42 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                               ),
                             ),
                             Column(
-                                  children: [
-                                    for (var tech in 
-                                    request.technicians!.values.toList()
-                                    )
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                                        child: ListTile(
-                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                                          onTap: () async {
-                                            // 
-                                          },
-                                          leading: CircleAvatar(
-                                            backgroundImage: tech.photoUrl.isEmpty
-                                                ? null
-                                                : NetworkImage(
-                                                    tech.photoUrl,
-                                                  ),
-                                            child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
-                                          ),
-                                          title: Text(tech.displayName),
-                                          trailing: IconButton(
-                                            icon: const Icon(FluentIcons.delete_24_regular),
-                                            onPressed: () {
-                                              // _technicians.value = {
-                                              //   ..._technicians.value,
-                                              // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
-                                              setState(() {
-                                                request.technicians = { 
-                                                  ...request.technicians!..removeWhere((key, value) => value.ref.id == tech.ref.id)
-                                                };
-                                              });
-                                            },
-                                          ),
-                                        ),
+                              children: [
+                                for (var tech in request.technicians!.values.toList())
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      onTap: () async {
+                                        //
+                                      },
+                                      leading: CircleAvatar(
+                                        backgroundImage: tech.photoUrl.isEmpty
+                                            ? null
+                                            : NetworkImage(
+                                                tech.photoUrl,
+                                              ),
+                                        child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
                                       ),
-                                  ],
-                                ),
-                            
+                                      title: Text(tech.displayName),
+                                      trailing: IconButton(
+                                        icon: const Icon(FluentIcons.delete_24_regular),
+                                        onPressed: () {
+                                          // _technicians.value = {
+                                          //   ..._technicians.value,
+                                          // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                          setState(() {
+                                            request.technicians = {
+                                              ...request.technicians!..removeWhere((key, value) => value.ref.id == tech.ref.id)
+                                            };
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+
                             // intervention is model
                             Divider(),
                             const ListTile(
@@ -418,37 +467,40 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                               enabled: false,
                             ),
                             if (request.intervention != null)
-                            Card(
-                              margin: const EdgeInsets.symmetric(horizontal: 24),
-                              child: ListTile(
-                                leading: const Icon(FluentIcons.gas_pump_24_regular),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
-                                visualDensity: const VisualDensity(vertical: -3),
-                                title: Text(request.intervention!.description ?? "No description"),
-                                subtitle: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(request.intervention!.type.name),
-                                    Divider(),
-                                    Text("Intervated at: "+DateFormat.yMMMMEEEEd().format(request.intervention!.date)),
-                                    Divider(),
-                                    Text("Created at: "+DateFormat.yMMMMEEEEd().format(request.intervention!.createdAt)),
-                                    Text("Updated at: "+DateFormat.yMMMMEEEEd().format(request.intervention!.updatedAt)),
-                                  ],
+                              Card(
+                                margin: const EdgeInsets.symmetric(horizontal: 24),
+                                child: ListTile(
+                                  leading: const Icon(FluentIcons.gas_pump_24_regular),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                                  visualDensity: const VisualDensity(vertical: -3),
+                                  title: Text(request.intervention!.description ?? "No description"),
+                                  subtitle: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(request.intervention!.type.name),
+                                      Divider(),
+                                      Text("Intervated at: " + DateFormat.yMMMMEEEEd().format(request.intervention!.date)),
+                                      Divider(),
+                                      Text("Created at: " + DateFormat.yMMMMEEEEd().format(request.intervention!.createdAt)),
+                                      Text("Updated at: " + DateFormat.yMMMMEEEEd().format(request.intervention!.updatedAt)),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    // showDetailsInterventionModelDailog(context, request.intervention!);
+                                  },
                                 ),
-                                onTap: () {
-                                  // showDetailsInterventionModelDailog(context, request.intervention!);
-                                },
-                              ),
-                            )
-                            else const Center(
+                              )
+                            else
+                              const Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(12),
                                   child: Text("No Intervention"),
                                 ),
                               ),
-                                const SizedBox(height: 20,),
+                            const SizedBox(
+                              height: 20,
+                            ),
 
                             // Padding(
                             //   padding: const EdgeInsets.symmetric(horizontal: 12),
