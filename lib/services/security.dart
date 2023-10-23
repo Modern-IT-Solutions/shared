@@ -22,7 +22,9 @@ class SecurityService extends Service {
   });
   @override
   Future<void> init() async {
-    await _initScreenRecordingDetection();
+    if (kIsWeb) {
+      await _initScreenRecordingDetection();
+    }
     if (kIsWeb) {
       await _initElectronWeb();
     } else {
@@ -226,8 +228,6 @@ class _Secrets {
   // static const privateKey = ;
   // static const publicKey =
 }
-
-
 
 /// bypassSecurity extension to ProfileModel
 extension BypassSecurityExtension on ProfileModel {

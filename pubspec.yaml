@@ -15,17 +15,17 @@ dependencies:
   google_fonts:
   geoflutterfire2: ^2.3.15
   core:
-    # path: /Users/mohamad/Desktop/projects/core
-    git:
-     url: https://github.com/Modern-IT-Solutions/core.git
-     ref: main
+    path: /Users/mohamad/Desktop/projects/core
+    # git:
+    #  url: https://github.com/Modern-IT-Solutions/core.git
+    #  ref: main
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   firebase_ui_firestore: ^1.5.11
   safe_device:
   device_info_plus: ^9.0.3
   screen_capture_event:
-  flex_color_picker:
+  flex_color_picker: 
   zplayer:
     git:
       url: https://github.com/Modern-IT-Solutions/zplayer.git
