@@ -22,7 +22,7 @@ class SecurityService extends Service {
   });
   @override
   Future<void> init() async {
-    if (kIsWeb) {
+    if (!kIsWeb) {
       await _initScreenRecordingDetection();
     }
     if (kIsWeb) {
