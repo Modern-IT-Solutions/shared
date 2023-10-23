@@ -9,15 +9,16 @@ part of 'bill_model.dart';
 _$BillModelImpl _$$BillModelImplFromJson(Map<String, dynamic> json) =>
     _$BillModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
-      number: json['number'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       amount: (json['amount'] as num).toDouble(),
-      paidAmount: (json['paidAmount'] as num).toDouble(),
-      currency: json['currency'] as String,
-      status: $enumDecode(_$BillStatusEnumMap, json['status']),
+      currency: json['currency'] as String? ?? "DZD",
+      status: $enumDecodeNullable(_$BillStatusEnumMap, json['status']) ??
+          BillStatus.panding,
+      paymentMethod: $enumDecode(_$PaymentMethodEnumMap, json['paymentMethod']),
       items: (json['items'] as List<dynamic>)
           .map((e) => BillingItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
       updatedAt:
@@ -29,13 +30,13 @@ _$BillModelImpl _$$BillModelImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
     <String, dynamic>{
       'ref': const ModelRefSerializer().toJson(instance.ref),
-      'number': instance.number,
       'description': instance.description,
       'amount': instance.amount,
-      'paidAmount': instance.paidAmount,
       'currency': instance.currency,
       'status': _$BillStatusEnumMap[instance.status]!,
+      'paymentMethod': _$PaymentMethodEnumMap[instance.paymentMethod]!,
       'items': instance.items.map((e) => e.toJson()).toList(),
+      'metadata': instance.metadata,
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
       'updatedAt':
@@ -45,9 +46,12 @@ Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
     };
 
 const _$BillStatusEnumMap = {
-  BillStatus.draft: 'draft',
-  BillStatus.sent: 'sent',
+  BillStatus.panding: 'panding',
   BillStatus.paid: 'paid',
-  BillStatus.partiallyPaid: 'partiallyPaid',
   BillStatus.cancelled: 'cancelled',
+};
+
+const _$PaymentMethodEnumMap = {
+  PaymentMethod.cash: 'cash',
+  PaymentMethod.cheque: 'cheque',
 };

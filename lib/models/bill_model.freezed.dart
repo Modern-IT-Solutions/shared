@@ -22,14 +22,15 @@ BillModel _$BillModelFromJson(Map<String, dynamic> json) {
 mixin _$BillModel {
   @ModelRefSerializer()
   ModelRef get ref => throw _privateConstructorUsedError;
-  String get number => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   double get amount =>
       throw _privateConstructorUsedError; // the paid part of the bill, user can pay a part of the bill and the rest later
-  double get paidAmount => throw _privateConstructorUsedError;
+// required double paidAmount,
   String get currency => throw _privateConstructorUsedError;
-  BillStatus get status => throw _privateConstructorUsedError;
+  BillStatus get status => throw _privateConstructorUsedError; // payment method
+  PaymentMethod get paymentMethod => throw _privateConstructorUsedError;
   List<BillingItemModel> get items => throw _privateConstructorUsedError;
+  Map<String, dynamic> get metadata => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
@@ -50,13 +51,13 @@ abstract class $BillModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
-      String number,
-      String description,
+      String? description,
       double amount,
-      double paidAmount,
       String currency,
       BillStatus status,
+      PaymentMethod paymentMethod,
       List<BillingItemModel> items,
+      Map<String, dynamic> metadata,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
@@ -76,13 +77,13 @@ class _$BillModelCopyWithImpl<$Res, $Val extends BillModel>
   @override
   $Res call({
     Object? ref = null,
-    Object? number = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? amount = null,
-    Object? paidAmount = null,
     Object? currency = null,
     Object? status = null,
+    Object? paymentMethod = null,
     Object? items = null,
+    Object? metadata = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? deletedAt = freezed,
@@ -92,21 +93,13 @@ class _$BillModelCopyWithImpl<$Res, $Val extends BillModel>
           ? _value.ref
           : ref // ignore: cast_nullable_to_non_nullable
               as ModelRef,
-      number: null == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      paidAmount: null == paidAmount
-          ? _value.paidAmount
-          : paidAmount // ignore: cast_nullable_to_non_nullable
               as double,
       currency: null == currency
           ? _value.currency
@@ -116,10 +109,18 @@ class _$BillModelCopyWithImpl<$Res, $Val extends BillModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as BillStatus,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as PaymentMethod,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<BillingItemModel>,
+      metadata: null == metadata
+          ? _value.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -146,13 +147,13 @@ abstract class _$$BillModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
-      String number,
-      String description,
+      String? description,
       double amount,
-      double paidAmount,
       String currency,
       BillStatus status,
+      PaymentMethod paymentMethod,
       List<BillingItemModel> items,
+      Map<String, dynamic> metadata,
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @NullableTimestampDateTimeSerializer() DateTime? deletedAt});
@@ -170,13 +171,13 @@ class __$$BillModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? ref = null,
-    Object? number = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? amount = null,
-    Object? paidAmount = null,
     Object? currency = null,
     Object? status = null,
+    Object? paymentMethod = null,
     Object? items = null,
+    Object? metadata = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? deletedAt = freezed,
@@ -186,21 +187,13 @@ class __$$BillModelImplCopyWithImpl<$Res>
           ? _value.ref
           : ref // ignore: cast_nullable_to_non_nullable
               as ModelRef,
-      number: null == number
-          ? _value.number
-          : number // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      paidAmount: null == paidAmount
-          ? _value.paidAmount
-          : paidAmount // ignore: cast_nullable_to_non_nullable
               as double,
       currency: null == currency
           ? _value.currency
@@ -210,10 +203,18 @@ class __$$BillModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as BillStatus,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as PaymentMethod,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<BillingItemModel>,
+      metadata: null == metadata
+          ? _value._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -235,17 +236,18 @@ class __$$BillModelImplCopyWithImpl<$Res>
 class _$BillModelImpl implements _BillModel {
   _$BillModelImpl(
       {@ModelRefSerializer() required this.ref,
-      required this.number,
-      required this.description,
+      this.description,
       required this.amount,
-      required this.paidAmount,
-      required this.currency,
-      required this.status,
+      this.currency = "DZD",
+      this.status = BillStatus.panding,
+      required this.paymentMethod,
       required final List<BillingItemModel> items,
+      final Map<String, dynamic> metadata = const {},
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
       @NullableTimestampDateTimeSerializer() this.deletedAt})
-      : _items = items;
+      : _items = items,
+        _metadata = metadata;
 
   factory _$BillModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BillModelImplFromJson(json);
@@ -254,24 +256,35 @@ class _$BillModelImpl implements _BillModel {
   @ModelRefSerializer()
   final ModelRef ref;
   @override
-  final String number;
-  @override
-  final String description;
+  final String? description;
   @override
   final double amount;
 // the paid part of the bill, user can pay a part of the bill and the rest later
+// required double paidAmount,
   @override
-  final double paidAmount;
-  @override
+  @JsonKey()
   final String currency;
   @override
+  @JsonKey()
   final BillStatus status;
+// payment method
+  @override
+  final PaymentMethod paymentMethod;
   final List<BillingItemModel> _items;
   @override
   List<BillingItemModel> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
+  }
+
+  final Map<String, dynamic> _metadata;
+  @override
+  @JsonKey()
+  Map<String, dynamic> get metadata {
+    if (_metadata is EqualUnmodifiableMapView) return _metadata;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_metadata);
   }
 
   @override
@@ -286,7 +299,7 @@ class _$BillModelImpl implements _BillModel {
 
   @override
   String toString() {
-    return 'BillModel(ref: $ref, number: $number, description: $description, amount: $amount, paidAmount: $paidAmount, currency: $currency, status: $status, items: $items, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'BillModel(ref: $ref, description: $description, amount: $amount, currency: $currency, status: $status, paymentMethod: $paymentMethod, items: $items, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -295,16 +308,16 @@ class _$BillModelImpl implements _BillModel {
         (other.runtimeType == runtimeType &&
             other is _$BillModelImpl &&
             (identical(other.ref, ref) || other.ref == ref) &&
-            (identical(other.number, number) || other.number == number) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.paidAmount, paidAmount) ||
-                other.paidAmount == paidAmount) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other._metadata, _metadata) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -318,13 +331,13 @@ class _$BillModelImpl implements _BillModel {
   int get hashCode => Object.hash(
       runtimeType,
       ref,
-      number,
       description,
       amount,
-      paidAmount,
       currency,
       status,
+      paymentMethod,
       const DeepCollectionEquality().hash(_items),
+      const DeepCollectionEquality().hash(_metadata),
       createdAt,
       updatedAt,
       deletedAt);
@@ -346,13 +359,13 @@ class _$BillModelImpl implements _BillModel {
 abstract class _BillModel implements BillModel {
   factory _BillModel(
           {@ModelRefSerializer() required final ModelRef ref,
-          required final String number,
-          required final String description,
+          final String? description,
           required final double amount,
-          required final double paidAmount,
-          required final String currency,
-          required final BillStatus status,
+          final String currency,
+          final BillStatus status,
+          required final PaymentMethod paymentMethod,
           required final List<BillingItemModel> items,
+          final Map<String, dynamic> metadata,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
           @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
@@ -365,19 +378,20 @@ abstract class _BillModel implements BillModel {
   @ModelRefSerializer()
   ModelRef get ref;
   @override
-  String get number;
-  @override
-  String get description;
+  String? get description;
   @override
   double get amount;
   @override // the paid part of the bill, user can pay a part of the bill and the rest later
-  double get paidAmount;
-  @override
+// required double paidAmount,
   String get currency;
   @override
   BillStatus get status;
+  @override // payment method
+  PaymentMethod get paymentMethod;
   @override
   List<BillingItemModel> get items;
+  @override
+  Map<String, dynamic> get metadata;
   @override
   @TimestampDateTimeSerializer()
   DateTime get createdAt;

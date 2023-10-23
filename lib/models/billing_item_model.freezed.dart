@@ -22,9 +22,9 @@ BillingItemModel _$BillingItemModelFromJson(Map<String, dynamic> json) {
 mixin _$BillingItemModel {
   @ModelRefSerializer()
   ModelRef get ref => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
   String get currency => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError; // meta data
@@ -50,9 +50,9 @@ abstract class $BillingItemModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
-      String image,
+      String? image,
       String name,
-      String description,
+      String? description,
       double amount,
       String currency,
       int quantity,
@@ -76,9 +76,9 @@ class _$BillingItemModelCopyWithImpl<$Res, $Val extends BillingItemModel>
   @override
   $Res call({
     Object? ref = null,
-    Object? image = null,
+    Object? image = freezed,
     Object? name = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? amount = null,
     Object? currency = null,
     Object? quantity = null,
@@ -92,18 +92,18 @@ class _$BillingItemModelCopyWithImpl<$Res, $Val extends BillingItemModel>
           ? _value.ref
           : ref // ignore: cast_nullable_to_non_nullable
               as ModelRef,
-      image: null == image
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -146,9 +146,9 @@ abstract class _$$BillingItemModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
-      String image,
+      String? image,
       String name,
-      String description,
+      String? description,
       double amount,
       String currency,
       int quantity,
@@ -170,9 +170,9 @@ class __$$BillingItemModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? ref = null,
-    Object? image = null,
+    Object? image = freezed,
     Object? name = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? amount = null,
     Object? currency = null,
     Object? quantity = null,
@@ -186,18 +186,18 @@ class __$$BillingItemModelImplCopyWithImpl<$Res>
           ? _value.ref
           : ref // ignore: cast_nullable_to_non_nullable
               as ModelRef,
-      image: null == image
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -235,11 +235,11 @@ class __$$BillingItemModelImplCopyWithImpl<$Res>
 class _$BillingItemModelImpl implements _BillingItemModel {
   _$BillingItemModelImpl(
       {@ModelRefSerializer() required this.ref,
-      required this.image,
+      this.image,
       required this.name,
-      required this.description,
+      this.description,
       required this.amount,
-      required this.currency,
+      this.currency = "DZD",
       required this.quantity,
       final Map<String, dynamic> metadata = const {},
       @TimestampDateTimeSerializer() required this.createdAt,
@@ -254,14 +254,15 @@ class _$BillingItemModelImpl implements _BillingItemModel {
   @ModelRefSerializer()
   final ModelRef ref;
   @override
-  final String image;
+  final String? image;
   @override
   final String name;
   @override
-  final String description;
+  final String? description;
   @override
   final double amount;
   @override
+  @JsonKey()
   final String currency;
   @override
   final int quantity;
@@ -349,11 +350,11 @@ class _$BillingItemModelImpl implements _BillingItemModel {
 abstract class _BillingItemModel implements BillingItemModel {
   factory _BillingItemModel(
           {@ModelRefSerializer() required final ModelRef ref,
-          required final String image,
+          final String? image,
           required final String name,
-          required final String description,
+          final String? description,
           required final double amount,
-          required final String currency,
+          final String currency,
           required final int quantity,
           final Map<String, dynamic> metadata,
           @TimestampDateTimeSerializer() required final DateTime createdAt,
@@ -368,11 +369,11 @@ abstract class _BillingItemModel implements BillingItemModel {
   @ModelRefSerializer()
   ModelRef get ref;
   @override
-  String get image;
+  String? get image;
   @override
   String get name;
   @override
-  String get description;
+  String? get description;
   @override
   double get amount;
   @override

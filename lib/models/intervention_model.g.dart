@@ -19,6 +19,9 @@ _$InterventionModelImpl _$$InterventionModelImplFromJson(
       type: $enumDecode(_$InterventionTypeEnumMap, json['type']),
       intervener:
           ProfileModel.fromJson(json['intervener'] as Map<String, dynamic>),
+      bill: json['bill'] == null
+          ? null
+          : BillModel.fromJson(json['bill'] as Map<String, dynamic>),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
@@ -38,6 +41,7 @@ Map<String, dynamic> _$$InterventionModelImplToJson(
       'attachments': instance.attachments.map((e) => e.toJson()).toList(),
       'type': _$InterventionTypeEnumMap[instance.type]!,
       'intervener': instance.intervener.toJson(),
+      'bill': instance.bill?.toJson(),
       'metadata': instance.metadata,
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
@@ -49,7 +53,7 @@ Map<String, dynamic> _$$InterventionModelImplToJson(
 
 const _$InterventionStatusEnumMap = {
   InterventionStatus.pending: 'pending',
-  InterventionStatus.inProgress: 'inProgress',
+  InterventionStatus.accepted: 'accepted',
   InterventionStatus.completed: 'completed',
   InterventionStatus.canceled: 'canceled',
 };

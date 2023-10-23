@@ -7,11 +7,18 @@ part 'bill_model.freezed.dart';
 part 'bill_model.g.dart';
 
 enum BillStatus {
-  draft,
-  sent,
+  panding,
   paid,
-  partiallyPaid,
+  // partiallyPaid,
   cancelled,
+}
+
+enum PaymentMethod {
+  cash,
+  cheque,
+  // bankTransfer,
+  // creditCard,
+  // other,
 }
 
 @freezed
@@ -20,15 +27,18 @@ class BillModel with _$BillModel implements Model {
   factory BillModel({
     @ModelRefSerializer()
     required ModelRef ref,
-    required String number,
-    required String description,
+    String? description,
     required double amount,
     // the paid part of the bill, user can pay a part of the bill and the rest later
-    required double paidAmount,
-    required String currency,
-    required BillStatus status,
-    
+    // required double paidAmount,
+    @Default("DZD") String currency,
+    @Default(BillStatus.panding) BillStatus status,
+    // payment method
+    required PaymentMethod paymentMethod,
     required List<BillingItemModel> items,
+
+
+    @Default({}) Map<String,dynamic> metadata,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
     @TimestampDateTimeSerializer()

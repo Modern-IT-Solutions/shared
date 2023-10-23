@@ -24,6 +24,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
     required List<AttachmentModel> attachments,
     required ProfileModel? reviewer,
     required InterventionModel? intervention,
+    
     @NullableTimestampDateTimeSerializer()
     DateTime? nextInterventionDate,
     @TimestampDateTimeSerializer()

@@ -10,11 +10,11 @@ class BillingItemModel with _$BillingItemModel implements Model {
   factory BillingItemModel({
     @ModelRefSerializer()
     required ModelRef ref,
-    required String image,
+    String? image,
     required String name,
-    required String description,
+    String? description,
     required double amount,
-    required String currency,
+    @Default("DZD") String currency,
     required int quantity,
     // meta data
     @Default({}) Map<String,dynamic> metadata,

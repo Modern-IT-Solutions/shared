@@ -4,6 +4,7 @@ import 'package:shared/features/stations/data/models/station_model.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/models/attachment_model.dart';
+import 'package:shared/models/bill_model.dart';
 import 'package:shared/shared.dart';
 
 part 'intervention_model.freezed.dart';
@@ -26,6 +27,7 @@ class InterventionModel with _$InterventionModel implements Model {
     required List<AttachmentModel> attachments,
     required InterventionType type,
     required ProfileModel intervener,
+    BillModel? bill,
     // next intervention date
     @Default({}) Map<String,dynamic> metadata,
     @TimestampDateTimeSerializer()
@@ -46,8 +48,8 @@ enum InterventionStatus {
   /// The intervention is pending.
   pending,
 
-  /// The intervention is in progress.
-  inProgress,
+  /// The intervention is in progress
+  accepted,
 
   /// The intervention is completed.
   completed,

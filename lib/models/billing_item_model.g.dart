@@ -10,11 +10,11 @@ _$BillingItemModelImpl _$$BillingItemModelImplFromJson(
         Map<String, dynamic> json) =>
     _$BillingItemModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
-      image: json['image'] as String,
+      image: json['image'] as String?,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       amount: (json['amount'] as num).toDouble(),
-      currency: json['currency'] as String,
+      currency: json['currency'] as String? ?? "DZD",
       quantity: json['quantity'] as int,
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       createdAt:
