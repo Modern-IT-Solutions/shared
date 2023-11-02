@@ -1,23 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'bill_model.dart';
+part of 'gift_card_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BillModelImpl _$$BillModelImplFromJson(Map<String, dynamic> json) =>
-    _$BillModelImpl(
+_$GiftCardModelImpl _$$GiftCardModelImplFromJson(Map<String, dynamic> json) =>
+    _$GiftCardModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
-      description: json['description'] as String?,
+      owner: json['owner'] == null
+          ? null
+          : ProfileModel.fromJson(json['owner'] as Map<String, dynamic>),
+      code: json['code'] as String,
+      expiresAt: const NullableTimestampDateTimeSerializer()
+          .fromJson(json['expiresAt']),
       amount: (json['amount'] as num).toDouble(),
-      currency: json['currency'] as String? ?? "DZD",
-      status: $enumDecodeNullable(_$BillStatusEnumMap, json['status']) ??
-          BillStatus.panding,
-      paymentMethod: $enumDecode(_$PaymentMethodEnumMap, json['paymentMethod']),
-      items: (json['items'] as List<dynamic>)
-          .map((e) => BillingItemModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      currency: json['currency'] as String,
+      transaction: json['transaction'] == null
+          ? null
+          : TransactionModel.fromJson(
+              json['transaction'] as Map<String, dynamic>),
+      freezed: json['freezed'] as bool? ?? false,
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
@@ -27,15 +31,17 @@ _$BillModelImpl _$$BillModelImplFromJson(Map<String, dynamic> json) =>
           .fromJson(json['deletedAt']),
     );
 
-Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
+Map<String, dynamic> _$$GiftCardModelImplToJson(_$GiftCardModelImpl instance) =>
     <String, dynamic>{
       'ref': const ModelRefSerializer().toJson(instance.ref),
-      'description': instance.description,
+      'owner': instance.owner?.toJson(),
+      'code': instance.code,
+      'expiresAt': const NullableTimestampDateTimeSerializer()
+          .toJson(instance.expiresAt),
       'amount': instance.amount,
       'currency': instance.currency,
-      'status': _$BillStatusEnumMap[instance.status]!,
-      'paymentMethod': _$PaymentMethodEnumMap[instance.paymentMethod]!,
-      'items': instance.items.map((e) => e.toJson()).toList(),
+      'transaction': instance.transaction?.toJson(),
+      'freezed': instance.freezed,
       'metadata': instance.metadata,
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
@@ -44,14 +50,3 @@ Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
       'deletedAt': const NullableTimestampDateTimeSerializer()
           .toJson(instance.deletedAt),
     };
-
-const _$BillStatusEnumMap = {
-  BillStatus.panding: 'panding',
-  BillStatus.paid: 'paid',
-  BillStatus.cancelled: 'cancelled',
-};
-
-const _$PaymentMethodEnumMap = {
-  PaymentMethod.cash: 'cash',
-  PaymentMethod.cheque: 'cheque',
-};

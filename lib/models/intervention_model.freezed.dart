@@ -23,6 +23,7 @@ mixin _$InterventionModel {
   @ModelRefSerializer()
   ModelRef get ref => throw _privateConstructorUsedError;
   InterventionStatus get status => throw _privateConstructorUsedError;
+  @TimestampDateTimeSerializer()
   DateTime get date => throw _privateConstructorUsedError;
   String get description =>
       throw _privateConstructorUsedError; // required List<AttachmentModel> attachments,
@@ -54,7 +55,7 @@ abstract class $InterventionModelCopyWith<$Res> {
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
       InterventionStatus status,
-      DateTime date,
+      @TimestampDateTimeSerializer() DateTime date,
       String description,
       List<AttachmentModel> attachments,
       InterventionType type,
@@ -179,7 +180,7 @@ abstract class _$$InterventionModelImplCopyWith<$Res>
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
       InterventionStatus status,
-      DateTime date,
+      @TimestampDateTimeSerializer() DateTime date,
       String description,
       List<AttachmentModel> attachments,
       InterventionType type,
@@ -279,7 +280,7 @@ class _$InterventionModelImpl implements _InterventionModel {
   _$InterventionModelImpl(
       {@ModelRefSerializer() required this.ref,
       required this.status,
-      required this.date,
+      @TimestampDateTimeSerializer() required this.date,
       required this.description,
       required final List<AttachmentModel> attachments,
       required this.type,
@@ -301,6 +302,7 @@ class _$InterventionModelImpl implements _InterventionModel {
   @override
   final InterventionStatus status;
   @override
+  @TimestampDateTimeSerializer()
   final DateTime date;
   @override
   final String description;
@@ -407,7 +409,7 @@ abstract class _InterventionModel implements InterventionModel {
   factory _InterventionModel(
           {@ModelRefSerializer() required final ModelRef ref,
           required final InterventionStatus status,
-          required final DateTime date,
+          @TimestampDateTimeSerializer() required final DateTime date,
           required final String description,
           required final List<AttachmentModel> attachments,
           required final InterventionType type,
@@ -428,6 +430,7 @@ abstract class _InterventionModel implements InterventionModel {
   @override
   InterventionStatus get status;
   @override
+  @TimestampDateTimeSerializer()
   DateTime get date;
   @override
   String get description;

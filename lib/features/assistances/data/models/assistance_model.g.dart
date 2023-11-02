@@ -28,13 +28,13 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
           : InterventionModel.fromJson(
               json['intervention'] as Map<String, dynamic>),
       nextInterventionDate: const NullableTimestampDateTimeSerializer()
-          .fromJson(json['nextInterventionDate'] as Timestamp?),
+          .fromJson(json['nextInterventionDate']),
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
       updatedAt:
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
       deletedAt: const NullableTimestampDateTimeSerializer()
-          .fromJson(json['deletedAt'] as Timestamp?),
+          .fromJson(json['deletedAt']),
     );
 
 Map<String, dynamic> _$$AssistanceModelImplToJson(

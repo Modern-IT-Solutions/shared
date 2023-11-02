@@ -37,7 +37,7 @@ _$DepositRequestModelImpl _$$DepositRequestModelImplFromJson(
       updatedAt:
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
       deletedAt: const NullableTimestampDateTimeSerializer()
-          .fromJson(json['deletedAt'] as Timestamp?),
+          .fromJson(json['deletedAt']),
     );
 
 Map<String, dynamic> _$$DepositRequestModelImplToJson(

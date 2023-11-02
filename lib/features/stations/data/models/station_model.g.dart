@@ -27,7 +27,7 @@ _$StationModelImpl _$$StationModelImplFromJson(Map<String, dynamic> json) =>
       updatedAt:
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
       deletedAt: const NullableTimestampDateTimeSerializer()
-          .fromJson(json['deletedAt'] as Timestamp?),
+          .fromJson(json['deletedAt']),
     );
 
 Map<String, dynamic> _$$StationModelImplToJson(_$StationModelImpl instance) =>

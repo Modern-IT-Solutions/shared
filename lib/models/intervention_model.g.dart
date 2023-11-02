@@ -11,7 +11,7 @@ _$InterventionModelImpl _$$InterventionModelImplFromJson(
     _$InterventionModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
       status: $enumDecode(_$InterventionStatusEnumMap, json['status']),
-      date: DateTime.parse(json['date'] as String),
+      date: const TimestampDateTimeSerializer().fromJson(json['date']),
       description: json['description'] as String,
       attachments: (json['attachments'] as List<dynamic>)
           .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
@@ -28,7 +28,7 @@ _$InterventionModelImpl _$$InterventionModelImplFromJson(
       updatedAt:
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
       deletedAt: const NullableTimestampDateTimeSerializer()
-          .fromJson(json['deletedAt'] as Timestamp?),
+          .fromJson(json['deletedAt']),
     );
 
 Map<String, dynamic> _$$InterventionModelImplToJson(
@@ -36,7 +36,7 @@ Map<String, dynamic> _$$InterventionModelImplToJson(
     <String, dynamic>{
       'ref': const ModelRefSerializer().toJson(instance.ref),
       'status': _$InterventionStatusEnumMap[instance.status]!,
-      'date': instance.date.toIso8601String(),
+      'date': const TimestampDateTimeSerializer().toJson(instance.date),
       'description': instance.description,
       'attachments': instance.attachments.map((e) => e.toJson()).toList(),
       'type': _$InterventionTypeEnumMap[instance.type]!,

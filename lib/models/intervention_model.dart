@@ -24,6 +24,7 @@ class InterventionModel with _$InterventionModel implements Model {
     @ModelRefSerializer()
     required ModelRef ref,
     required InterventionStatus status,
+    @TimestampDateTimeSerializer()
     required DateTime date,
     required String description,
     // required List<AttachmentModel> attachments,
