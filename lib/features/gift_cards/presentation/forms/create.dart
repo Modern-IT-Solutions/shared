@@ -90,9 +90,10 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
               "ref": request.ref.path + "_$i",
               "code": generateCode(),
               // inject rootid in metadata
-              "metadata": {
+              "metadata": <String,dynamic>{
                 ...(data['metadata'] ?? {}),
                 "rootId": request.ref.id,
+                "subId": i,
               },
             });
             await setDocument(path: item.ref.path, data: item.toJson());

@@ -42,6 +42,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
         fields: {
           FieldDescription(
             name: "station",
+            path: "station",
             nullable: true,
             type: FieldType.text,
             map: (m) => m.station.name,
@@ -49,6 +50,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
           ),
           FieldDescription(
             name: "reviewer",
+            path: "reviewer",
             type: FieldType.text,
             map: (m) => m.reviewer?.displayName,
             group: FieldGroup.primary,

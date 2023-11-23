@@ -58,6 +58,7 @@ class DepositRequestModel with _$DepositRequestModel implements Model {
         fields: {
           FieldDescription(
             name: "status",
+            path: "status",
             nullable: true,
             type: FieldType.text,
             map: (m) => m.status.name,
@@ -65,36 +66,42 @@ class DepositRequestModel with _$DepositRequestModel implements Model {
           ),
           FieldDescription(
             name: "amount",
+            path: "amount",
             type: FieldType.number,
             map: (m) => m.amount,
             group: FieldGroup.primary,
           ),
           FieldDescription(
             name: "currency",
+            path: "currency",
             type: FieldType.text,
             map: (m) => m.currency,
             group: FieldGroup.hidden,
           ),
           FieldDescription(
             name: "uid",
+            path: "uid",
             type: FieldType.listText,
             map: (m) => m.uid,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "createdAt",
+            path: "createdAt",
             type: FieldType.datetime,
             map: (m) => m.createdAt,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "updatedAt",
+            path: "updatedAt",
             type: FieldType.datetime,
             map: (m) => m.updatedAt,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "deletedAt",
+            path: "deletedAt",
             nullable: true,
             type: FieldType.datetime,
             map: (m) => m.deletedAt,
@@ -102,18 +109,21 @@ class DepositRequestModel with _$DepositRequestModel implements Model {
           ),
           FieldDescription(
             name: "ref",
+            path: "ref",
             type: FieldType.reference,
             map: (m) => m.ref,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "firstName",
+            path: "firstName",
             type: FieldType.text,
             map: (m) => m.firstName,
             group: FieldGroup.secondary,
           ),
           FieldDescription(
             name: "lastName",
+            path: "lastName",
             type: FieldType.text,
             map: (m) => m.lastName,
             group: FieldGroup.secondary,

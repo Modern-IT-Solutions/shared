@@ -36,6 +36,7 @@ class StationModel with _$StationModel implements Model {
         fields: {
           FieldDescription(
             name: "name",
+            path: "name",
             nullable: true,
             type: FieldType.text,
             map: (m) => m.name,
@@ -43,30 +44,35 @@ class StationModel with _$StationModel implements Model {
           ),
           FieldDescription(
             name: "email",
+            path: "email",
             type: FieldType.number,
             map: (m) => m.email,
             group: FieldGroup.primary,
           ),
           FieldDescription(
             name: "phoneNumbers",
+            path: "phoneNumbers",
             type: FieldType.listText,
             map: (m) => m.phoneNumbers,
             group: FieldGroup.hidden,
           ),
           FieldDescription(
             name: "createdAt",
+            path: "createdAt",
             type: FieldType.datetime,
             map: (m) => m.createdAt,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "updatedAt",
+            path: "updatedAt",
             type: FieldType.datetime,
             map: (m) => m.updatedAt,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "deletedAt",
+            path: "deletedAt",
             nullable: true,
             type: FieldType.datetime,
             map: (m) => m.deletedAt,
@@ -74,6 +80,7 @@ class StationModel with _$StationModel implements Model {
           ),
           FieldDescription(
             name: "ref",
+            path: "ref",
             type: FieldType.reference,
             map: (m) => m.ref,
             group: FieldGroup.metadata,
