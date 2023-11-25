@@ -201,7 +201,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/Desktop/projects/core",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-35c64010acccb3885d3afdfbc9f16a6cd97c130d/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1490,7 +1490,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-25T14:56:04.548968Z",
+  "generated": "2023-11-25T15:49:42.166372Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }
