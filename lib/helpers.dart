@@ -407,6 +407,7 @@ class Roles {
   static Role teacher = Role('teacher');
   static Role parent = Role('parent');
   static Role support = Role('support');
+  static Role supplier = Role('supplier');
 
   // values
   static List<Role> get values => [
@@ -416,6 +417,7 @@ class Roles {
           Role('teacher'),
           Role('parent'),
           Role('support'),
+          Role('supplier'),
         ] else if (FirebaseAuth.instance.app.options.projectId == 'tadakholati-9032e') ...[
           Role('technician'),
           Role('client'),
