@@ -268,9 +268,11 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "/Users/mohamad/Desktop/projects/core"
-      relative: false
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: d9f4731e9fd6647ba6a68daaf0c868f88c4c70f9
+      url: "https://github.com/Modern-IT-Solutions/core.git"
+    source: git
     version: "0.0.1"
   country_pickers:
     dependency: transitive

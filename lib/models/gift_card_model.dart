@@ -40,6 +40,14 @@ class GiftCardModel with _$GiftCardModel implements Model {
  static ModelDescription<GiftCardModel> get description => ModelDescription<GiftCardModel>(
         fields: {
           FieldDescription(
+            name: "Code",
+            path: "code",
+            nullable: true,
+            type: FieldType.text,
+            map: (m) => m.owner?.uid,
+            group: FieldGroup.primary,
+          ),
+          FieldDescription(
             name: "owner uid",
             path: "owner.uid",
             nullable: true,
@@ -66,6 +74,13 @@ class GiftCardModel with _$GiftCardModel implements Model {
             path: "uids",
             type: FieldType.listText,
             map: (m) => m.transaction?.uids,
+          ),
+          FieldDescription(
+            name: "used At",
+            path: "transaction.createdAt",
+            type: FieldType.datetime,
+            map: (m) => m.transaction?.createdAt,
+            group: FieldGroup.metadata,
           ),
           FieldDescription(
             name: "created At",
