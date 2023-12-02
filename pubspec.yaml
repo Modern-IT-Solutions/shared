@@ -16,7 +16,7 @@ dependencies:
   geoflutterfire2: ^2.3.15
   file_saver:
   core:
-    # path: /Users/mohamad/Desktop/projects/core
+    # path: ../core
     git:
      url: https://github.com/Modern-IT-Solutions/core.git
      ref: main
@@ -28,6 +28,7 @@ dependencies:
   screen_capture_event:
   flex_color_picker: 
   zplayer:
+    # path: ../zplayer
     git:
       url: https://github.com/Modern-IT-Solutions/zplayer.git
       ref: main

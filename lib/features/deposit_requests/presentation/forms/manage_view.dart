@@ -93,7 +93,7 @@
 //             for (QueryFilter<DepositRequestModel> filter in activeFilters) {
 //               query = filter.server(query);
 //             }
-//             query = query.orderBy("updatedAt", descending: true);
+//             query = query.orderBy("updatedAt", descending: false);
 //             if (startAfter != null) {
 //               query = query.startAfter(startAfter);
 //             }

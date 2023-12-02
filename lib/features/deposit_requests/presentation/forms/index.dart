@@ -121,7 +121,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
             for (QueryFilter<DepositRequestModel> filter in activeFilters) {
               query = filter.server(query);
             }
-            query = query.orderBy("updatedAt", descending: true);
+            query = query.orderBy("updatedAt", descending: false);
             if (startAfter != null) {
               query = query.startAfter(startAfter);
             }
@@ -564,7 +564,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
                                           vertical: 24.0,
                                           horizontal: 12,
                                         ),
-                                        child: Text('You reached the end.'),
+                                        child: Text('You reached the end...'),
                                       )
                                   ]
                                 ],

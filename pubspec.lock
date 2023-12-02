@@ -268,11 +268,9 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "35c64010acccb3885d3afdfbc9f16a6cd97c130d"
-      url: "https://github.com/Modern-IT-Solutions/core.git"
-    source: git
+      path: "../core"
+      relative: true
+    source: path
     version: "0.0.1"
   country_pickers:
     dependency: transitive
@@ -1025,11 +1023,9 @@ packages:
   lib:
     dependency: transitive
     description:
-      path: "."
-      ref: main
-      resolved-ref: "1bc2a52f8b4f4141b1eae2f8e5c9c533bbaf4ddf"
-      url: "https://github.com/Modern-IT-Solutions/lib.git"
-    source: git
+      path: "../lib"
+      relative: true
+    source: path
     version: "0.0.3"
   lints:
     dependency: transitive
@@ -1959,11 +1955,9 @@ packages:
   zplayer:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: c165aaf8bb58b99695c2fceb871c24ab6242678c
-      url: "https://github.com/Modern-IT-Solutions/zplayer.git"
-    source: git
+      path: "../zplayer"
+      relative: true
+    source: path
     version: "0.0.1"
 sdks:
   dart: ">=3.2.0-194.0.dev <3.7.0"

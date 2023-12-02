@@ -71,8 +71,8 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
       });
 
       try {
-        await StationRepository.instance.update(request);
-        widget.onUpdated?.call(widget.model.copyWith(
+        // await StationRepository.instance.update(request);
+        var nModel = widget.model.copyWith(
           name: request.name ?? widget.model.name,
           address: request.address ?? widget.model.address,
           email: request.email ?? widget.model.email,
@@ -80,7 +80,12 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
           phoneNumbers: request.phoneNumbers ?? widget.model.phoneNumbers,
           technicians: request.technicians ?? widget.model.technicians,
           owners: request.owners ?? widget.model.owners,
-        ));
+        );
+        await updateDocument(
+          path: nModel.ref.path,
+          data: nModel.toJson(),
+        );
+        widget.onUpdated?.call(nModel);
       }
       // FirebaseFunctionsException
       on FirebaseFunctionsException catch (e) {
