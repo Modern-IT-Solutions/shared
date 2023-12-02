@@ -275,8 +275,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                         ),
                                         Text(
                                           assistanceRecord.station.address
-                                                  .toString() ??
-                                              "No phone",
+                                                  .toString(),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
