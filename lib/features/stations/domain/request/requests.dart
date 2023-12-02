@@ -18,8 +18,9 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
   /// The email of the station.
   String? email;
   /// The technicians of the station.
-  Map<String,ProfileModel> technicians;
-  Map<String,ProfileModel> owners;
+  List<ProfileModel> technicians;
+  List<ProfileModel> owners;
+  
 
   StationCreateRequest({
     super.id,
@@ -28,8 +29,8 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
     this.photoUrl,
     this.phoneNumbers = const [],
     this.email,
-    this.technicians = const {},
-    this.owners = const {},
+    this.technicians = const [],
+    this.owners = const [],
   });
   
   @override
@@ -46,10 +47,10 @@ class StationCreateRequest<T extends StationModel> extends CreateRequest<T> {
     'photoUrl': photoUrl,
     'phoneNumbers': phoneNumbers,
     'email': email,
-    'technicians': technicians. // must be Map<String, Map<String, dynamic>>
-      map((key, value) => MapEntry(key, value.toJson())),
-    'owners': owners. // must be Map<String, Map<String, dynamic>>
-      map((key, value) => MapEntry(key, value.toJson())),
+    'technicians': technicians,
+    'techniciansRefs': technicians.map((e) => e.ref.path).toList(),
+    'owners': owners,
+    'ownersRefs': owners.map((e) => e.ref.path).toList(),
   };
 
 
