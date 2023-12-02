@@ -1959,9 +1959,11 @@ packages:
   zplayer:
     dependency: "direct main"
     description:
-      path: "../zplayer"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: c165aaf8bb58b99695c2fceb871c24ab6242678c
+      url: "https://github.com/Modern-IT-Solutions/zplayer.git"
+    source: git
     version: "0.0.1"
 sdks:
   dart: ">=3.2.0-194.0.dev <3.7.0"
