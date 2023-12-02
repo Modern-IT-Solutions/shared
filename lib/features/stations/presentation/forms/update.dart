@@ -531,45 +531,20 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       fixed: true,
                                     )
                                   ]);
-                                  // profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
-                                  profiles?.removeWhere((element) => request.technicians!.containsKey(element.ref.id));
-                                  if (profiles != null) {
-                                    // _technicians.value = {
-                                    //   ..._technicians.value,
-                                    //   ...Map.fromEntries(
-                                    //     profiles.map(
-                                    //       (e) => MapEntry(e.ref.id, e),
-                                    //     ),
-                                    //   ),
-                                    // };
-                                    // // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                                    // _technicians.notifyListeners();
-                                    setState(() {
-                                      request.technicians = {
-                                        ...request.technicians!,
-                                      }..addEntries(
-                                          profiles.map(
-                                            (e) => MapEntry(e.ref.id, e),
-                                          ),
-                                        );
-                                    });
-                                  }
-                                  // var technicians = await showDialog<Map<String, ProfileModel>>(
-                                  //   context: context,
-                                  //   builder: (context) {
-                                  //     return SelectTechniciansDialog(selected: _technicians.value);
-                                  //   },
-                                  // );
-                                  // if (technicians != null) {
-                                  //   _technicians.value = technicians;
-                                  // }
+                                  if (profiles == null) return;
+                                  setState(() {
+                                    request.technicians = [
+                                      ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                                      ...profiles
+                                    ];
+                                  });
                                 },
                               ),
                             ),
                             Column(
                                   children: [
-                                    for (var tech in 
-                                    request.technicians!.values.toList()
+                                    for (ProfileModel tech in 
+                                    request.technicians ?? []
                                     )
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -594,9 +569,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                               //   ..._technicians.value,
                                               // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
                                               setState(() {
-                                                request.technicians = {
-                                                  ...request.technicians!..removeWhere((key, value) => value.ref.id == tech.ref.id)
-                                                };
+                                                request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
                                               });
                                             },
                                           ),
@@ -623,36 +596,19 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       fixed: true,
                                     )
                                   ]);
-                                  // profiles?.removeWhere((element) => _owners.value.containsKey(element.ref.id));
-                                  profiles?.removeWhere((element) => request.owners!.containsKey(element.ref.id));
-                                  if (profiles != null) {
-                                    // _owners.value = {
-                                    //   ..._owners.value,
-                                    //   ...Map.fromEntries(
-                                    //     profiles.map(
-                                    //       (e) => MapEntry(e.ref.id, e),
-                                    //     ),
-                                    //   ),
-                                    // };
-                                    // _owners.notifyListeners();
-                                    setState(() {
-                                      request.owners = {
-                                        ...request.owners!,
-                                      }..addEntries(
-                                          profiles.map(
-                                            (e) => MapEntry(e.ref.id, e),
-                                          ),
-                                        );
-                                    });
-                                  }
+                                  if (profiles == null) return;
+                                  setState(() {
+                                    request.owners = [
+                                      ...?request.owners?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                                      ...profiles
+                                    ];
+                                  });
                                 },
                               ),
                             ),
                             Column(
                                   children: [
-                                    for (var owner in 
-                                    request.owners!.values.toList()
-                                    )
+                                    for (ProfileModel owner in request.owners ?? [])
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 24),
                                         child: ListTile(
@@ -672,13 +628,8 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                           trailing: IconButton(
                                             icon: const Icon(FluentIcons.delete_24_regular),
                                             onPressed: () {
-                                              // _owners.value = {
-                                              //   ..._owners.value,
-                                              // }..removeWhere((key, value) => value.ref.id == owner.ref.id);
                                               setState(() {
-                                                request.owners = {
-                                                  ...request.owners!..removeWhere((key, value) => value.ref.id == owner.ref.id)
-                                                };
+                                                request.owners = request.owners!.where((e) => e.ref.path != owner.ref.path).toList();
                                               });
                                             },
                                           ),
@@ -686,32 +637,6 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       ),
                                   ],
                                 ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-                            //   child: SwitchListTile(
-                            //     secondary:
-                            //         const Icon(FluentIcons.presence_blocked_24_regular),
-                            //     contentPadding: EdgeInsets.only(left: 12),
-                            //     visualDensity: VisualDensity(vertical: -3),
-                            //     title: Text('Blocked'),
-                            //     value: _disabled,
-                            //     onChanged: (e) => setState(() {
-                            //       _disabled = e;
-                            //     }),
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-                            //   child: SwitchListTile(
-                            //     contentPadding: EdgeInsets.only(left: 12),
-                            //     visualDensity: VisualDensity(vertical: -3),
-                            //     title: Text('Email Verified'),
-                            //     value: _emailVerified,
-                            //     onChanged: (e) => setState(() {
-                            //       _emailVerified = e;
-                            //     }),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),

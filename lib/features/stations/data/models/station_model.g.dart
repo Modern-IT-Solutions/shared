@@ -16,12 +16,18 @@ _$StationModelImpl _$$StationModelImplFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
       address: AddressModel.fromJson(json['address'] as Map<String, dynamic>),
-      owners: (json['owners'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
-      ),
-      technicians: (json['technicians'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
-      ),
+      owners: (json['owners'] as List<dynamic>)
+          .map((e) => ProfileModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      ownersRefs: (json['ownersRefs'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      technicians: (json['technicians'] as List<dynamic>)
+          .map((e) => ProfileModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      techniciansRefs: (json['techniciansRefs'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),
       updatedAt:
@@ -38,9 +44,10 @@ Map<String, dynamic> _$$StationModelImplToJson(_$StationModelImpl instance) =>
       'email': instance.email,
       'phoneNumbers': instance.phoneNumbers,
       'address': instance.address.toJson(),
-      'owners': instance.owners.map((k, e) => MapEntry(k, e.toJson())),
-      'technicians':
-          instance.technicians.map((k, e) => MapEntry(k, e.toJson())),
+      'owners': instance.owners.map((e) => e.toJson()).toList(),
+      'ownersRefs': instance.ownersRefs,
+      'technicians': instance.technicians.map((e) => e.toJson()).toList(),
+      'techniciansRefs': instance.techniciansRefs,
       'createdAt':
           const TimestampDateTimeSerializer().toJson(instance.createdAt),
       'updatedAt':

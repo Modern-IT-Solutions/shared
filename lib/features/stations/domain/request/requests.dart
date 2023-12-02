@@ -160,8 +160,8 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
   /// The email of the station.
   String? email;
   /// The technicians of the station.
-  Map<String, ProfileModel>? technicians;
-  Map<String, ProfileModel>? owners;
+  List<ProfileModel>? technicians;
+  List<ProfileModel>? owners;
 
   get data => toMap();
 
@@ -184,10 +184,10 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
       'photoUrl': photoUrl,
       'phoneNumbers': phoneNumbers,
       'email': email,
-      'technicians': technicians?. // must be Map<String, Map<String, dynamic>>
-        map((key, value) => MapEntry(key, value.toJson())),
-      'owners': owners?. // must be Map<String, Map<String, dynamic>>
-        map((key, value) => MapEntry(key, value.toJson())),
+      'technicians': technicians,
+      'techniciansRefs': technicians?.map((e) => e.ref.path).toList(),
+      'owners': owners,
+      'ownersRefs': owners?.map((e) => e.ref.path).toList(),
     };
   }
   }

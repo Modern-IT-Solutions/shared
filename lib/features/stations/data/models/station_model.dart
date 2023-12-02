@@ -21,8 +21,10 @@ class StationModel with _$StationModel implements Model {
     required List<String> phoneNumbers,
     // owner 
     required AddressModel address,
-    required Map<String,ProfileModel> owners,
-    required Map<String,ProfileModel> technicians,
+    required List<ProfileModel> owners,
+    required List<String> ownersRefs,
+    required List<ProfileModel> technicians,
+    required List<String> techniciansRefs,
     @TimestampDateTimeSerializer()
     required DateTime createdAt,
     @TimestampDateTimeSerializer()

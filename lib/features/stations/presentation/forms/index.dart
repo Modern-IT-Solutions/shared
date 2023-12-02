@@ -233,7 +233,7 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
                                           child: Wrap(
                                             spacing: 5,
                                             children: [
-                                              for (var technician in stationRecord.technicians.values)
+                                              for (var technician in stationRecord.technicians)
                                                 SizedBox(
                                                   width: 25,
                                                   height: 40,
