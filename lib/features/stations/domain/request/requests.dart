@@ -186,6 +186,7 @@ class StationUpdateRequest<T extends StationModel> extends UpdateRequest<T> {
       'phoneNumbers': phoneNumbers,
       'email': email,
       'technicians': technicians,
+      '__techniciansRefs': technicians?.length,
       'techniciansRefs': technicians?.map((e) => e.ref.path).toList(),
       'owners': owners,
       'ownersRefs': owners?.map((e) => e.ref.path).toList(),
