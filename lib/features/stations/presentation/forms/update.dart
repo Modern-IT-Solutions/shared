@@ -79,7 +79,9 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
           photoUrl: request.photoUrl ?? widget.model.photoUrl,
           phoneNumbers: request.phoneNumbers ?? widget.model.phoneNumbers,
           technicians: request.technicians ?? widget.model.technicians,
+          techniciansRefs: (request.technicians ?? widget.model.technicians).map((e) => e.ref.path).toList(),
           owners: request.owners ?? widget.model.owners,
+          ownersRefs: (request.owners ?? widget.model.owners).map((e) => e.ref.path).toList(),
         );
         await updateDocument(
           path: nModel.ref.path,
