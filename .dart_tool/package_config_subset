@@ -2,10 +2,6 @@ lib
 3.0
 file:///Users/mohamad/.pub-cache/git/lib-6a9b5d859178f20bf573186448b88a0531231377/
 file:///Users/mohamad/.pub-cache/git/lib-6a9b5d859178f20bf573186448b88a0531231377/lib/
-zplayer
-3.1
-file:///Users/mohamad/.pub-cache/git/zplayer-c165aaf8bb58b99695c2fceb871c24ab6242678c/
-file:///Users/mohamad/.pub-cache/git/zplayer-c165aaf8bb58b99695c2fceb871c24ab6242678c/lib/
 _fe_analyzer_shared
 3.0
 file:///Users/mohamad/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-65.0.0/
@@ -970,6 +966,10 @@ shared
 3.1
 file:///Users/mohamad/Desktop/projects/packages/shared/
 file:///Users/mohamad/Desktop/projects/packages/shared/lib/
+zplayer
+3.1
+file:///Users/mohamad/Desktop/projects/packages/zplayer/
+file:///Users/mohamad/Desktop/projects/packages/zplayer/lib/
 sky_engine
 3.2
 file:///Users/mohamad/dev/flutter/bin/cache/pkg/sky_engine/

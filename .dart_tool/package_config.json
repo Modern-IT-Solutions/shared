@@ -1479,7 +1479,7 @@
     },
     {
       "name": "zplayer",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/zplayer-c165aaf8bb58b99695c2fceb871c24ab6242678c/",
+      "rootUri": "../../zplayer",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1490,7 +1490,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-12-02T22:00:09.770978Z",
+  "generated": "2023-12-02T22:08:02.074200Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }

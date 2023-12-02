@@ -28,10 +28,7 @@ dependencies:
   screen_capture_event:
   flex_color_picker: 
   zplayer:
-    # path: ../zplayer
-    git:
-      url: https://github.com/Modern-IT-Solutions/zplayer.git
-      ref: main
+    path: ../zplayer
   fast_rsa:
   convert:
   shared_preferences: 
@@ -50,6 +47,7 @@ dev_dependencies:
   build_runner: ^2.4.6
   freezed: ^2.4.2
   json_serializable: ^6.7.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
