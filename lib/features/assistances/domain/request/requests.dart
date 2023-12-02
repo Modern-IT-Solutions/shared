@@ -173,7 +173,7 @@ class AssistanceCreateRequest<T extends AssistanceModel> extends CreateRequest<T
 class AssistanceUpdateRequest<T extends AssistanceModel> {
   ModelRef ref;
   StationModel? station;
-  Map<String,ProfileModel>? technicians;
+  List<ProfileModel>? technicians;
   AssistanceStatus? status;
   DateTime? date;
   String? note;
@@ -211,8 +211,8 @@ class AssistanceUpdateRequest<T extends AssistanceModel> {
     return {
       'ref': ref.path,
       'station': station?.toJson(),
-      'technicians': technicians?. // must be Map<String,Map<String,dynamic>>
-        map((key, value) => MapEntry(key, value.toJson())),
+      'technicians': technicians?.map((x) => x.toJson()).toList(),
+      'techniciansRefs': technicians?.map((x) => x.ref.path).toList(),
       'status': status?.name,
       'date': date,
       'note': note,

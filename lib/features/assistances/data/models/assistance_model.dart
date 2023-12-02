@@ -16,7 +16,8 @@ class AssistanceModel with _$AssistanceModel implements Model {
     @ModelRefSerializer()
     required ModelRef ref,
     required StationModel station,
-    required Map<String,ProfileModel> technicians,
+    required List<ProfileModel> technicians,
+    required List<String> techniciansRefs,
     required AssistanceStatus status,
     @TimestampDateTimeSerializer()
     required DateTime date,

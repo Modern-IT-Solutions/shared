@@ -11,9 +11,12 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
     _$AssistanceModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
       station: StationModel.fromJson(json['station'] as Map<String, dynamic>),
-      technicians: (json['technicians'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, ProfileModel.fromJson(e as Map<String, dynamic>)),
-      ),
+      technicians: (json['technicians'] as List<dynamic>)
+          .map((e) => ProfileModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      techniciansRefs: (json['techniciansRefs'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       status: $enumDecode(_$AssistanceStatusEnumMap, json['status']),
       date: const TimestampDateTimeSerializer().fromJson(json['date']),
       note: json['note'] as String,
@@ -42,8 +45,8 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
     <String, dynamic>{
       'ref': const ModelRefSerializer().toJson(instance.ref),
       'station': instance.station.toJson(),
-      'technicians':
-          instance.technicians.map((k, e) => MapEntry(k, e.toJson())),
+      'technicians': instance.technicians.map((e) => e.toJson()).toList(),
+      'techniciansRefs': instance.techniciansRefs,
       'status': _$AssistanceStatusEnumMap[instance.status]!,
       'date': const TimestampDateTimeSerializer().toJson(instance.date),
       'note': instance.note,

@@ -368,45 +368,21 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                               fixed: true,
                             )
                           ]);
-                          // profiles?.removeWhere((element) => _technicians.value.containsKey(element.ref.id));
-                          profiles?.removeWhere((element) => request.technicians!.containsKey(element.ref.id));
                           if (profiles != null) {
-                            // _technicians.value = {
-                            //   ..._technicians.value,
-                            //   ...Map.fromEntries(
-                            //     profiles.map(
-                            //       (e) => MapEntry(e.ref.id, e),
-                            //     ),
-                            //   ),
-                            // };
-                            // // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                            // _technicians.notifyListeners();
                             setState(() {
-                              request.technicians = {
-                                ...request.technicians!,
-                              }..addEntries(
-                                  profiles.map(
-                                    (e) => MapEntry(e.ref.id, e),
-                                  ),
-                                );
+                                    request.technicians = [
+                                      ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                                      ...profiles
+                                    ];
                             });
                           }
-                          // var technicians = await showDialog<Map<String, ProfileModel>>(
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return SelectTechniciansDialog(selected: _technicians.value);
-                          //   },
-                          // );
-                          // if (technicians != null) {
-                          //   _technicians.value = technicians;
-                          // }
                         },
                       ),
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        for (var tech in request.technicians!.values.toList())
+                        for (ProfileModel tech in request.technicians ?? [])
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: ListTile(
@@ -430,9 +406,9 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                   //   ..._technicians.value,
                                   // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
                                   setState(() {
-                                    request.technicians = {
-                                      ...request.technicians!
-                                    }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                    request.technicians = [
+                                      ...?request.technicians?.where((e) => e.ref.path != tech.ref.path),
+                                    ];
                                   });
                                 },
                               ),

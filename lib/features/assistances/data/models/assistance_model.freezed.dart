@@ -23,8 +23,8 @@ mixin _$AssistanceModel {
   @ModelRefSerializer()
   ModelRef get ref => throw _privateConstructorUsedError;
   StationModel get station => throw _privateConstructorUsedError;
-  Map<String, ProfileModel> get technicians =>
-      throw _privateConstructorUsedError;
+  List<ProfileModel> get technicians => throw _privateConstructorUsedError;
+  List<String> get techniciansRefs => throw _privateConstructorUsedError;
   AssistanceStatus get status => throw _privateConstructorUsedError;
   @TimestampDateTimeSerializer()
   DateTime get date => throw _privateConstructorUsedError;
@@ -56,7 +56,8 @@ abstract class $AssistanceModelCopyWith<$Res> {
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
       StationModel station,
-      Map<String, ProfileModel> technicians,
+      List<ProfileModel> technicians,
+      List<String> techniciansRefs,
       AssistanceStatus status,
       @TimestampDateTimeSerializer() DateTime date,
       String note,
@@ -89,6 +90,7 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
     Object? ref = null,
     Object? station = null,
     Object? technicians = null,
+    Object? techniciansRefs = null,
     Object? status = null,
     Object? date = null,
     Object? note = null,
@@ -112,7 +114,11 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
       technicians: null == technicians
           ? _value.technicians
           : technicians // ignore: cast_nullable_to_non_nullable
-              as Map<String, ProfileModel>,
+              as List<ProfileModel>,
+      techniciansRefs: null == techniciansRefs
+          ? _value.techniciansRefs
+          : techniciansRefs // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -200,7 +206,8 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
   $Res call(
       {@ModelRefSerializer() ModelRef ref,
       StationModel station,
-      Map<String, ProfileModel> technicians,
+      List<ProfileModel> technicians,
+      List<String> techniciansRefs,
       AssistanceStatus status,
       @TimestampDateTimeSerializer() DateTime date,
       String note,
@@ -234,6 +241,7 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
     Object? ref = null,
     Object? station = null,
     Object? technicians = null,
+    Object? techniciansRefs = null,
     Object? status = null,
     Object? date = null,
     Object? note = null,
@@ -257,7 +265,11 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
       technicians: null == technicians
           ? _value._technicians
           : technicians // ignore: cast_nullable_to_non_nullable
-              as Map<String, ProfileModel>,
+              as List<ProfileModel>,
+      techniciansRefs: null == techniciansRefs
+          ? _value._techniciansRefs
+          : techniciansRefs // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -308,7 +320,8 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   _$AssistanceModelImpl(
       {@ModelRefSerializer() required this.ref,
       required this.station,
-      required final Map<String, ProfileModel> technicians,
+      required final List<ProfileModel> technicians,
+      required final List<String> techniciansRefs,
       required this.status,
       @TimestampDateTimeSerializer() required this.date,
       required this.note,
@@ -320,6 +333,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       @TimestampDateTimeSerializer() required this.updatedAt,
       @NullableTimestampDateTimeSerializer() this.deletedAt})
       : _technicians = technicians,
+        _techniciansRefs = techniciansRefs,
         _attachments = attachments;
 
   factory _$AssistanceModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -330,12 +344,20 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   final ModelRef ref;
   @override
   final StationModel station;
-  final Map<String, ProfileModel> _technicians;
+  final List<ProfileModel> _technicians;
   @override
-  Map<String, ProfileModel> get technicians {
-    if (_technicians is EqualUnmodifiableMapView) return _technicians;
+  List<ProfileModel> get technicians {
+    if (_technicians is EqualUnmodifiableListView) return _technicians;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_technicians);
+    return EqualUnmodifiableListView(_technicians);
+  }
+
+  final List<String> _techniciansRefs;
+  @override
+  List<String> get techniciansRefs {
+    if (_techniciansRefs is EqualUnmodifiableListView) return _techniciansRefs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_techniciansRefs);
   }
 
   @override
@@ -372,7 +394,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
 
   @override
   String toString() {
-    return 'AssistanceModel(ref: $ref, station: $station, technicians: $technicians, status: $status, date: $date, note: $note, attachments: $attachments, reviewer: $reviewer, intervention: $intervention, nextInterventionDate: $nextInterventionDate, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'AssistanceModel(ref: $ref, station: $station, technicians: $technicians, techniciansRefs: $techniciansRefs, status: $status, date: $date, note: $note, attachments: $attachments, reviewer: $reviewer, intervention: $intervention, nextInterventionDate: $nextInterventionDate, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -384,6 +406,8 @@ class _$AssistanceModelImpl implements _AssistanceModel {
             (identical(other.station, station) || other.station == station) &&
             const DeepCollectionEquality()
                 .equals(other._technicians, _technicians) &&
+            const DeepCollectionEquality()
+                .equals(other._techniciansRefs, _techniciansRefs) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.note, note) || other.note == note) &&
@@ -410,6 +434,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       ref,
       station,
       const DeepCollectionEquality().hash(_technicians),
+      const DeepCollectionEquality().hash(_techniciansRefs),
       status,
       date,
       note,
@@ -440,7 +465,8 @@ abstract class _AssistanceModel implements AssistanceModel {
   factory _AssistanceModel(
           {@ModelRefSerializer() required final ModelRef ref,
           required final StationModel station,
-          required final Map<String, ProfileModel> technicians,
+          required final List<ProfileModel> technicians,
+          required final List<String> techniciansRefs,
           required final AssistanceStatus status,
           @TimestampDateTimeSerializer() required final DateTime date,
           required final String note,
@@ -463,7 +489,9 @@ abstract class _AssistanceModel implements AssistanceModel {
   @override
   StationModel get station;
   @override
-  Map<String, ProfileModel> get technicians;
+  List<ProfileModel> get technicians;
+  @override
+  List<String> get techniciansRefs;
   @override
   AssistanceStatus get status;
   @override
