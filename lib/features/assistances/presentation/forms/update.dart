@@ -370,10 +370,10 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                           ]);
                           if (profiles != null) {
                             setState(() {
-                                    request.technicians = [
-                                      ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
-                                      ...profiles
-                                    ];
+                              request.technicians = [
+                                ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                                ...profiles
+                              ];
                             });
                           }
                         },
@@ -388,14 +388,10 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             child: ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                               onTap: () async {
-                                //
+                                showUpdateProfileModelDailog(context, tech);
                               },
                               leading: CircleAvatar(
-                                backgroundImage: tech.photoUrl.isEmpty
-                                    ? null
-                                    : NetworkImage(
-                                        tech.photoUrl,
-                                      ),
+                                backgroundImage: tech.photoUrl.isEmpty ? null : NetworkImage(tech.photoUrl),
                                 child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
                               ),
                               title: Text(tech.displayName),
@@ -417,138 +413,141 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                       ],
                     ),
 
-                    // intervention is model
-                    Divider(),
-                    const ListTile(
-                      leading: Icon(FluentIcons.gas_pump_24_regular),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 24),
-                      visualDensity: VisualDensity(vertical: -3),
-                      title: Text("Intervention Information"),
-                      enabled: false,
-                    ),
-                    if (request.intervention != null) ...[
-                      AppTextFormField(
-                        enabled: false,
-                        initialValue: request.intervention!.intervener == null? "(No intervener)":request.intervention!.intervener!.displayName,
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(FluentIcons.person_24_regular),
-                          label: const Text('Intervener'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        initialValue: request.intervention!.description.nullIfEmpty == null? "(Nothing)":request.intervention!.description,
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(FluentIcons.text_align_left_16_regular),
-                          label: const Text('Details'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        initialValue: request.intervention!.status.name,
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.circle,color: request.intervention!.status.color,),
-                          label: const Text('Status'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        initialValue: request.intervention!.type.name,
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(request.intervention!.type.icon),
-                          label: const Text('Type'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        mode: AppTextFormFieldMode.dateTime,
-                        initialValue: request.intervention!.date?.toIso8601String(),
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        onChanged: (v) async {
-                          request.date = DateTime.tryParse(v);
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(FluentIcons.calendar_3_day_28_regular),
-                          label: const Text('Intervation date'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        mode: AppTextFormFieldMode.dateTime,
-                        initialValue: request.intervention!.createdAt?.toIso8601String(),
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        onChanged: (v) async {
-                          request.date = DateTime.tryParse(v);
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(FluentIcons.calendar_32_regular),
-                          label: const Text('Creation date'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        mode: AppTextFormFieldMode.dateTime,
-                        initialValue: request.intervention!.createdAt?.toIso8601String(),
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        onChanged: (v) async {
-                          request.date = DateTime.tryParse(v);
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(FluentIcons.calendar_32_regular),
-                          label: const Text('Last Update date'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                      AppTextFormField(
-                        enabled: false,
-                        mode: AppTextFormFieldMode.dateTime,
-                        initialValue: request.intervention!.deletedAt?.toIso8601String() ?? "(Not deleted)",
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        onChanged: (v) async {
-                          request.date = DateTime.tryParse(v);
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(FluentIcons.calendar_32_regular),
-                          label: const Text('Deletion date'),
-                          alignLabelWithHint: true,
-                          border: InputBorder.none,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                    ] else
-                      const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(12),
-                          child: Text("No Intervention"),
-                        ),
-                      ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    // // intervention is model
+                    // Divider(),
+                    // const ListTile(
+                    //   leading: Icon(FluentIcons.gas_pump_24_regular),
+                    //   contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                    //   visualDensity: VisualDensity(vertical: -3),
+                    //   title: Text("Intervention Information"),
+                    //   enabled: false,
+                    // ),
+                    // if (request.intervention != null) ...[
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     initialValue: request.intervention!.intervener == null ? "(No intervener)" : request.intervention!.intervener!.displayName,
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: Icon(FluentIcons.person_24_regular),
+                    //       label: const Text('Intervener'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     initialValue: request.intervention!.description.nullIfEmpty == null ? "(Nothing)" : request.intervention!.description,
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: Icon(FluentIcons.text_align_left_16_regular),
+                    //       label: const Text('Details'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     initialValue: request.intervention!.status.name,
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: Icon(
+                    //         Icons.circle,
+                    //         color: request.intervention!.status.color,
+                    //       ),
+                    //       label: const Text('Status'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     initialValue: request.intervention!.type.name,
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: Icon(request.intervention!.type.icon),
+                    //       label: const Text('Type'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     mode: AppTextFormFieldMode.dateTime,
+                    //     initialValue: request.intervention!.date?.toIso8601String(),
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     onChanged: (v) async {
+                    //       request.date = DateTime.tryParse(v);
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: const Icon(FluentIcons.calendar_3_day_28_regular),
+                    //       label: const Text('Intervation date'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     mode: AppTextFormFieldMode.dateTime,
+                    //     initialValue: request.intervention!.createdAt?.toIso8601String(),
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     onChanged: (v) async {
+                    //       request.date = DateTime.tryParse(v);
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: const Icon(FluentIcons.calendar_32_regular),
+                    //       label: const Text('Creation date'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     mode: AppTextFormFieldMode.dateTime,
+                    //     initialValue: request.intervention!.createdAt?.toIso8601String(),
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     onChanged: (v) async {
+                    //       request.date = DateTime.tryParse(v);
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: const Icon(FluentIcons.calendar_32_regular),
+                    //       label: const Text('Last Update date'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    //   AppTextFormField(
+                    //     enabled: false,
+                    //     mode: AppTextFormFieldMode.dateTime,
+                    //     initialValue: request.intervention!.deletedAt?.toIso8601String() ?? "(Not deleted)",
+                    //     margin: const EdgeInsets.symmetric(horizontal: 24),
+                    //     onChanged: (v) async {
+                    //       request.date = DateTime.tryParse(v);
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: const Icon(FluentIcons.calendar_32_regular),
+                    //       label: const Text('Deletion date'),
+                    //       alignLabelWithHint: true,
+                    //       border: InputBorder.none,
+                    //       fillColor: Colors.transparent,
+                    //     ),
+                    //   ),
+                    // ] else
+                    //   const Center(
+                    //     child: Padding(
+                    //       padding: EdgeInsets.all(12),
+                    //       child: Text("No Intervention"),
+                    //     ),
+                    //   ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
 
                     // Padding(
                     //   padding: const EdgeInsets.symmetric(horizontal: 12),

@@ -49,3 +49,15 @@ class BillModel with _$BillModel implements Model {
 
   factory BillModel.fromJson(Map<String, dynamic> json) => _$BillModelFromJson(json);
 }
+
+// extension for total
+extension BillModelX on BillModel {
+  // sub total
+  double get subTotal {
+    return items.fold(0, (previousValue, element) => previousValue + element.amount*element.quantity);
+  }
+
+  double get total {
+    return subTotal + (subTotal * 0.19);
+  }
+}
