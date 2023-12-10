@@ -513,7 +513,7 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
     var child = Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: FindStationForm(
-        id: model.ref.id,
+        ref: model.ref.id,
         model: model,
         actions: [
           // edit

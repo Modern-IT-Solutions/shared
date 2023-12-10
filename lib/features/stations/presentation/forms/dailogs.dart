@@ -154,7 +154,7 @@ Future<void> showDetailsStationModelDailog(BuildContext context, StationModel mo
   var child = Container(
     constraints: const BoxConstraints(maxWidth: 500),
     child: FindStationForm(
-      id: model.ref.id,
+      ref: model.ref.id,
       model: model,
       actions: [
         // edit
