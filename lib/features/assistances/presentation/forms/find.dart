@@ -139,7 +139,7 @@ class _FindAssistanceFormState extends State<FindAssistanceForm> {
                                       ? null
                                       : DecorationImage(
                                           image: NetworkImage(
-                                            assistance!.station.photoUrl!,
+                                            assistance!.station.photoUrl,
                                           ),
                                           fit: BoxFit.cover,
                                         ),
