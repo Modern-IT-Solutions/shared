@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:lib/utils/platforms.dart';
+import 'package:shared/models/bill_item_template_model.dart';
 export 'package:lib/utils/platforms.dart';
 
 import 'models/event_preference.dart';
@@ -425,4 +426,22 @@ class Roles {
           Role('client'),
         ],
       ];
+}
+
+
+
+/// [getBillItemsList]
+/// list of [BillItemTemplateModel] for auto complete in client app
+Future<List<BillItemTemplateModel>> getBillItemsList() async {
+  await Future.delayed(const Duration(seconds: 1));
+  return [
+    BillItemTemplateModel(name: "Capture", price: 20000),
+    BillItemTemplateModel(name: "Motor", price: 50000),
+    BillItemTemplateModel(name: "Fix Pump", price: 20000),
+    BillItemTemplateModel(name: "Replace Pump", price: 300000),
+    BillItemTemplateModel(name: "Gas Pump fix", price: 30000),
+    BillItemTemplateModel(name: "Gas Pump replace", price: 30000),
+    BillItemTemplateModel(name: "Gas Pump", price: 30000),
+    BillItemTemplateModel(name: "Cylinder of gas", price: 30000),
+  ];
 }
