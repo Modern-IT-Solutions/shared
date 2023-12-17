@@ -2,6 +2,8 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:lib/utils/platforms.dart';
 import 'package:shared/models/bill_item_template_model.dart';
+import 'package:shared/models/displacement_cost_list_model.dart';
+import 'package:algeria/algeria.dart';
 export 'package:lib/utils/platforms.dart';
 
 import 'models/event_preference.dart';
@@ -443,5 +445,18 @@ Future<List<BillItemTemplateModel>> getBillItemsList() async {
     BillItemTemplateModel(name: "Gas Pump replace", price: 30000),
     BillItemTemplateModel(name: "Gas Pump", price: 30000),
     BillItemTemplateModel(name: "Cylinder of gas", price: 30000),
+  ];
+}
+
+/// [getDisplacementCostList]
+Future<List<DisplacementCostModel>> getDisplacementCostList() async {
+  await Future.delayed(const Duration(seconds: 1));
+  return [
+    for (var state in Algeria.states.values)
+      DisplacementCostModel(
+        from: state,
+        to: "blida",
+        cost: Random().nextDouble() * 1000,
+      ),
   ];
 }
