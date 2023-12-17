@@ -21,8 +21,8 @@ DisplacementCostModel _$DisplacementCostModelFromJson(
 
 /// @nodoc
 mixin _$DisplacementCostModel {
-  String get from => throw _privateConstructorUsedError;
-  String get to => throw _privateConstructorUsedError;
+  String get region => throw _privateConstructorUsedError;
+  String get state => throw _privateConstructorUsedError;
   double get cost => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $DisplacementCostModelCopyWith<$Res> {
           $Res Function(DisplacementCostModel) then) =
       _$DisplacementCostModelCopyWithImpl<$Res, DisplacementCostModel>;
   @useResult
-  $Res call({String from, String to, double cost});
+  $Res call({String region, String state, double cost});
 }
 
 /// @nodoc
@@ -54,18 +54,18 @@ class _$DisplacementCostModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? from = null,
-    Object? to = null,
+    Object? region = null,
+    Object? state = null,
     Object? cost = null,
   }) {
     return _then(_value.copyWith(
-      from: null == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
               as String,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
               as String,
       cost: null == cost
           ? _value.cost
@@ -84,7 +84,7 @@ abstract class _$$DisplacementCostModelImplCopyWith<$Res>
       __$$DisplacementCostModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String from, String to, double cost});
+  $Res call({String region, String state, double cost});
 }
 
 /// @nodoc
@@ -99,18 +99,18 @@ class __$$DisplacementCostModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? from = null,
-    Object? to = null,
+    Object? region = null,
+    Object? state = null,
     Object? cost = null,
   }) {
     return _then(_$DisplacementCostModelImpl(
-      from: null == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
+      region: null == region
+          ? _value.region
+          : region // ignore: cast_nullable_to_non_nullable
               as String,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
               as String,
       cost: null == cost
           ? _value.cost
@@ -124,21 +124,21 @@ class __$$DisplacementCostModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DisplacementCostModelImpl implements _DisplacementCostModel {
   _$DisplacementCostModelImpl(
-      {required this.from, required this.to, required this.cost});
+      {required this.region, required this.state, required this.cost});
 
   factory _$DisplacementCostModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$DisplacementCostModelImplFromJson(json);
 
   @override
-  final String from;
+  final String region;
   @override
-  final String to;
+  final String state;
   @override
   final double cost;
 
   @override
   String toString() {
-    return 'DisplacementCostModel(from: $from, to: $to, cost: $cost)';
+    return 'DisplacementCostModel(region: $region, state: $state, cost: $cost)';
   }
 
   @override
@@ -146,14 +146,14 @@ class _$DisplacementCostModelImpl implements _DisplacementCostModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DisplacementCostModelImpl &&
-            (identical(other.from, from) || other.from == from) &&
-            (identical(other.to, to) || other.to == to) &&
+            (identical(other.region, region) || other.region == region) &&
+            (identical(other.state, state) || other.state == state) &&
             (identical(other.cost, cost) || other.cost == cost));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, from, to, cost);
+  int get hashCode => Object.hash(runtimeType, region, state, cost);
 
   @JsonKey(ignore: true)
   @override
@@ -172,17 +172,17 @@ class _$DisplacementCostModelImpl implements _DisplacementCostModel {
 
 abstract class _DisplacementCostModel implements DisplacementCostModel {
   factory _DisplacementCostModel(
-      {required final String from,
-      required final String to,
+      {required final String region,
+      required final String state,
       required final double cost}) = _$DisplacementCostModelImpl;
 
   factory _DisplacementCostModel.fromJson(Map<String, dynamic> json) =
       _$DisplacementCostModelImpl.fromJson;
 
   @override
-  String get from;
+  String get region;
   @override
-  String get to;
+  String get state;
   @override
   double get cost;
   @override

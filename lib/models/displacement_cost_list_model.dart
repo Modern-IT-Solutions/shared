@@ -7,8 +7,8 @@ part 'displacement_cost_list_model.g.dart';
 class DisplacementCostModel with _$DisplacementCostModel {
 
   factory DisplacementCostModel({
-    required String from,
-    required String to,
+    required String region,
+    required String state,
     required double cost,
   }) = _DisplacementCostModel;
 

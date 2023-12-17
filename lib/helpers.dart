@@ -454,9 +454,9 @@ Future<List<DisplacementCostModel>> getDisplacementCostList() async {
   return [
     for (var state in Algeria.states.values)
       DisplacementCostModel(
-        from: state,
-        to: "blida",
-        cost: Random().nextDouble() * 1000,
+        region: "center",
+        state: state,
+        cost: (Random().nextDouble() * 1000).toInt().toDouble(),
       ),
   ];
 }
