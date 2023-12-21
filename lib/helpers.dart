@@ -15,6 +15,10 @@ SecurityService getSecurity() {
   return Services.instance.get<SecurityService>()!;
 }
 
+NotificationService getNotificationService() {
+  return Services.instance.get<NotificationService>()!;
+}
+
 extension ProfileModelxPreferences on ProfileModel {
   Map<String, dynamic>? get preferences {
     return customClaims['preferences'] as Map<String, dynamic>?;
