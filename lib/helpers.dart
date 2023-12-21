@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:flutter/material.dart';
 import 'package:lib/utils/platforms.dart';
 import 'package:shared/models/bill_item_template_model.dart';
 import 'package:shared/models/displacement_cost_list_model.dart';
