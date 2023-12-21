@@ -11,6 +11,6 @@ class DisplacementCostModel with _$DisplacementCostModel {
     required String state,
     required double cost,
   }) = _DisplacementCostModel;
-
+ 
   factory DisplacementCostModel.fromJson(Map<String, dynamic> json) => _$DisplacementCostModelFromJson(json);
 }
