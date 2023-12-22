@@ -30,6 +30,7 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
           ? null
           : InterventionModel.fromJson(
               json['intervention'] as Map<String, dynamic>),
+      metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       nextInterventionDate: const NullableTimestampDateTimeSerializer()
           .fromJson(json['nextInterventionDate']),
       createdAt:
@@ -53,6 +54,7 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
       'attachments': instance.attachments.map((e) => e.toJson()).toList(),
       'reviewer': instance.reviewer?.toJson(),
       'intervention': instance.intervention?.toJson(),
+      'metadata': instance.metadata,
       'nextInterventionDate': const NullableTimestampDateTimeSerializer()
           .toJson(instance.nextInterventionDate),
       'createdAt':
