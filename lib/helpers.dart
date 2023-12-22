@@ -433,33 +433,30 @@ class Roles {
       ];
 }
 
-
-
 /// [getBillItemsList]
 /// list of [BillItemTemplateModel] for auto complete in client app
 Future<List<BillItemTemplateModel>> getBillItemsList() async {
-  await Future.delayed(const Duration(seconds: 1));
+  // await Future.delayed(const Duration(seconds: 1));
+  // return [
+  //   BillItemTemplateModel(name: "Capture", price: 20000),
+  //   BillItemTemplateModel(name: "Motor", price: 50000),
+  //   BillItemTemplateModel(name: "Fix Pump", price: 20000),
+  //   BillItemTemplateModel(name: "Replace Pump", price: 300000),
+  //   BillItemTemplateModel(name: "Gas Pump fix", price: 30000),
+  //   BillItemTemplateModel(name: "Gas Pump replace", price: 30000),
+  //   BillItemTemplateModel(name: "Gas Pump", price: 30000),
+  //   BillItemTemplateModel(name: "Cylinder of gas", price: 30000),
+  // ];
+  var settings = await getDocument(path: 'preferences/settings');
   return [
-    BillItemTemplateModel(name: "Capture", price: 20000),
-    BillItemTemplateModel(name: "Motor", price: 50000),
-    BillItemTemplateModel(name: "Fix Pump", price: 20000),
-    BillItemTemplateModel(name: "Replace Pump", price: 300000),
-    BillItemTemplateModel(name: "Gas Pump fix", price: 30000),
-    BillItemTemplateModel(name: "Gas Pump replace", price: 30000),
-    BillItemTemplateModel(name: "Gas Pump", price: 30000),
-    BillItemTemplateModel(name: "Cylinder of gas", price: 30000),
+    for (var item in settings?.data['billItems'] ?? []) BillItemTemplateModel.fromJson(item),
   ];
 }
 
 /// [getDisplacementCostList]
 Future<List<DisplacementCostModel>> getDisplacementCostList() async {
-  await Future.delayed(const Duration(seconds: 1));
+  var settings = await getDocument(path: 'preferences/settings');
   return [
-    for (var state in Algeria.states.values)
-      DisplacementCostModel(
-        region: "center",
-        state: state,
-        cost: (Random().nextDouble() * 1000).toInt().toDouble(),
-      ),
+    for (var item in settings?.data['displacementCosts'] ?? []) DisplacementCostModel.fromJson(item),
   ];
 }
