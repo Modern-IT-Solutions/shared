@@ -36,6 +36,11 @@ final _builders = <_i1.BuilderApplication>[
     _i1.toAllPackages(),
     isOptional: true,
     hideOutput: true,
+    appliesBuilders: const [r'build_resolvers:transitive_digest_cleanup'],
+  ),
+  _i1.applyPostProcess(
+    r'build_resolvers:transitive_digest_cleanup',
+    _i5.transitiveDigestCleanup,
   ),
   _i1.applyPostProcess(
     r'source_gen:part_cleanup',

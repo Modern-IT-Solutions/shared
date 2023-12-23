@@ -12,6 +12,7 @@ _$BillItemTemplateModelImpl _$$BillItemTemplateModelImplFromJson(
       reference: json['reference'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
+      category: json['category'] as String?,
       price: (json['price'] as num).toDouble(),
       enabled: json['enabled'] as bool? ?? true,
     );
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$BillItemTemplateModelImplToJson(
       'reference': instance.reference,
       'name': instance.name,
       'description': instance.description,
+      'category': instance.category,
       'price': instance.price,
       'enabled': instance.enabled,
     };

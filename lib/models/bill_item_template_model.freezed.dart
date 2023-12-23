@@ -24,6 +24,7 @@ mixin _$BillItemTemplateModel {
   String? get reference => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   bool get enabled => throw _privateConstructorUsedError;
 
@@ -43,6 +44,7 @@ abstract class $BillItemTemplateModelCopyWith<$Res> {
       {String? reference,
       String name,
       String? description,
+      String? category,
       double price,
       bool enabled});
 }
@@ -64,6 +66,7 @@ class _$BillItemTemplateModelCopyWithImpl<$Res,
     Object? reference = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? category = freezed,
     Object? price = null,
     Object? enabled = null,
   }) {
@@ -79,6 +82,10 @@ class _$BillItemTemplateModelCopyWithImpl<$Res,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String?,
       price: null == price
           ? _value.price
@@ -105,6 +112,7 @@ abstract class _$$BillItemTemplateModelImplCopyWith<$Res>
       {String? reference,
       String name,
       String? description,
+      String? category,
       double price,
       bool enabled});
 }
@@ -124,6 +132,7 @@ class __$$BillItemTemplateModelImplCopyWithImpl<$Res>
     Object? reference = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? category = freezed,
     Object? price = null,
     Object? enabled = null,
   }) {
@@ -139,6 +148,10 @@ class __$$BillItemTemplateModelImplCopyWithImpl<$Res>
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
               as String?,
       price: null == price
           ? _value.price
@@ -159,6 +172,7 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
       {this.reference,
       required this.name,
       this.description,
+      this.category,
       required this.price,
       this.enabled = true});
 
@@ -172,6 +186,8 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
   @override
   final String? description;
   @override
+  final String? category;
+  @override
   final double price;
   @override
   @JsonKey()
@@ -179,11 +195,11 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
 
   @override
   String toString() {
-    return 'BillItemTemplateModel(reference: $reference, name: $name, description: $description, price: $price, enabled: $enabled)';
+    return 'BillItemTemplateModel(reference: $reference, name: $name, description: $description, category: $category, price: $price, enabled: $enabled)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BillItemTemplateModelImpl &&
@@ -192,14 +208,16 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.enabled, enabled) || other.enabled == enabled));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, reference, name, description, price, enabled);
+  int get hashCode => Object.hash(
+      runtimeType, reference, name, description, category, price, enabled);
 
   @JsonKey(ignore: true)
   @override
@@ -221,6 +239,7 @@ abstract class _BillItemTemplateModel implements BillItemTemplateModel {
       {final String? reference,
       required final String name,
       final String? description,
+      final String? category,
       required final double price,
       final bool enabled}) = _$BillItemTemplateModelImpl;
 
@@ -233,6 +252,8 @@ abstract class _BillItemTemplateModel implements BillItemTemplateModel {
   String get name;
   @override
   String? get description;
+  @override
+  String? get category;
   @override
   double get price;
   @override

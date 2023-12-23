@@ -293,7 +293,7 @@ class _$BillingItemModelImpl implements _BillingItemModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BillingItemModelImpl &&

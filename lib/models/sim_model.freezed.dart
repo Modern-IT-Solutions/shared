@@ -354,7 +354,7 @@ class _$SimModelImpl implements _SimModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SimModelImpl &&

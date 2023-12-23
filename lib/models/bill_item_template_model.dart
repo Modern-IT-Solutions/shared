@@ -11,6 +11,7 @@ class BillItemTemplateModel with _$BillItemTemplateModel {
     String? reference,
     required String name,
     String? description,
+    String? category,
     required double price,
     @Default(true) bool enabled,
   }) = _BillItemTemplateModel;
