@@ -8,6 +8,7 @@ part 'bill_item_template_model.g.dart';
 class BillItemTemplateModel with _$BillItemTemplateModel {
 
   factory BillItemTemplateModel({
+    String? photoUrl,
     String? reference,
     required String name,
     String? description,

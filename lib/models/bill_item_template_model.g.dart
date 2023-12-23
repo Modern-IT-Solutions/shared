@@ -9,6 +9,7 @@ part of 'bill_item_template_model.dart';
 _$BillItemTemplateModelImpl _$$BillItemTemplateModelImplFromJson(
         Map<String, dynamic> json) =>
     _$BillItemTemplateModelImpl(
+      photoUrl: json['photoUrl'] as String?,
       reference: json['reference'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
@@ -20,6 +21,7 @@ _$BillItemTemplateModelImpl _$$BillItemTemplateModelImplFromJson(
 Map<String, dynamic> _$$BillItemTemplateModelImplToJson(
         _$BillItemTemplateModelImpl instance) =>
     <String, dynamic>{
+      'photoUrl': instance.photoUrl,
       'reference': instance.reference,
       'name': instance.name,
       'description': instance.description,

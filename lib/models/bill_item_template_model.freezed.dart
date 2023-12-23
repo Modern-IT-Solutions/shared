@@ -21,6 +21,7 @@ BillItemTemplateModel _$BillItemTemplateModelFromJson(
 
 /// @nodoc
 mixin _$BillItemTemplateModel {
+  String? get photoUrl => throw _privateConstructorUsedError;
   String? get reference => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $BillItemTemplateModelCopyWith<$Res> {
       _$BillItemTemplateModelCopyWithImpl<$Res, BillItemTemplateModel>;
   @useResult
   $Res call(
-      {String? reference,
+      {String? photoUrl,
+      String? reference,
       String name,
       String? description,
       String? category,
@@ -63,6 +65,7 @@ class _$BillItemTemplateModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? photoUrl = freezed,
     Object? reference = freezed,
     Object? name = null,
     Object? description = freezed,
@@ -71,6 +74,10 @@ class _$BillItemTemplateModelCopyWithImpl<$Res,
     Object? enabled = null,
   }) {
     return _then(_value.copyWith(
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       reference: freezed == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -109,7 +116,8 @@ abstract class _$$BillItemTemplateModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? reference,
+      {String? photoUrl,
+      String? reference,
       String name,
       String? description,
       String? category,
@@ -129,6 +137,7 @@ class __$$BillItemTemplateModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? photoUrl = freezed,
     Object? reference = freezed,
     Object? name = null,
     Object? description = freezed,
@@ -137,6 +146,10 @@ class __$$BillItemTemplateModelImplCopyWithImpl<$Res>
     Object? enabled = null,
   }) {
     return _then(_$BillItemTemplateModelImpl(
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       reference: freezed == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
@@ -169,7 +182,8 @@ class __$$BillItemTemplateModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
   _$BillItemTemplateModelImpl(
-      {this.reference,
+      {this.photoUrl,
+      this.reference,
       required this.name,
       this.description,
       this.category,
@@ -179,6 +193,8 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
   factory _$BillItemTemplateModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BillItemTemplateModelImplFromJson(json);
 
+  @override
+  final String? photoUrl;
   @override
   final String? reference;
   @override
@@ -195,7 +211,7 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
 
   @override
   String toString() {
-    return 'BillItemTemplateModel(reference: $reference, name: $name, description: $description, category: $category, price: $price, enabled: $enabled)';
+    return 'BillItemTemplateModel(photoUrl: $photoUrl, reference: $reference, name: $name, description: $description, category: $category, price: $price, enabled: $enabled)';
   }
 
   @override
@@ -203,6 +219,8 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BillItemTemplateModelImpl &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl) &&
             (identical(other.reference, reference) ||
                 other.reference == reference) &&
             (identical(other.name, name) || other.name == name) &&
@@ -216,8 +234,8 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, reference, name, description, category, price, enabled);
+  int get hashCode => Object.hash(runtimeType, photoUrl, reference, name,
+      description, category, price, enabled);
 
   @JsonKey(ignore: true)
   @override
@@ -236,7 +254,8 @@ class _$BillItemTemplateModelImpl implements _BillItemTemplateModel {
 
 abstract class _BillItemTemplateModel implements BillItemTemplateModel {
   factory _BillItemTemplateModel(
-      {final String? reference,
+      {final String? photoUrl,
+      final String? reference,
       required final String name,
       final String? description,
       final String? category,
@@ -246,6 +265,8 @@ abstract class _BillItemTemplateModel implements BillItemTemplateModel {
   factory _BillItemTemplateModel.fromJson(Map<String, dynamic> json) =
       _$BillItemTemplateModelImpl.fromJson;
 
+  @override
+  String? get photoUrl;
   @override
   String? get reference;
   @override
