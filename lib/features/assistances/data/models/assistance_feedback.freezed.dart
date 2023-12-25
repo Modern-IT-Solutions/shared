@@ -21,7 +21,8 @@ AssistanceFeedback _$AssistanceFeedbackFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AssistanceFeedback {
   String? get note => throw _privateConstructorUsedError; // rate
-  double get rate => throw _privateConstructorUsedError; // metadata
+  double get rate => throw _privateConstructorUsedError; // created by
+  ProfileModel get profile => throw _privateConstructorUsedError; // metadata
   Map<String, dynamic> get metadata => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,13 @@ abstract class $AssistanceFeedbackCopyWith<$Res> {
           AssistanceFeedback value, $Res Function(AssistanceFeedback) then) =
       _$AssistanceFeedbackCopyWithImpl<$Res, AssistanceFeedback>;
   @useResult
-  $Res call({String? note, double rate, Map<String, dynamic> metadata});
+  $Res call(
+      {String? note,
+      double rate,
+      ProfileModel profile,
+      Map<String, dynamic> metadata});
+
+  $ProfileModelCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -54,6 +61,7 @@ class _$AssistanceFeedbackCopyWithImpl<$Res, $Val extends AssistanceFeedback>
   $Res call({
     Object? note = freezed,
     Object? rate = null,
+    Object? profile = null,
     Object? metadata = null,
   }) {
     return _then(_value.copyWith(
@@ -65,11 +73,23 @@ class _$AssistanceFeedbackCopyWithImpl<$Res, $Val extends AssistanceFeedback>
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
               as double,
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as ProfileModel,
       metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileModelCopyWith<$Res> get profile {
+    return $ProfileModelCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value) as $Val);
+    });
   }
 }
 
@@ -81,7 +101,14 @@ abstract class _$$AssistanceFeedbackImplCopyWith<$Res>
       __$$AssistanceFeedbackImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? note, double rate, Map<String, dynamic> metadata});
+  $Res call(
+      {String? note,
+      double rate,
+      ProfileModel profile,
+      Map<String, dynamic> metadata});
+
+  @override
+  $ProfileModelCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -97,6 +124,7 @@ class __$$AssistanceFeedbackImplCopyWithImpl<$Res>
   $Res call({
     Object? note = freezed,
     Object? rate = null,
+    Object? profile = null,
     Object? metadata = null,
   }) {
     return _then(_$AssistanceFeedbackImpl(
@@ -108,6 +136,10 @@ class __$$AssistanceFeedbackImplCopyWithImpl<$Res>
           ? _value.rate
           : rate // ignore: cast_nullable_to_non_nullable
               as double,
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as ProfileModel,
       metadata: null == metadata
           ? _value._metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -122,6 +154,7 @@ class _$AssistanceFeedbackImpl implements _AssistanceFeedback {
   _$AssistanceFeedbackImpl(
       {this.note,
       required this.rate,
+      required this.profile,
       final Map<String, dynamic> metadata = const {}})
       : _metadata = metadata;
 
@@ -133,6 +166,9 @@ class _$AssistanceFeedbackImpl implements _AssistanceFeedback {
 // rate
   @override
   final double rate;
+// created by
+  @override
+  final ProfileModel profile;
 // metadata
   final Map<String, dynamic> _metadata;
 // metadata
@@ -146,7 +182,7 @@ class _$AssistanceFeedbackImpl implements _AssistanceFeedback {
 
   @override
   String toString() {
-    return 'AssistanceFeedback(note: $note, rate: $rate, metadata: $metadata)';
+    return 'AssistanceFeedback(note: $note, rate: $rate, profile: $profile, metadata: $metadata)';
   }
 
   @override
@@ -156,13 +192,14 @@ class _$AssistanceFeedbackImpl implements _AssistanceFeedback {
             other is _$AssistanceFeedbackImpl &&
             (identical(other.note, note) || other.note == note) &&
             (identical(other.rate, rate) || other.rate == rate) &&
+            (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other._metadata, _metadata));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, note, rate, const DeepCollectionEquality().hash(_metadata));
+  int get hashCode => Object.hash(runtimeType, note, rate, profile,
+      const DeepCollectionEquality().hash(_metadata));
 
   @JsonKey(ignore: true)
   @override
@@ -183,6 +220,7 @@ abstract class _AssistanceFeedback implements AssistanceFeedback {
   factory _AssistanceFeedback(
       {final String? note,
       required final double rate,
+      required final ProfileModel profile,
       final Map<String, dynamic> metadata}) = _$AssistanceFeedbackImpl;
 
   factory _AssistanceFeedback.fromJson(Map<String, dynamic> json) =
@@ -192,6 +230,8 @@ abstract class _AssistanceFeedback implements AssistanceFeedback {
   String? get note;
   @override // rate
   double get rate;
+  @override // created by
+  ProfileModel get profile;
   @override // metadata
   Map<String, dynamic> get metadata;
   @override

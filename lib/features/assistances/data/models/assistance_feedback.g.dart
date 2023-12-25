@@ -11,6 +11,7 @@ _$AssistanceFeedbackImpl _$$AssistanceFeedbackImplFromJson(
     _$AssistanceFeedbackImpl(
       note: json['note'] as String?,
       rate: (json['rate'] as num).toDouble(),
+      profile: ProfileModel.fromJson(json['profile'] as Map<String, dynamic>),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
     );
 
@@ -19,5 +20,6 @@ Map<String, dynamic> _$$AssistanceFeedbackImplToJson(
     <String, dynamic>{
       'note': instance.note,
       'rate': instance.rate,
+      'profile': instance.profile.toJson(),
       'metadata': instance.metadata,
     };

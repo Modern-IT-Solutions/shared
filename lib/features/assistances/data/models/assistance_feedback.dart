@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:shared/shared.dart';
 
 part 'assistance_feedback.freezed.dart';
 part 'assistance_feedback.g.dart';
@@ -10,6 +11,8 @@ class AssistanceFeedback with _$AssistanceFeedback {
     String? note,
     // rate
     required double rate,
+    // created by
+    required ProfileModel profile,
     // metadata
     @Default({}) Map<String,dynamic> metadata,    
   }) = _AssistanceFeedback;

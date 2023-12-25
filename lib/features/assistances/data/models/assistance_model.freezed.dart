@@ -32,6 +32,8 @@ mixin _$AssistanceModel {
   List<AttachmentModel> get attachments => throw _privateConstructorUsedError;
   ProfileModel? get reviewer => throw _privateConstructorUsedError;
   InterventionModel? get intervention =>
+      throw _privateConstructorUsedError; // feedback
+  AssistanceFeedback? get feedback =>
       throw _privateConstructorUsedError; // metadata
   Map<String, dynamic> get metadata => throw _privateConstructorUsedError;
   @NullableTimestampDateTimeSerializer()
@@ -66,6 +68,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
       List<AttachmentModel> attachments,
       ProfileModel? reviewer,
       InterventionModel? intervention,
+      AssistanceFeedback? feedback,
       Map<String, dynamic> metadata,
       @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
       @TimestampDateTimeSerializer() DateTime createdAt,
@@ -75,6 +78,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
   $StationModelCopyWith<$Res> get station;
   $ProfileModelCopyWith<$Res>? get reviewer;
   $InterventionModelCopyWith<$Res>? get intervention;
+  $AssistanceFeedbackCopyWith<$Res>? get feedback;
 }
 
 /// @nodoc
@@ -100,6 +104,7 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
     Object? attachments = null,
     Object? reviewer = freezed,
     Object? intervention = freezed,
+    Object? feedback = freezed,
     Object? metadata = null,
     Object? nextInterventionDate = freezed,
     Object? createdAt = null,
@@ -147,6 +152,10 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
           ? _value.intervention
           : intervention // ignore: cast_nullable_to_non_nullable
               as InterventionModel?,
+      feedback: freezed == feedback
+          ? _value.feedback
+          : feedback // ignore: cast_nullable_to_non_nullable
+              as AssistanceFeedback?,
       metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -201,6 +210,18 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
       return _then(_value.copyWith(intervention: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AssistanceFeedbackCopyWith<$Res>? get feedback {
+    if (_value.feedback == null) {
+      return null;
+    }
+
+    return $AssistanceFeedbackCopyWith<$Res>(_value.feedback!, (value) {
+      return _then(_value.copyWith(feedback: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -222,6 +243,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
       List<AttachmentModel> attachments,
       ProfileModel? reviewer,
       InterventionModel? intervention,
+      AssistanceFeedback? feedback,
       Map<String, dynamic> metadata,
       @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
       @TimestampDateTimeSerializer() DateTime createdAt,
@@ -234,6 +256,8 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
   $ProfileModelCopyWith<$Res>? get reviewer;
   @override
   $InterventionModelCopyWith<$Res>? get intervention;
+  @override
+  $AssistanceFeedbackCopyWith<$Res>? get feedback;
 }
 
 /// @nodoc
@@ -257,6 +281,7 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
     Object? attachments = null,
     Object? reviewer = freezed,
     Object? intervention = freezed,
+    Object? feedback = freezed,
     Object? metadata = null,
     Object? nextInterventionDate = freezed,
     Object? createdAt = null,
@@ -304,6 +329,10 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
           ? _value.intervention
           : intervention // ignore: cast_nullable_to_non_nullable
               as InterventionModel?,
+      feedback: freezed == feedback
+          ? _value.feedback
+          : feedback // ignore: cast_nullable_to_non_nullable
+              as AssistanceFeedback?,
       metadata: null == metadata
           ? _value._metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -342,6 +371,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       required final List<AttachmentModel> attachments,
       required this.reviewer,
       required this.intervention,
+      this.feedback,
       final Map<String, dynamic> metadata = const {},
       @NullableTimestampDateTimeSerializer() this.nextInterventionDate,
       @TimestampDateTimeSerializer() required this.createdAt,
@@ -395,6 +425,9 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   final ProfileModel? reviewer;
   @override
   final InterventionModel? intervention;
+// feedback
+  @override
+  final AssistanceFeedback? feedback;
 // metadata
   final Map<String, dynamic> _metadata;
 // metadata
@@ -421,7 +454,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
 
   @override
   String toString() {
-    return 'AssistanceModel(ref: $ref, station: $station, technicians: $technicians, techniciansRefs: $techniciansRefs, status: $status, date: $date, note: $note, attachments: $attachments, reviewer: $reviewer, intervention: $intervention, metadata: $metadata, nextInterventionDate: $nextInterventionDate, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'AssistanceModel(ref: $ref, station: $station, technicians: $technicians, techniciansRefs: $techniciansRefs, status: $status, date: $date, note: $note, attachments: $attachments, reviewer: $reviewer, intervention: $intervention, feedback: $feedback, metadata: $metadata, nextInterventionDate: $nextInterventionDate, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -444,6 +477,8 @@ class _$AssistanceModelImpl implements _AssistanceModel {
                 other.reviewer == reviewer) &&
             (identical(other.intervention, intervention) ||
                 other.intervention == intervention) &&
+            (identical(other.feedback, feedback) ||
+                other.feedback == feedback) &&
             const DeepCollectionEquality().equals(other._metadata, _metadata) &&
             (identical(other.nextInterventionDate, nextInterventionDate) ||
                 other.nextInterventionDate == nextInterventionDate) &&
@@ -469,6 +504,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       const DeepCollectionEquality().hash(_attachments),
       reviewer,
       intervention,
+      feedback,
       const DeepCollectionEquality().hash(_metadata),
       nextInterventionDate,
       createdAt,
@@ -502,6 +538,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           required final List<AttachmentModel> attachments,
           required final ProfileModel? reviewer,
           required final InterventionModel? intervention,
+          final AssistanceFeedback? feedback,
           final Map<String, dynamic> metadata,
           @NullableTimestampDateTimeSerializer()
           final DateTime? nextInterventionDate,
@@ -535,6 +572,8 @@ abstract class _AssistanceModel implements AssistanceModel {
   ProfileModel? get reviewer;
   @override
   InterventionModel? get intervention;
+  @override // feedback
+  AssistanceFeedback? get feedback;
   @override // metadata
   Map<String, dynamic> get metadata;
   @override

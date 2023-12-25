@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:shared/features/assistances/data/models/assistance_feedback.dart';
 import 'package:shared/models/attachment_model.dart';
 import 'package:shared/models/intervention_model.dart';
 import 'package:shared/shared.dart';
@@ -25,6 +26,8 @@ class AssistanceModel with _$AssistanceModel implements Model {
     required List<AttachmentModel> attachments,
     required ProfileModel? reviewer,
     required InterventionModel? intervention,
+    // feedback
+    AssistanceFeedback? feedback,
     // metadata
     @Default({}) Map<String,dynamic> metadata,    
     @NullableTimestampDateTimeSerializer()
