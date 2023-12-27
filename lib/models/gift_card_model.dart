@@ -82,33 +82,36 @@ class GiftCardModel with _$GiftCardModel implements Model {
             map: (m) => m.transaction?.createdAt,
             group: FieldGroup.metadata,
           ),
+          
+
+
           FieldDescription(
-            name: "created At",
+            name: "ref",
+            path: "ref",
+            type: FieldType.text,
+            map: (m) => m.ref,
+            group: FieldGroup.metadata,
+          ),
+          FieldDescription(
+            name: "createdAt",
             path: "createdAt",
             type: FieldType.datetime,
             map: (m) => m.createdAt,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
-            name: "updated At",
+            name: "updatedAt",
             path: "updatedAt",
             type: FieldType.datetime,
             map: (m) => m.updatedAt,
             group: FieldGroup.metadata,
           ),
           FieldDescription(
-            name: "deleted At",
+            name: "deletedAt",
             path: "deletedAt",
             nullable: true,
             type: FieldType.datetime,
             map: (m) => m.deletedAt,
-            group: FieldGroup.metadata,
-          ),
-          FieldDescription(
-            name: "reference path",
-            path: "ref",
-            type: FieldType.reference,
-            map: (m) => m.ref,
             group: FieldGroup.metadata,
           ),
         },

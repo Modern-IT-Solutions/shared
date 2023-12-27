@@ -71,7 +71,7 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
     };
 
 const _$AssistanceStatusEnumMap = {
-  AssistanceStatus.draft: 'draft',
+  // AssistanceStatus.draft: 'draft',
   AssistanceStatus.pending: 'pending',
   AssistanceStatus.inReview: 'inReview',
   AssistanceStatus.resolved: 'resolved',

@@ -236,6 +236,13 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             ],
                           ),
                         ),
+                  
+                  titleTextStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  iconTheme: const IconThemeData(color: Colors.white),
                   title: const Text('Update Station'),
                   leading: const BackButton(),
                   actions: [
@@ -639,6 +646,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       ),
                                   ],
                                 ),
+                                SizedBox(height: 24),
                           ],
                         ),
                       ),

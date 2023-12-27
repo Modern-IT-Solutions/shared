@@ -61,6 +61,38 @@ class TransactionModel with _$TransactionModel implements Model {
             type: FieldType.listText,
             map: (m) => m.uids,
           ),
+          
+          FieldDescription(
+            name: "from",
+            path: "from",
+            type: FieldType.reference,
+            map: (m) => m.from,
+            group: FieldGroup.hidden,
+          ),
+          FieldDescription(
+            name: "to",
+            path: "to",
+            type: FieldType.reference,
+            map: (m) => m.to,
+            group: FieldGroup.hidden,
+          ),
+          FieldDescription(
+            name: "type",
+            path: "type",
+            type: FieldType.text,
+            map: (m) => m.type,
+            group: FieldGroup.secondary,
+          ),
+
+
+
+          FieldDescription(
+            name: "ref",
+            path: "ref",
+            type: FieldType.text,
+            map: (m) => m.ref,
+            group: FieldGroup.metadata,
+          ),
           FieldDescription(
             name: "createdAt",
             path: "createdAt",
@@ -82,34 +114,6 @@ class TransactionModel with _$TransactionModel implements Model {
             type: FieldType.datetime,
             map: (m) => m.deletedAt,
             group: FieldGroup.metadata,
-          ),
-          FieldDescription(
-            name: "ref",
-            path: "ref",
-            type: FieldType.reference,
-            map: (m) => m.ref,
-            group: FieldGroup.metadata,
-          ),
-          FieldDescription(
-            name: "from",
-            path: "from",
-            type: FieldType.reference,
-            map: (m) => m.from,
-            group: FieldGroup.hidden,
-          ),
-          FieldDescription(
-            name: "to",
-            path: "to",
-            type: FieldType.reference,
-            map: (m) => m.to,
-            group: FieldGroup.hidden,
-          ),
-          FieldDescription(
-            name: "type",
-            path: "type",
-            type: FieldType.text,
-            map: (m) => m.type,
-            group: FieldGroup.secondary,
           ),
         },
         name: "Transaction",

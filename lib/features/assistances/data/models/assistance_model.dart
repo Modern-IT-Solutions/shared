@@ -7,6 +7,7 @@ import 'package:shared/models/intervention_model.dart';
 import 'package:shared/shared.dart';
 
 import '../../../stations/stations.dart';
+import 'assistant_modification_history.dart';
 
 part 'assistance_model.freezed.dart';
 part 'assistance_model.g.dart';
@@ -46,19 +47,114 @@ class AssistanceModel with _$AssistanceModel implements Model {
   static ModelDescription<AssistanceModel> get description => ModelDescription<AssistanceModel>(
         fields: {
           FieldDescription(
-            name: "station",
-            path: "station",
+            name: "station name",
+            path: "station.name",
             nullable: true,
             type: FieldType.text,
             map: (m) => m.station.name,
             group: FieldGroup.primary,
           ),
           FieldDescription(
-            name: "reviewer",
-            path: "reviewer",
+            name: "reviewer name",
+            path: "reviewer.displayName",
             type: FieldType.text,
             map: (m) => m.reviewer?.displayName,
             group: FieldGroup.primary,
+          ),
+          FieldDescription(
+            name: "reviewer uid",
+            path: "reviewer.uid",
+            type: FieldType.text,
+            map: (m) => m.reviewer?.uid,
+            group: FieldGroup.primary,
+          ),
+          // phoneNumber
+          FieldDescription(
+            name: "reviewer phoneNumber",
+            path: "reviewer.phoneNumber",
+            type: FieldType.text,
+            map: (m) => m.reviewer?.phoneNumber,
+            group: FieldGroup.primary,
+          ),
+          // email
+          FieldDescription(
+            name: "reviewer email",
+            path: "reviewer.email",
+            type: FieldType.text,
+            map: (m) => m.reviewer?.email,
+            group: FieldGroup.primary,
+          ),
+          // intervention
+          FieldDescription(
+            name: "intervention ref",
+            path: "intervention.ref",
+            type: FieldType.text,
+            map: (m) => m.intervention?.ref.path,
+            group: FieldGroup.primary,
+          ),
+          // intervention createdAt
+          FieldDescription(
+            name: "intervention createdAt",
+            path: "intervention.createdAt",
+            type: FieldType.datetime,
+            map: (m) => m.intervention?.createdAt,
+            group: FieldGroup.primary,
+          ),
+          // intervention updatedAt
+          FieldDescription(
+            name: "intervention updatedAt",
+            path: "intervention.updatedAt",
+            type: FieldType.datetime,
+            map: (m) => m.intervention?.updatedAt,
+            group: FieldGroup.primary,
+          ),  
+          // intervention deletedAt
+          FieldDescription(
+            name: "intervention deletedAt",
+            path: "intervention.deletedAt",
+            type: FieldType.datetime,
+            map: (m) => m.intervention?.deletedAt,
+            group: FieldGroup.primary,
+          ),
+          // intervention status
+          FieldDescription(
+            name: "intervention status",
+            path: "intervention.status",
+            type: FieldType.text,
+            map: (m) => m.intervention?.status.name,
+            group: FieldGroup.primary,
+          ),
+
+
+
+          FieldDescription(
+            name: "Assistance ref",
+            path: "ref",
+            type: FieldType.text,
+            map: (m) => m.ref,
+            group: FieldGroup.metadata,
+          ),
+          FieldDescription(
+            name: "Assistance createdAt",
+            path: "createdAt",
+            type: FieldType.datetime,
+            map: (m) => m.createdAt,
+            group: FieldGroup.metadata,
+          ),
+          FieldDescription(
+            name: "Assistance updatedAt",
+            path: "updatedAt",
+            type: FieldType.datetime,
+            map: (m) => m.updatedAt,
+            group: FieldGroup.metadata,
+          ),
+          FieldDescription(
+            name: "Assistance deletedAt",
+            path: "deletedAt",
+            nullable: true,
+            type: FieldType.datetime,
+            map: (m) => m.deletedAt,
+            group: FieldGroup.metadata,
           ),
         },
         name: "Assistances Requests",
@@ -78,7 +174,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
 ///  it contains : [Draft], [Pending], [InReview], [Resolved]
 enum AssistanceStatus {
   /// The request assistance is in draft.
-  draft(Colors.orangeAccent),
+  // draft(Colors.orangeAccent),
 
   /// The request assistance is pending.
   pending(Colors.orange),
@@ -97,12 +193,27 @@ enum AssistanceStatus {
 
   String toFrenchName() {
     var map = {
-      AssistanceStatus.draft: "Broullion",
+      // AssistanceStatus.draft: "Broullion",
       AssistanceStatus.pending: "En attente",
       AssistanceStatus.inReview: "En instance",
       AssistanceStatus.resolved: "Résolue",
       AssistanceStatus.cancelled: "Annulée",
     };
     return map[this] ?? "";
+  }
+}
+
+
+// extention for AssistantModificationHistory
+extension AssistantHistoryEx on AssistanceModel {
+  List<AssistantModificationHistory> get timeline {
+    var list = <AssistantModificationHistory>[];
+    if (metadata.containsKey("timeline")) {
+      var timeline = metadata["timeline"] as List;
+      for (var item in timeline) {
+        list.add(AssistantModificationHistory.fromJson(item));
+      }
+    }
+    return list;
   }
 }
