@@ -232,9 +232,13 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
               // reviewer
               if (widget.model?.feedback != null)
                 Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  margin: const EdgeInsets.only(
+                    bottom: 14,
+                    left: 24,
+                    right: 24,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -281,7 +285,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                     ),
                                   ),
                                   const SizedBox(width: 10),
-                                  Text(widget.model!.feedback!.rate.toStringAsFixed(1)),
+                                  Text((widget.model!.feedback!.rate * 5).toStringAsFixed(1)),
                                 ],
                               ),
                               Divider(),
