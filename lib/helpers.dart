@@ -429,6 +429,8 @@ class Roles {
           Role('client'),
         ] else if (FirebaseAuth.instance.app.options.projectId == 'ironparkapp') ...[
           Role('client'),
+        ] else if (FirebaseAuth.instance.app.options.projectId == 'roya-alakaria') ...[
+          Role('client'),
         ],
       ];
 }
