@@ -293,7 +293,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             ],
                           ),
                           onTap: () {
-                            // showDetailsProfileModelDailog(context, widget.model!.feedback!.reviewer!);
+                            showDetailsProfileModelDailog(context, widget.model!.feedback!.profile);
                           },
                         ),
                         // const SizedBox(height: 10),
@@ -436,7 +436,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   },
                 ),
               ),
-              Divider(),
+              // Divider(),
               if (false) ...[
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24),

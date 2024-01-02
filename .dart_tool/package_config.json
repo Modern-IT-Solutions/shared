@@ -531,7 +531,7 @@
     },
     {
       "name": "flutter_local_notifications",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_local_notifications-16.2.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_local_notifications-16.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -951,9 +951,9 @@
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/path_provider_android-2.2.1",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/path_provider_android-2.2.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "path_provider_foundation",
@@ -1490,7 +1490,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-12-27T18:57:56.250584Z",
+  "generated": "2024-01-02T18:38:42.248451Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }
