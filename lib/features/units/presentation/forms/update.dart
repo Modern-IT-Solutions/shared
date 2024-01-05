@@ -508,7 +508,7 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                                   IndexViewFilter(
                                     name: "Teachers",
                                     active: true,
-                                    local: (model) => model.roles.contains(Role("teacher")),
+                                      local: (model) => model.roles.map((e) => e.name).contains("teacher"),
                                     remote: (query) => query.where("roles", arrayContains: "teacher"),
                                     strict: false,
                                     fixed: true,

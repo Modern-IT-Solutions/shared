@@ -406,35 +406,6 @@ extension PreferencesEx on PreferencesService {
   }
 }
 
-/// extension on [Role]
-class Roles {
-  static Role admin = Role('admin');
-  static Role student = Role('student');
-  static Role teacher = Role('teacher');
-  static Role parent = Role('parent');
-  static Role support = Role('support');
-  static Role supplier = Role('supplier');
-
-  // values
-  static List<Role> get values => [
-        Role('admin'),
-        if (FirebaseAuth.instance.app.options.projectId == 'zed-academy-a9e43') ...[
-          Role('student'),
-          Role('teacher'),
-          Role('parent'),
-          Role('support'),
-          Role('supplier'),
-        ] else if (FirebaseAuth.instance.app.options.projectId == 'tadakholati-9032e') ...[
-          Role('technician'),
-          Role('client'),
-        ] else if (FirebaseAuth.instance.app.options.projectId == 'ironparkapp') ...[
-          Role('client'),
-        ] else if (FirebaseAuth.instance.app.options.projectId == 'roya-alakaria') ...[
-          Role('client'),
-        ],
-      ];
-}
-
 /// [getBillItemsList]
 /// list of [BillItemTemplateModel] for auto complete in client app
 Future<List<BillItemTemplateModel>> getBillItemsList() async {

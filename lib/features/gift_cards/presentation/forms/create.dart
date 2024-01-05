@@ -395,7 +395,7 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
                                   IndexViewFilter(
                                     name: "Suppliers",
                                     active: true,
-                                    local: (model) => model.roles.contains(Role("supplier")),
+                                    local: (model) => model.roles.map((e) => e.name).contains("supplier"),
                                     remote: (query) => query.where("roles", arrayContains: "supplier"),
                                     strict: false,
                                     fixed: true,

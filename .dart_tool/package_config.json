@@ -201,7 +201,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-c9f0d4b86fd2d658473edf5d322ab70919441657/",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-30d236d55dfb4438dbd4fad0943440db52f67df9/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1046,6 +1046,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "puncher",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/puncher-0.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "recase",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/recase-4.1.0",
       "packageUri": "lib/",
@@ -1490,7 +1496,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-02T18:38:42.248451Z",
+  "generated": "2024-01-05T14:41:33.248922Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }

@@ -450,7 +450,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                         IndexViewFilter(
                           name: "Technicians",
                           active: true,
-                          local: (model) => model.roles.contains(Role("technician")),
+                                    local: (model) => model.roles.map((e) => e.name).contains("technician"),
+
                           remote: (query) => query.where("roles", arrayContains: "technician"),
                           strict: false,
                           fixed: true,

@@ -511,7 +511,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                     IndexViewFilter(
                                       name: "Technicians",
                                       active: true,
-                                      local: (model) => model.roles.contains(Role("technician")),
+                                      local: (model) => model.roles.map((e) => e.name).contains("technician"),
                                       remote: (query) => query.where("roles", arrayContains: "technician"),
                                       strict: false,
                                       fixed: true,
@@ -575,7 +575,7 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                     IndexViewFilter(
                                       name: "Clients",
                                       active: true,
-                                      local: (model) => model.roles.contains(Role("client")),
+                                      local: (model) => model.roles.map((e) => e.name).contains("client"),
                                       remote: (query) => query.where("roles", arrayContains: "client"),
                                       strict: false,
                                       fixed: true,
