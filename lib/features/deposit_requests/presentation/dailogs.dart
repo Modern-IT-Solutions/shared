@@ -318,8 +318,6 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                 Navigator.of(context).pop(depositRequest);
               },
               actions: [
-                // edit
-
                 IconButton(
                   onPressed: () {
                     showDepositRequestModelHistoryDailog(context, drmodel);
@@ -514,11 +512,12 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                                         MaterialPageRoute(
                                           fullscreenDialog: true,
                                           builder: (context) {
-                                            return CompereAttatchmentViewer(images: [
-                                              attachment,
-                                              if (drmodel.attachments?.first.src.nullIfEmpty != null)
-                                                drmodel.attachments!.first.src,
-                                            ],);
+                                            return CompereAttatchmentViewer(
+                                              images: [
+                                                attachment,
+                                                if (drmodel.attachments?.first.src.nullIfEmpty != null) drmodel.attachments!.first.src,
+                                              ],
+                                            );
                                           },
                                         ),
                                       );
@@ -817,4 +816,3 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
     },
   );
 }
-

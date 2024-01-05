@@ -490,8 +490,8 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: ListTile(
                           leading: request.teacher?.photoUrl.nullIfEmpty != null
-                              ? CircleAvatar(
-                                  backgroundImage: NetworkImage(request.teacher!.photoUrl),
+                              ? ProfileAvatar(
+                                  profile: request.teacher!,
                                 )
                               : const Icon(FluentIcons.people_team_24_regular),
                           contentPadding: EdgeInsets.only(left: 12),
