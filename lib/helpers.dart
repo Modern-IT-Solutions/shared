@@ -8,10 +8,15 @@ export 'package:lib/utils/platforms.dart';
 import 'models/event_preference.dart';
 import 'models/slider_item_model.dart';
 import 'services/security.dart';
+import 'package:core/services/defaults/settings/settings.dart';
 import 'dart:math';
 
 SecurityService getSecurity() {
   return Services.instance.get<SecurityService>()!;
+}
+
+SettingsService getSettings() {
+  return Services.instance.get<SettingsService>()!;
 }
 
 NotificationService getNotificationService() {

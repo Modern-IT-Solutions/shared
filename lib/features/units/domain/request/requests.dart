@@ -69,7 +69,7 @@ class UnitUpdateRequest<T extends UnitModel> extends UpdateRequest<T> {
       'color': color?.value,
       'discount': discount,
       'price': price,
-      'duration': duration?.inMinutes,
+      'duration': duration?.inMicroseconds,
       'fields': fields,
       'statistics': statistics?.toJson() ?? {},
       'subject': subject?.toJson(),

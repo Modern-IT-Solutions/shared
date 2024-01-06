@@ -1,15 +1,14 @@
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:lib/lib.dart';
 import 'package:shared/models/unit_model.dart';
 import 'package:shared/models/unit_statistics_model.dart';
 import 'package:shared/models/unit_subject_model.dart';
 import 'package:shared/shared.dart';
 
+import '../../data/models/units_settings_model.dart';
 import '../../domain/request/requests.dart';
 
 /// [UpdateUnitForm] is a form to update a new user
@@ -443,45 +442,56 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                       // ),
                       // const SizedBox(height: 10),
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: MenuAnchor(
-                          menuChildren: <Widget>[
-                            for (final item in UnitSubjectModel.values)
-                              MenuItemButton(
-                                leadingIcon: request.subject?.ref == item.ref ? const Icon(FluentIcons.checkmark_24_regular) : const Icon(FluentIcons.clear_formatting_24_regular),
-                                trailingIcon: Text(item.name.firstCharOrNull),
-                                child: Text(item.name),
-                                onPressed: request.subject == item
-                                    ? null
-                                    : () => setState(
-                                          () {
-                                            request.subject = item;
-                                          },
-                                        ),
-                              ),
-                          ],
-                          builder: (BuildContext context, MenuController controller, Widget? child) {
-                            return ListTile(
-                              leading: const Icon(FluentIcons.class_24_regular),
-                              contentPadding: EdgeInsets.only(left: 12),
-                              visualDensity: VisualDensity(vertical: -3),
-                              title: Text(request.subject?.name ?? "Select subject"),
-                              subtitle: Text("Select subject"),
-                              trailing: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
-                                child: const Icon(FluentIcons.chevron_down_24_regular),
-                              ),
-                              onTap: () {
-                                if (controller.isOpen) {
-                                  controller.close();
-                                } else {
-                                  controller.open();
-                                }
+                      FutureBuilder(
+                        future: getUnitsSettings(),
+                        builder: (context, snapshot) {
+                          List<String> subjects = snapshot.data?.subjects ?? [];
+                          print(subjects);
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: MenuAnchor(
+                              menuChildren: <Widget>[
+                                for (String item in subjects)
+                                  MenuItemButton(
+                                    child: Text(item),
+                                    onPressed: request.subject?.name == item
+                                        ? null
+                                        : () => setState(
+                                              () {
+                                                request.subject = UnitSubjectModel(
+                                                  // ref: ref, name: name, createdAt: createdAt, updatedAt: updatedAt
+                                                  ref: ModelRef("subjects/$item"),
+                                                  name: item,
+                                                  createdAt: DateTime.now(),
+                                                  updatedAt: DateTime.now(),
+                                                );
+                                              },
+                                            ),
+                                  ),
+                              ],
+                              builder: (BuildContext context, MenuController controller, Widget? child) {
+                                return ListTile(
+                                  leading: const Icon(FluentIcons.class_24_regular),
+                                  contentPadding: EdgeInsets.only(left: 12),
+                                  visualDensity: VisualDensity(vertical: -3),
+                                  title: Text(request.subject?.name ?? "Select subject"),
+                                  subtitle: Text("Select subject"),
+                                  trailing: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    child: const Icon(FluentIcons.chevron_down_24_regular),
+                                  ),
+                                  onTap: () {
+                                    if (controller.isOpen) {
+                                      controller.close();
+                                    } else {
+                                      controller.open();
+                                    }
+                                  },
+                                );
                               },
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        }
                       ),
                       const SizedBox(height: 10),
 
