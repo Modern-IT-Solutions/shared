@@ -13,7 +13,8 @@ class UnitsSettingsModel with _$UnitsSettingsModel implements Model {
     @TimestampDateTimeSerializer() required DateTime updatedAt,
     @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
     /// option model field
-    required List<String> subjects,
+    @Default([]) List<String> subjects,
+    @Default([]) List<String> fields,
   }) = _UnitsSettingsModel;
 
   factory UnitsSettingsModel.fromJson(Map<String, dynamic> json) => _$UnitsSettingsModelFromJson(json);
@@ -27,6 +28,7 @@ Future<UnitsSettingsModel?> getUnitsSettings() async {
         "createdAt": Timestamp.fromDate(DateTime.now()),
         "updatedAt": Timestamp.fromDate(DateTime.now()),
         "subjects": [],
+        "fields": [],
         ... data ?? {}
     };
   return UnitsSettingsModel.fromJson(settingsData);

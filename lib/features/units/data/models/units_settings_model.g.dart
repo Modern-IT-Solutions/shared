@@ -16,8 +16,14 @@ _$UnitsSettingsModelImpl _$$UnitsSettingsModelImplFromJson(
           const TimestampDateTimeSerializer().fromJson(json['updatedAt']),
       deletedAt: const NullableTimestampDateTimeSerializer()
           .fromJson(json['deletedAt']),
-      subjects:
-          (json['subjects'] as List<dynamic>).map((e) => e as String).toList(),
+      subjects: (json['subjects'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      fields: (json['fields'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$UnitsSettingsModelImplToJson(
@@ -31,4 +37,5 @@ Map<String, dynamic> _$$UnitsSettingsModelImplToJson(
       'deletedAt': const NullableTimestampDateTimeSerializer()
           .toJson(instance.deletedAt),
       'subjects': instance.subjects,
+      'fields': instance.fields,
     };

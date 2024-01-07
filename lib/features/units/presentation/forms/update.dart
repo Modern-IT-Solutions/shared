@@ -3,6 +3,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:recase/recase.dart';
 import 'package:shared/models/unit_model.dart';
 import 'package:shared/models/unit_statistics_model.dart';
 import 'package:shared/models/unit_subject_model.dart';
@@ -338,25 +339,69 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      AppTextFormField(
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        initialValue: request.fields?.join(","),
-                        onChanged: (v) {
-                          if (v.isEmpty) {
-                            request.fields = null;
-                          } else {
-                            request.fields = v.split(",");
-                          }
-                        },
-                        validator: FormBuilderValidators.compose([]),
-                        decoration: InputDecoration(
-                          errorText: _errors['fields'],
-                          prefixIcon: const SizedBox(child: Icon(FluentIcons.app_title_24_regular)),
-                          label: const Text('fields'),
-                          alignLabelWithHint: true,
-                          helperText: 'The fields of the item, required *',
-                        ),
+
+                      FutureBuilder(
+                        future: getUnitsSettings(),
+                        builder: (context, snapshot) {
+                          List<String> fields = snapshot.data?.fields ?? [
+                            "رياضيات",
+                            "علوم تجريبية",
+                            "تقني رياضي",
+                            "آداب و فلسفة",
+                          ];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: SizedBox(
+                              height: 60,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  const SizedBox(width: 24),
+                                  // selectable chips for roles
+                                  for (String field in fields) ...[
+                                    InputChip(
+                                      key: Key(field),
+                                      onSelected: (selected) {
+                                        setState(() {
+                                          if (selected) {
+                                            request.fields!.add(field);
+                                          } else {
+                                            request.fields!.remove(field);
+                                          }
+                                        });
+                                      },
+                                      selected: request.fields!.contains(field),
+                                      label: Text(field.titleCase),
+                                    ),
+                                    const SizedBox(width: 10)
+                                  ],
+                          
+                                  const SizedBox(width: 24),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
                       ),
+                      // AppTextFormField(
+                      //   margin: const EdgeInsets.symmetric(horizontal: 24),
+                      //   initialValue: request.fields?.join(","),
+                      //   onChanged: (v) {
+                      //     if (v.isEmpty) {
+                      //       request.fields = null;
+                      //     } else {
+                      //       request.fields = v.split(",");
+                      //     }
+                      //   },
+                      //   validator: FormBuilderValidators.compose([]),
+                      //   decoration: InputDecoration(
+                      //     errorText: _errors['fields'],
+                      //     prefixIcon: const SizedBox(child: Icon(FluentIcons.app_title_24_regular)),
+                      //     label: const Text('fields'),
+                      //     alignLabelWithHint: true,
+                      //     helperText: 'The fields of the item, required *',
+                      //   ),
+                      // ),
                       Divider(),
                       const ListTile(
                         leading: Icon(FluentIcons.money_24_regular),
@@ -445,7 +490,17 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                       FutureBuilder(
                         future: getUnitsSettings(),
                         builder: (context, snapshot) {
-                          List<String> subjects = snapshot.data?.subjects ?? [];
+                          List<String> subjects = snapshot.data?.subjects ?? [
+                            "الرياضيات",
+                            "اللغة العربية",
+                            "اللغة الفرنسية",
+                            "اللغة الانجليزية",
+                            "اللغة الاسبانية",
+                            "الفلسفة",
+                            "التاريخ والجغرافيا",
+                            "التربية الاسلامية",
+                            "الفيزياء",
+                          ];
                           print(subjects);
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),

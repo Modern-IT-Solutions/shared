@@ -270,7 +270,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: c61ae649c3b17de555c6a0429d8d236085d02772
+      resolved-ref: "6f328ed5db2433f85fa935489f9967b608983530"
       url: "https://github.com/Modern-IT-Solutions/core.git"
     source: git
     version: "0.0.1"

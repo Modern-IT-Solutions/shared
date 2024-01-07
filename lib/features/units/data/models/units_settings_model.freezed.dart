@@ -31,6 +31,7 @@ mixin _$UnitsSettingsModel {
 
   /// option model field
   List<String> get subjects => throw _privateConstructorUsedError;
+  List<String> get fields => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +50,8 @@ abstract class $UnitsSettingsModelCopyWith<$Res> {
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
-      List<String> subjects});
+      List<String> subjects,
+      List<String> fields});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$UnitsSettingsModelCopyWithImpl<$Res, $Val extends UnitsSettingsModel>
     Object? updatedAt = null,
     Object? deletedAt = freezed,
     Object? subjects = null,
+    Object? fields = null,
   }) {
     return _then(_value.copyWith(
       ref: null == ref
@@ -92,6 +95,10 @@ class _$UnitsSettingsModelCopyWithImpl<$Res, $Val extends UnitsSettingsModel>
           ? _value.subjects
           : subjects // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      fields: null == fields
+          ? _value.fields
+          : fields // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$UnitsSettingsModelImplCopyWith<$Res>
       @TimestampDateTimeSerializer() DateTime createdAt,
       @TimestampDateTimeSerializer() DateTime updatedAt,
       @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
-      List<String> subjects});
+      List<String> subjects,
+      List<String> fields});
 }
 
 /// @nodoc
@@ -128,6 +136,7 @@ class __$$UnitsSettingsModelImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? deletedAt = freezed,
     Object? subjects = null,
+    Object? fields = null,
   }) {
     return _then(_$UnitsSettingsModelImpl(
       ref: null == ref
@@ -150,6 +159,10 @@ class __$$UnitsSettingsModelImplCopyWithImpl<$Res>
           ? _value._subjects
           : subjects // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      fields: null == fields
+          ? _value._fields
+          : fields // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -162,8 +175,10 @@ class _$UnitsSettingsModelImpl implements _UnitsSettingsModel {
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
       @NullableTimestampDateTimeSerializer() this.deletedAt,
-      required final List<String> subjects})
-      : _subjects = subjects;
+      final List<String> subjects = const [],
+      final List<String> fields = const []})
+      : _subjects = subjects,
+        _fields = fields;
 
   factory _$UnitsSettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UnitsSettingsModelImplFromJson(json);
@@ -186,15 +201,25 @@ class _$UnitsSettingsModelImpl implements _UnitsSettingsModel {
 
   /// option model field
   @override
+  @JsonKey()
   List<String> get subjects {
     if (_subjects is EqualUnmodifiableListView) return _subjects;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_subjects);
   }
 
+  final List<String> _fields;
+  @override
+  @JsonKey()
+  List<String> get fields {
+    if (_fields is EqualUnmodifiableListView) return _fields;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_fields);
+  }
+
   @override
   String toString() {
-    return 'UnitsSettingsModel(ref: $ref, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, subjects: $subjects)';
+    return 'UnitsSettingsModel(ref: $ref, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, subjects: $subjects, fields: $fields)';
   }
 
   @override
@@ -209,13 +234,20 @@ class _$UnitsSettingsModelImpl implements _UnitsSettingsModel {
                 other.updatedAt == updatedAt) &&
             (identical(other.deletedAt, deletedAt) ||
                 other.deletedAt == deletedAt) &&
-            const DeepCollectionEquality().equals(other._subjects, _subjects));
+            const DeepCollectionEquality().equals(other._subjects, _subjects) &&
+            const DeepCollectionEquality().equals(other._fields, _fields));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, ref, createdAt, updatedAt,
-      deletedAt, const DeepCollectionEquality().hash(_subjects));
+  int get hashCode => Object.hash(
+      runtimeType,
+      ref,
+      createdAt,
+      updatedAt,
+      deletedAt,
+      const DeepCollectionEquality().hash(_subjects),
+      const DeepCollectionEquality().hash(_fields));
 
   @JsonKey(ignore: true)
   @override
@@ -238,7 +270,8 @@ abstract class _UnitsSettingsModel implements UnitsSettingsModel {
       @TimestampDateTimeSerializer() required final DateTime createdAt,
       @TimestampDateTimeSerializer() required final DateTime updatedAt,
       @NullableTimestampDateTimeSerializer() final DateTime? deletedAt,
-      required final List<String> subjects}) = _$UnitsSettingsModelImpl;
+      final List<String> subjects,
+      final List<String> fields}) = _$UnitsSettingsModelImpl;
 
   factory _UnitsSettingsModel.fromJson(Map<String, dynamic> json) =
       _$UnitsSettingsModelImpl.fromJson;
@@ -259,6 +292,8 @@ abstract class _UnitsSettingsModel implements UnitsSettingsModel {
 
   /// option model field
   List<String> get subjects;
+  @override
+  List<String> get fields;
   @override
   @JsonKey(ignore: true)
   _$$UnitsSettingsModelImplCopyWith<_$UnitsSettingsModelImpl> get copyWith =>
