@@ -1,10 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_json_view/flutter_json_view.dart';
 import 'package:lib/lib.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:recase/recase.dart';
@@ -470,7 +472,7 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
                   const SizedBox(height: 24),
                 ],
               ),
-              SingleChildScrollView(child: ProfileSummary(uid: depositRequest?.uid)),
+              SingleChildScrollView(child: ProfileSummary(model: depositRequest?.profile)),
             ],
           ),
         ),
@@ -775,12 +777,10 @@ Future<void> tryCopy(BuildContext context, String? text) async {
 
 /// [ProfileSummary]
 class ProfileSummary extends StatefulWidget {
-  const ProfileSummary({
-    super.key,
-    required this.uid,
-  });
+  const ProfileSummary({super.key, this.ref, this.model});
 
-  final String? uid;
+  final String? ref;
+  final ProfileModel? model;
 
   @override
   State<ProfileSummary> createState() => _ProfileSummaryState();
@@ -795,8 +795,12 @@ class _ProfileSummaryState extends State<ProfileSummary> {
   }
 
   Future<void> load() async {
-    if (widget.uid != null) {
-      var profile = await getModelDocument(path: "profiles/${widget.uid}", fromJson: ProfileModel.fromJson);
+    if (widget.model != null) {
+      setState(() {
+        this.profile = widget.model;
+      });
+    } else if (widget.ref != null) {
+      var profile = await getModelDocument(path: widget.ref!, fromJson: ProfileModel.fromJson);
       setState(() {
         this.profile = profile;
       });
@@ -821,15 +825,7 @@ class _ProfileSummaryState extends State<ProfileSummary> {
                 );
               }
             },
-            child: profile == null
-                ? CircleAvatar(
-                    child: const Icon(FluentIcons.person_24_regular),
-                    backgroundColor: Colors.grey[300],
-                  )
-                : CircleAvatar(
-                    backgroundImage: profile!.photoUrl.nullIfEmpty == null ? null : NetworkImage(profile!.photoUrl),
-                    child: profile!.photoUrl.nullIfEmpty != null ? null : Text(profile!.displayName[0].toUpperCase()),
-                  ),
+            child: ProfileAvatar(profile: profile),
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 24),
           visualDensity: const VisualDensity(vertical: -3),
@@ -1048,7 +1044,456 @@ class _ProfileSummaryState extends State<ProfileSummary> {
             icon: const Icon(FluentIcons.copy_24_regular),
           ),
         ),
+        // email verified
+        ListTile(
+          leading: const Icon(FluentIcons.circle_20_regular),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+          visualDensity: const VisualDensity(vertical: -3),
+          title: profile == null
+              ? const TextPlaceholder()
+              : Text(
+                  profile!.emailVerified ? "Verified" : "Not verified",
+                ),
+          subtitle: const Text(
+            'Is Email Verified',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 14,
+            ),
+          ),
+          trailing: IconButton(
+            onPressed: () {
+              tryCopy(context, profile?.emailVerified.toString());
+            },
+            icon: const Icon(FluentIcons.copy_24_regular),
+          ),
+        ),
+        // advanced
+        ListTile(
+          enabled: false,
+          leading: const Icon(FluentIcons.settings_20_regular),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+          visualDensity: const VisualDensity(vertical: -3),
+          title: const Text('Advanced'),
+        ),
+        JsonView.map(profile?.toJson() ?? {})
       ],
+    );
+  }
+}
+
+/// [FindGiftCardOrderForm] is a form to update a new user
+class FindGiftCardOrderForm extends StatefulWidget {
+  final String id;
+  final GiftCardOrderModel? giftCardOrder;
+  final VoidCallback? onCancel;
+  final void Function(GiftCardOrderModel? giftCardOrder)? onFinded;
+  // on accept
+  final void Function(GiftCardOrderModel giftCardOrder)? onAccepted;
+  // on reject
+  final void Function(GiftCardOrderModel giftCardOrder)? onRejected;
+
+  final List<Widget> actions;
+  const FindGiftCardOrderForm({
+    Key? key,
+    this.onFinded,
+    this.onAccepted,
+    this.onRejected,
+    this.onCancel,
+    required this.id,
+    required this.giftCardOrder,
+    this.actions = const [],
+  }) : super(key: key);
+
+  @override
+  State<FindGiftCardOrderForm> createState() => _FindGiftCardOrderFormState();
+}
+
+class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  bool _loading = false;
+  late String? _error;
+  GiftCardOrderModel? giftCardOrder;
+  @override
+  void initState() {
+    super.initState();
+    giftCardOrder = widget.giftCardOrder;
+    if (giftCardOrder == null) {
+      find();
+    }
+    _error = null;
+  }
+
+  Future<void> find() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _error = null;
+        _loading = true;
+      });
+      try {
+        giftCardOrder = GiftCardOrderModel.fromJson((await getDocument(path: "giftCardOrders/${widget.id}"))!.data);
+        widget.onFinded?.call(giftCardOrder);
+      }
+      // FirebaseFunctionsException
+      on FirebaseFunctionsException catch (e) {
+        setState(() {
+          _error = e.message;
+        });
+      } catch (e) {
+        setState(() {
+          _error = e.toString();
+        });
+        rethrow;
+      }
+
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  String? get _firstImageUrl {
+    return giftCardOrder?.profile.photoUrl.nullIfEmpty;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LoadingBox(
+      loading: _loading,
+      child: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (context, _) {
+            return [
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: 240,
+                floating: true,
+                excludeHeaderSemantics: true,
+                forceElevated: true,
+                primary: true,
+                snap: false,
+                stretch: true,
+                stretchTriggerOffset: 100,
+                title: Text('Order #${widget.giftCardOrder?.shortId}'),
+                leading: const BackButton(),
+                actions: [
+                  ...widget.actions,
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          image: _firstImageUrl != null
+                              ? DecorationImage(
+                                  image: NetworkImage(
+                                    _firstImageUrl!,
+                                  ),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
+                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TabBar(
+                              tabs: [
+                                Tab(
+                                  icon: const Icon(FluentIcons.info_24_regular),
+                                  text: 'Order info',
+                                ),
+                                Tab(
+                                  icon: const Icon(FluentIcons.person_24_regular),
+                                  text: 'Profile',
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              ListView(
+                children: [
+                  if (_error != null)
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red[100],
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            FluentIcons.people_error_24_regular,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              _error!,
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _error = null;
+                              });
+                            },
+                            icon: const Icon(
+                              FluentIcons.dismiss_24_regular,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  const SizedBox(height: 20),
+                  // status
+                  ListTile(
+                    leading:
+                        // circle zith color
+                        Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: giftCardOrder?.status.color,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          FluentIcons.checkmark_16_regular,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.status == null ? const TextPlaceholder() : Text(giftCardOrder!.status.name.pascalCase),
+                    subtitle: Text(
+                      (giftCardOrder?.metadata['reason'] ?? "Status"),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: Row
+                        // Accept and Reject buttons
+                        (
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Accept button
+                        // IconButton(
+                        //   onPressed: _accept,
+                        //   icon: const Icon(FluentIcons.checkmark_24_regular),
+                        // ),
+                        // Reject button
+                        // IconButton(
+                        //   onPressed: _reject,
+                        //   icon: const Icon(FluentIcons.dismiss_24_regular),
+                        // ),
+                        // open in external browser
+                        // https://console.firebase.google.com/u/0/project/zed-academy-a9e43/firestore/data/~2FgiftCardOrders~[id]
+                        IconButton(
+                          onPressed: () async {
+                            if (giftCardOrder != null) {
+                              await launchUrl(Uri.parse('https://console.firebase.google.com/u/0/project/zed-academy-a9e43/firestore/data/~2FgiftCardOrders~2F${giftCardOrder!.id}'));
+                            }
+                          },
+                          icon: const Icon(FluentIcons.open_24_regular),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    leading: const Icon(FluentIcons.money_24_regular),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.amount == null ? const TextPlaceholder() : Text("${giftCardOrder!.amount}"),
+                    subtitle: const Text(
+                      'Amount',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    // copy
+                    trailing: IconButton(
+                      onPressed: () {
+                        tryCopy(context, giftCardOrder?.amount.toString());
+                      },
+                      icon: const Icon(FluentIcons.copy_24_regular),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    leading: const Icon(FluentIcons.person_24_regular),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.shipping.name == null ? const TextPlaceholder() : Text(giftCardOrder!.shipping.name!),
+                    subtitle: const Text(
+                      'Full Name',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        tryCopy(context, giftCardOrder?.shipping.name);
+                      },
+                      icon: const Icon(FluentIcons.copy_24_regular),
+                    ),
+                  ),
+                  for (var phoneNumber in giftCardOrder?.shipping.phoneNumbers ?? [])
+                    ListTile(
+                      onTap: () async {
+                        if (giftCardOrder != null) {
+                          await launchUrl(Uri.parse('tel:$phoneNumber'));
+                        }
+                      },
+                      leading: const Icon(FluentIcons.phone_20_regular),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                      visualDensity: const VisualDensity(vertical: -3),
+                      title: Text(phoneNumber),
+                      subtitle: const Text(
+                        'Phone',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          tryCopy(context, phoneNumber);
+                        },
+                        icon: const Icon(FluentIcons.copy_24_regular),
+                      ),
+                    ),
+                  ListTile(
+                    leading: const Icon(FluentIcons.location_24_regular),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.shipping.address == null ? const TextPlaceholder() : Text(giftCardOrder!.shipping.address.raw),
+                    subtitle: Text(
+                      'Address' + '${giftCardOrder?.shipping.address.state} ${giftCardOrder?.shipping.address.city}',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        tryCopy(context, "${giftCardOrder?.shipping.address.raw} | ${giftCardOrder?.shipping.address.state} | ${giftCardOrder?.shipping.address.city}");
+                      },
+                      icon: const Icon(FluentIcons.copy_24_regular),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(FluentIcons.note_24_regular),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.note == null ? const TextPlaceholder() : Text("${giftCardOrder!.note}"),
+                    subtitle: const Text(
+                      'Note',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        tryCopy(context, giftCardOrder?.note);
+                      },
+                      icon: const Icon(FluentIcons.copy_24_regular),
+                    ),
+                  ),
+                  Card(
+                    margin: const EdgeInsets.all(24.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text(jsonEncode(giftCardOrder?.metadata ?? {})),
+                    ),
+                  ),
+                  // created at
+                  ListTile(
+                    leading: const Icon(FluentIcons.calendar_20_regular),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.updatedAt == null ? const TextPlaceholder() : Text("${giftCardOrder!.createdAt}", maxLines: 1, overflow: TextOverflow.ellipsis),
+                    subtitle: const Text(
+                      'Created At',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        tryCopy(context, giftCardOrder?.createdAt.toString());
+                      },
+                      icon: const Icon(FluentIcons.copy_24_regular),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(FluentIcons.calendar_20_regular),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                    visualDensity: const VisualDensity(vertical: -3),
+                    title: giftCardOrder?.updatedAt == null ? const TextPlaceholder() : Text("${giftCardOrder!.updatedAt}", maxLines: 1, overflow: TextOverflow.ellipsis),
+                    subtitle: const Text(
+                      'Last Update at',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        tryCopy(context, giftCardOrder?.updatedAt.toString());
+                      },
+                      icon: const Icon(FluentIcons.copy_24_regular),
+                    ),
+                  ),
+                  // updated at
+                  const SizedBox(height: 24),
+                ],
+              ),
+              SingleChildScrollView(child: ProfileSummary(model: giftCardOrder?.profile)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

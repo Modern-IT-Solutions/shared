@@ -360,17 +360,20 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                                   // selectable chips for roles
                                   for (String field in fields) ...[
                                     InputChip(
-                                      key: Key(field),
                                       onSelected: (selected) {
                                         setState(() {
                                           if (selected) {
-                                            request.fields!.add(field);
+                                            request.fields = [
+                                              ...request.fields ?? [],
+                                              field,
+                                            ];
                                           } else {
-                                            request.fields!.remove(field);
+                                            // request.fields!.remove(field);
+                                            request.fields = request.fields?.where((element) => element != field).toList() ?? [];
                                           }
                                         });
                                       },
-                                      selected: request.fields!.contains(field),
+                                      selected: request.fields?.contains(field) ?? false,
                                       label: Text(field.titleCase),
                                     ),
                                     const SizedBox(width: 10)

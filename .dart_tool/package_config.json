@@ -201,7 +201,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-6f328ed5db2433f85fa935489f9967b608983530/",
+      "rootUri": "../../core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -522,6 +522,12 @@
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_form_builder-9.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "flutter_json_view",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_json_view-1.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_lints",
@@ -1485,7 +1491,7 @@
     },
     {
       "name": "zplayer",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/z-player-7a0ed6445155efb90d9ec1a6ed69998c34907293/",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/z-player-eab21ba293d5c447f63c7dd4a2f70730c878a60e/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1496,7 +1502,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-07T00:52:41.657002Z",
+  "generated": "2024-01-08T03:39:04.883696Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }

@@ -268,11 +268,9 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "6f328ed5db2433f85fa935489f9967b608983530"
-      url: "https://github.com/Modern-IT-Solutions/core.git"
-    source: git
+      path: "../core"
+      relative: true
+    source: path
     version: "0.0.1"
   country_pickers:
     dependency: transitive
@@ -695,6 +693,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.1.1"
+  flutter_json_view:
+    dependency: transitive
+    description:
+      name: flutter_json_view
+      sha256: b10457bf9cbe24c7ca305f28da238ecd16ebceb66903dab4e67677ee6e45618a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.4"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -1969,7 +1975,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "7a0ed6445155efb90d9ec1a6ed69998c34907293"
+      resolved-ref: eab21ba293d5c447f63c7dd4a2f70730c878a60e
       url: "https://github.com/Modern-IT-Solutions/z-player.git"
     source: git
     version: "0.0.1"

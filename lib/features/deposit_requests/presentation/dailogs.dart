@@ -1,3 +1,4 @@
+import 'package:core/modules/commerce/gift_cards/views/dailogs.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/transaction_model.dart';
@@ -7,6 +8,227 @@ import 'package:shared/shared.dart';
 import '../../../models/deposit_request_model.dart';
 import 'forms/find.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
+@override
+Future<GiftCardOrderModel?> showDetailsGiftCardOrderModellDailog(BuildContext context, GiftCardOrderModel model) async {
+  child(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 500),
+      child: FindGiftCardOrderForm(
+        id: model.ref.id,
+        giftCardOrder: model,
+        onAccepted: (giftCardOrder) {
+          Navigator.of(context).pop(giftCardOrder);
+        },
+        onRejected: (giftCardOrder) {
+          Navigator.of(context).pop(giftCardOrder);
+        },
+        actions: [
+          // edit
+
+          IconButton(
+            onPressed: () {
+              showGiftCardOrderModelHistoryDailog(context, excludeRefs: [model.ref.path], isUidEqualTo: model.profile.uid);
+            },
+            icon: const Icon(FluentIcons.search_20_regular),
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              showUpdateGiftCardOrderModelDailog(context, model);
+            },
+            icon: const Icon(FluentIcons.edit_16_regular),
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+        ],
+      ),
+    );
+  }
+
+  return await showDialog<GiftCardOrderModel?>(
+    context: context,
+    builder: (context) {
+      if (MediaQuery.of(context).size.width > 600) {
+        return Dialog(
+          clipBehavior: Clip.antiAlias,
+          child: child(context),
+        );
+      } else {
+        return Dialog.fullscreen(
+          child: child(context),
+        );
+      }
+    },
+  );
+}
+
+Future<void> showGiftCardOrderModelHistoryDailog(
+  BuildContext context, {
+  String? isUidEqualTo,
+  List<String> excludeRefs = const [],
+}) async {
+  bool _defaultFilter(Model _model) {
+            var r=true;
+            if (isUidEqualTo != null) {
+              r = _model.ref != isUidEqualTo;
+            }
+            if (excludeRefs.isNotEmpty) {
+              r = r && !excludeRefs.contains(_model.ref.path);
+            }
+            return r;
+          };
+  var controller = ModelListViewController<GiftCardOrderModel>(
+    value: ModelListViewValue(
+      forceFilter: true,
+      filters: [
+        IndexViewFilter(
+          name: "all",
+          active: true,
+          local: _defaultFilter,
+          // remote: (query) => query.where("profile.uid", isEqualTo: model.profile.uid),
+          remote: (q) {
+            if (isUidEqualTo != null) {
+              q = q.where("profile.uid", isEqualTo: isUidEqualTo);
+            }
+            if (excludeRefs.isNotEmpty) {
+              q = q.where("ref", whereNotIn: excludeRefs);
+            }
+            return q;//.orderBy("updatedAt", descending: false);
+          },
+          strict: false,
+          fixed: true,
+        ),
+        for (var status in OrderStatus.values)
+          IndexViewFilter(
+            name: status.name,
+            active: false,
+            local: (model) => model.status == status && _defaultFilter(model),
+            // remote: (query) => query.where("status", isEqualTo: status.name).where("profile.uid", isEqualTo: model.profile.uid).orderBy("updatedAt", descending: false),
+            remote: (q) {
+              if (isUidEqualTo != null) {
+                q = q.where("profile.uid", isEqualTo: isUidEqualTo);
+              }
+              if (excludeRefs.isNotEmpty) {
+                q = q.where("ref", whereNotIn: excludeRefs);
+              }
+              return q.where("status", isEqualTo: status.name);//.orderBy("updatedAt", descending: false);
+            },
+            strict: false,
+            fixed: true,
+          ),
+      ],
+    ),
+    description: GiftCardOrderModel.description.copyWith(
+      actions: [
+        ModelAction(
+          label: "Show details",
+          group: "CRUD",
+          icon: Icon(FluentIcons.search_20_regular),
+          single: (context, model) async {
+            return await showDetailsGiftCardOrderModellDailog(context, model!);
+          },
+        ),
+        // show history
+        // ModelAction(
+        //   label: "Show history",
+        //   group: "related",
+        //   icon: Icon(FluentIcons.history_20_regular),
+        //   single: (context, model) async {
+        //     await showGiftCardOrderModelHistoryDailog(context, model!);
+        //   },
+        // ),
+      ],
+    ),
+  );
+  child(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 801, maxHeight: MediaQuery.of(context).size.height * .8),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Container(
+          child: ModelListView<GiftCardOrderModel>(
+            onModelTap: (model) async {
+              await showDetailsGiftCardOrderModellDailog(context, model);
+            },
+            flexTableItemBuilders: [
+              (
+                header: const SizedBox(),
+                config: const FlexTableItemConfig.square(40),
+                builder: (model) {
+                  return ProfileAvatar(profile: model.profile);
+                },
+              ),
+              (
+                header: const Text("customer"),
+                config: const FlexTableItemConfig.flex(2),
+                builder: (model) {
+                  if (model.profile.displayName.nullIfEmpty == null) return const DataFlagWidget.empty();
+                  return Text(
+                    model.profile.displayName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  );
+                },
+              ),
+              // amount
+              (
+                header: const Text("amount"),
+                config: const FlexTableItemConfig.flex(1),
+                builder: (model) {
+                  return Text("${model.amount} din");
+                }
+              ),
+              if (constraints.maxWidth > 800) ...[
+                //status
+                (
+                  header: const Text("status"),
+                  config: const FlexTableItemConfig.flex(1),
+                  builder: (model) {
+                    return DataFlagWidget(custom: model.status.name);
+                  }
+                ),
+              ],
+              if (constraints.maxWidth > 1000) ...[
+                (
+                  header: const Text("updatedAt"),
+                  config: const FlexTableItemConfig.flex(2),
+                  builder: (model) {
+                    return Text(
+                      timeago.format(model.updatedAt),
+                      style: Theme.of(context).textTheme.caption,
+                    );
+                  }
+                ),
+              ],
+            ],
+            controller: controller,
+          ),
+        );
+      }),
+    );
+  }
+
+  await showDialog(
+    context: context,
+    builder: (context) {
+      // if (MediaQuery.of(context).size.width > 600) {
+      return Dialog(
+        insetPadding: EdgeInsets.all(15),
+        clipBehavior: Clip.antiAlias,
+        child: child(context),
+      );
+      // } else {
+      //   return Dialog.fullscreen(
+      //     child: child(context),
+      //   );
+      // }
+    },
+  );
+}
 
 @override
 Future<DepositRequestModel?> showDetailsDepositRequestModellDailog(BuildContext context, DepositRequestModel model) async {
