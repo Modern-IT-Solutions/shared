@@ -19,7 +19,7 @@ dependencies:
     path: ../core
     # git:
     #  url: https://github.com/Modern-IT-Solutions/core.git
-    #  ref: main
+    #  ref: arch2
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   firebase_ui_firestore: ^1.5.11
@@ -28,10 +28,10 @@ dependencies:
   screen_capture_event:
   flex_color_picker: 
   zplayer:
-    # path: ../zplayer
-    git:
-     url: https://github.com/Modern-IT-Solutions/z-player.git
-     ref: main
+    path: ../zplayer
+    # git:
+    #  url: https://github.com/Modern-IT-Solutions/z-player.git
+    #  ref: main
 
   fast_rsa:
   convert:
