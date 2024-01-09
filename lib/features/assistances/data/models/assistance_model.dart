@@ -124,9 +124,28 @@ class AssistanceModel with _$AssistanceModel implements Model {
             map: (m) => m.intervention?.status.name,
             group: FieldGroup.primary,
           ),
-
-
-
+          // bill dates
+          FieldDescription(
+            name: "bill createdAt",
+            path: "intervention.bill.createdAt",
+            type: FieldType.datetime,
+            map: (m) => m.intervention?.bill?.createdAt,
+            group: FieldGroup.primary,
+          ),
+          FieldDescription(
+            name: "bill updatedAt",
+            path: "intervention.bill.updatedAt",
+            type: FieldType.datetime,
+            map: (m) => m.intervention?.bill?.updatedAt,
+            group: FieldGroup.primary,
+          ),
+          FieldDescription(
+            name: "bill deletedAt",
+            path: "intervention.bill.deletedAt",
+            type: FieldType.datetime,
+            map: (m) => m.intervention?.bill?.deletedAt,
+            group: FieldGroup.primary,
+          ),
           FieldDescription(
             name: "Assistance ref",
             path: "ref",
