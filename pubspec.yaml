@@ -28,10 +28,10 @@ dependencies:
   screen_capture_event:
   flex_color_picker: 
   zplayer:
-    path: ../zplayer
-    # git:
-    #  url: https://github.com/Modern-IT-Solutions/z-player.git
-    #  ref: main
+    # path: ../zplayer
+    git:
+     url: https://github.com/Modern-IT-Solutions/z-player.git
+     ref: main
 
   fast_rsa:
   convert:
