@@ -243,6 +243,10 @@ extension PreferencesEx on PreferencesService {
     return getOption<bool>('iosShowWallet', defaults: false);
   }
 
+  bool? get enableIOSInARM {
+    return getOption<bool>('enableIOSInARM', defaults: false);
+  }
+
   bool? get androidShowWallet {
     return getOption<bool>('androidShowWallet');
   }
