@@ -197,7 +197,7 @@ class _UpdateDepositRequestFormState extends State<UpdateDepositRequestForm> {
                             image: _attachment.value?.src == null
                                 ? null
                                 : DecorationImage(
-                                    image: NetworkImage(
+                                    image: CachedNetworkImageProvider(
                                       _attachment.value!.src,
                                     ),
                                     fit: BoxFit.cover,

@@ -138,7 +138,7 @@ class _FindAssistanceFormState extends State<FindAssistanceForm> {
                                   image: assistance?.station.photoUrl == null
                                       ? null
                                       : DecorationImage(
-                                          image: NetworkImage(
+                                          image: CachedNetworkImageProvider(
                                             assistance!.station.photoUrl,
                                           ),
                                           fit: BoxFit.cover,
@@ -187,7 +187,7 @@ class _FindAssistanceFormState extends State<FindAssistanceForm> {
                                         backgroundImage: assistance?.station.photoUrl ==
                                                 null
                                             ? null
-                                            : NetworkImage(
+                                            : CachedNetworkImageProvider(
                                                 assistance!.station.photoUrl.toString(),
                                               ),
                                       ),

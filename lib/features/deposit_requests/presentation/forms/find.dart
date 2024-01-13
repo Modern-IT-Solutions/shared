@@ -127,7 +127,7 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
                         decoration: BoxDecoration(
                           image: _firstImageUrl != null
                               ? DecorationImage(
-                                  image: NetworkImage(
+                                  image: CachedNetworkImageProvider(
                                     _firstImageUrl!,
                                   ),
                                   fit: BoxFit.cover,
@@ -706,7 +706,7 @@ class AttatchmentViewer extends StatelessWidget {
           PhotoView(
               enableRotation: true,
               controller: controller,
-              imageProvider: NetworkImage(
+              imageProvider: CachedNetworkImageProvider(
                 _firstImageUrl!,
               )),
           // toolbar
@@ -871,7 +871,7 @@ class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
                         decoration: BoxDecoration(
                           image: _firstImageUrl != null
                               ? DecorationImage(
-                                  image: NetworkImage(
+                                  image: CachedNetworkImageProvider(
                                     _firstImageUrl!,
                                   ),
                                   fit: BoxFit.cover,

@@ -172,7 +172,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: NetworkImage(
+                                    image: CachedNetworkImageProvider(
                                       widget.model.photoUrl!,
                                     ),
                                     fit: BoxFit.cover,
@@ -217,7 +217,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                         radius: 30,
                                         backgroundImage: request.photoUrl == null
                                             ? null
-                                            : NetworkImage(
+                                            : CachedNetworkImageProvider(
                                                 request.photoUrl!,
                                               ),
                                       ),
@@ -570,7 +570,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                           // leading: CircleAvatar(
                                           //   backgroundImage: tech.photoUrl.isEmpty
                                           //       ? null
-                                          //       : NetworkImage(
+                                          //       : CachedNetworkImageProvider(
                                           //           tech.photoUrl,
                                           //         ),
                                           //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),

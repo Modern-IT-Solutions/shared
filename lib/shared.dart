@@ -17,3 +17,5 @@ export './models/cached_document.dart';
 /// helpers
 export './helpers.dart';
 
+/// packages
+export 'package:cached_network_image/cached_network_image.dart';

@@ -10,6 +10,7 @@ import 'package:lib/lib.dart';
 import 'package:muskey/muskey.dart';
 import 'package:recase/recase.dart';
 import 'package:shared/shared.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../data/models/assistance_model.dart';
 import '../../data/repositories/repository.dart';
@@ -243,8 +244,7 @@ class _CreateAssistanceFormState extends State<CreateAssistanceForm> {
                                       ),
                                       child: CircleAvatar(
                                         radius: 30,
-                                        backgroundImage: NetworkImage(
-                                          _photoUrlController.text,
+                                        backgroundImage: CachedNetworkImageProvider(_photoUrlController.text,
                                         ),
                                         // child: IconButton(
                                         //   onPressed: ()=>_photoUploadTriger.value?.call(),
@@ -527,7 +527,7 @@ class _CreateAssistanceFormState extends State<CreateAssistanceForm> {
                                             backgroundImage:
                                                 tech.photoUrl == null
                                                     ? null
-                                                    : NetworkImage(
+                                                    : CachedNetworkImageProvider(
                                                         tech.photoUrl ?? '',
                                                       ),
                                             child: tech.photoUrl != null

@@ -155,7 +155,7 @@
 //                               Container(
 //                                 decoration: BoxDecoration(
 //                                   image: DecorationImage(
-//                                     image: NetworkImage(
+//                                     image: CachedNetworkImageProvider(
 //                                       request.photoUrl!,
 //                                     ),
 //                                     fit: BoxFit.cover,
@@ -200,7 +200,7 @@
 //                                         radius: 30,
 //                                         backgroundImage: request.photoUrl == null
 //                                             ? null
-//                                             : NetworkImage(
+//                                             : CachedNetworkImageProvider(
 //                                                 request.photoUrl!,
 //                                               ),
 //                                       ),
@@ -567,7 +567,7 @@
 //                                           leading: CircleAvatar(
 //                                             backgroundImage: tech.photoUrl.isEmpty
 //                                                 ? null
-//                                                 : NetworkImage(
+//                                                 : CachedNetworkImageProvider(
 //                                                     tech.photoUrl,
 //                                                   ),
 //                                             child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
@@ -649,7 +649,7 @@
 //                                           leading: CircleAvatar(
 //                                             backgroundImage: owner.photoUrl.isEmpty
 //                                                 ? null
-//                                                 : NetworkImage(
+//                                                 : CachedNetworkImageProvider(
 //                                                     owner.photoUrl,
 //                                                   ),
 //                                             child: owner.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),

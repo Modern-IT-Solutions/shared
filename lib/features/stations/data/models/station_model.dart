@@ -95,7 +95,7 @@ class StationModel with _$StationModel implements Model {
           title: model.name,
           subtitle: model.email,
           leading: CircleAvatar(
-            backgroundImage:model.photoUrl.isEmpty? null : NetworkImage(model.photoUrl),
+            backgroundImage:model.photoUrl.isEmpty? null : CachedNetworkImageProvider(model.photoUrl),
             child: Center(
               child: model.photoUrl.isEmpty? const Icon(Icons.person) : null,
             ),

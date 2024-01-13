@@ -45,7 +45,7 @@ class UnitModel with _$UnitModel implements Model {
             subtitle: model.title,
             leading: // teacher circle
                 CircleAvatar(
-              backgroundImage: model.teacher.photoUrl.nullIfEmpty == null ? null : NetworkImage(model.teacher.photoUrl),
+              backgroundImage: model.teacher.photoUrl.nullIfEmpty == null ? null : CachedNetworkImageProvider(model.teacher.photoUrl),
               child: model.teacher.photoUrl.nullIfEmpty != null ? null : Text(model.teacher.displayName.firstCharOrNull),
             )),
         actions: [],

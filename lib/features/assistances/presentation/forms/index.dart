@@ -264,7 +264,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                                       .station.photoUrl ==
                                                   null
                                               ? null
-                                              : NetworkImage(assistanceRecord
+                                              : CachedNetworkImageProvider(assistanceRecord
                                                   .station.photoUrl!),
                                         ),
                                         Text(
@@ -323,7 +323,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                                                         .photoUrl!
                                                                         .isNotEmpty
                                                                 ? DecorationImage(
-                                                                    image: NetworkImage(
+                                                                    image: CachedNetworkImageProvider(
                                                                         technician
                                                                             .photoUrl!),
                                                                     fit: BoxFit

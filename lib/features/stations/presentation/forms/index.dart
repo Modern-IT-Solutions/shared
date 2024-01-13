@@ -215,7 +215,7 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
                                                   style: const TextStyle(fontSize: 18),
                                                 )
                                               : null,
-                                          backgroundImage: stationRecord.photoUrl == null ? null : NetworkImage(stationRecord.photoUrl!),
+                                          backgroundImage: stationRecord.photoUrl == null ? null : CachedNetworkImageProvider(stationRecord.photoUrl!),
                                         ),
                                         Text(
                                           stationRecord.name ?? "No name",
@@ -256,7 +256,7 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
                                                             /// if technician.photoUrl is not null and not empty show the image
                                                             image: technician.photoUrl != null && technician.photoUrl!.isNotEmpty
                                                                 ? DecorationImage(
-                                                                    image: NetworkImage(technician.photoUrl!),
+                                                                    image: CachedNetworkImageProvider(technician.photoUrl!),
                                                                     fit: BoxFit.cover,
                                                                   )
                                                                 : null,

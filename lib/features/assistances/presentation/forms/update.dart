@@ -183,7 +183,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
               ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.background,
-                  backgroundImage: request.station?.photoUrl.nullIfEmpty == null ? null : NetworkImage(request.station!.photoUrl),
+                  backgroundImage: request.station?.photoUrl.nullIfEmpty == null ? null : CachedNetworkImageProvider(request.station!.photoUrl),
                   child: request.station?.photoUrl.nullIfEmpty != null ? null : Text(request.station!.name.firstCharOrNull),
                 ),
                 contentPadding: EdgeInsets.symmetric(horizontal: 24),
@@ -480,7 +480,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             showUpdateProfileModelDailog(context, tech);
                           },
                           leading: CircleAvatar(
-                            backgroundImage: tech.photoUrl.isEmpty ? null : NetworkImage(tech.photoUrl),
+                            backgroundImage: tech.photoUrl.isEmpty ? null : CachedNetworkImageProvider(tech.photoUrl),
                             child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
                           ),
                           title: Text(tech.displayName),

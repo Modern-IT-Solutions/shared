@@ -369,7 +369,7 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
                   var firstLetters = (model.profile.displayName.nullIfEmpty ?? "?")[0].toUpperCase();
                   return CircleAvatar(
                     backgroundColor: Theme.of(context).colorScheme.background,
-                    backgroundImage: model.profile.photoUrl.nullIfEmpty == null ? null : NetworkImage(model.profile.photoUrl),
+                    backgroundImage: model.profile.photoUrl.nullIfEmpty == null ? null : CachedNetworkImageProvider(model.profile.photoUrl),
                     child: model.profile.photoUrl.nullIfEmpty != null ? null : Text(firstLetters),
                   );
                 }
@@ -875,7 +875,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                                   var firstLetters = (model.teacher.displayName.nullIfEmpty ?? "?")[0].toUpperCase();
                                   return CircleAvatar(
                                     backgroundColor: model.color,
-                                    backgroundImage: model.teacher.photoUrl.nullIfEmpty == null ? null : NetworkImage(model.teacher.photoUrl),
+                                    backgroundImage: model.teacher.photoUrl.nullIfEmpty == null ? null : CachedNetworkImageProvider(model.teacher.photoUrl),
                                     child: model.teacher.photoUrl.nullIfEmpty != null ? null : Text(firstLetters),
                                   );
                                 }

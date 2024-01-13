@@ -315,7 +315,7 @@
 //                                       children: [
 //                                         CircleAvatar(
 //                                           radius: 15,
-//                                           backgroundImage: NetworkImage(depositRequestRecord.profile.photoUrl),
+//                                           backgroundImage: CachedNetworkImageProvider(depositRequestRecord.profile.photoUrl),
 //                                           child: depositRequestRecord.profile.photoUrl.isEmpty
 //                                               ? Text(
 //                                                   depositRequestRecord.profile.displayName.isNotEmpty == true ? depositRequestRecord.profile.displayName[0].toUpperCase() : "?",

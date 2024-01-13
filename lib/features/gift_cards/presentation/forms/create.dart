@@ -378,7 +378,7 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
                         child: ListTile(
                           leading: request.owner?.photoUrl.nullIfEmpty != null
                               ? CircleAvatar(
-                                  backgroundImage: NetworkImage(request.owner!.photoUrl),
+                                  backgroundImage: CachedNetworkImageProvider(request.owner!.photoUrl),
                                 )
                               : const Icon(FluentIcons.people_team_24_regular),
                           contentPadding: EdgeInsets.only(left: 12),

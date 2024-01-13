@@ -138,7 +138,7 @@ class _FindStationFormState extends State<FindStationForm> {
                             image: station?.photoUrl == null
                                 ? null
                                 : DecorationImage(
-                                    image: NetworkImage(
+                                    image: CachedNetworkImageProvider(
                                       station!.photoUrl!,
                                     ),
                                     fit: BoxFit.cover,
@@ -183,7 +183,7 @@ class _FindStationFormState extends State<FindStationForm> {
                                   radius: 30,
                                   backgroundImage: station?.photoUrl == null
                                       ? null
-                                      : NetworkImage(
+                                      : CachedNetworkImageProvider(
                                           station!.photoUrl.toString(),
                                         ),
                                 ),

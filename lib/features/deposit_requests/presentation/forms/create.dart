@@ -187,7 +187,7 @@
 //                               Positioned(
 //                                 left: 0,
 //                                 right: 0,
-//                                 child: CachedNetworkImage(
+//                                 child: CachedCachedNetworkImageProvider(
 //                                   imageUrl: _photoUrlController.text,
 //                                   errorWidget: (context, url, error) => Image(
 //                                     image:
@@ -240,7 +240,7 @@
 //                                       ),
 //                                       child: CircleAvatar(
 //                                         radius: 30,
-//                                         backgroundImage: NetworkImage(
+//                                         backgroundImage: CachedNetworkImageProvider(
 //                                           _photoUrlController.text,
 //                                         ),
 //                                         // child: IconButton(
@@ -514,7 +514,7 @@
 //                                             backgroundImage:
 //                                                 tech.photoUrl == null
 //                                                     ? null
-//                                                     : NetworkImage(
+//                                                     : CachedNetworkImageProvider(
 //                                                         tech.photoUrl ?? '',
 //                                                       ),
 //                                             child: tech.photoUrl != null
