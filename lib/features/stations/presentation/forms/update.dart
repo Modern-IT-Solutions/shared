@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:core/features/users/presentation/dailogs.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
 import 'package:core/features/users/presentation/forms/update_profile.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -560,16 +561,20 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                         child: ListTile(
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                           onTap: () async {
-                                            //
+                                            await showDetailsProfileModelDailog(context, tech);
                                           },
-                                          leading: CircleAvatar(
-                                            backgroundImage: tech.photoUrl.isEmpty
-                                                ? null
-                                                : NetworkImage(
-                                                    tech.photoUrl,
-                                                  ),
-                                            child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                          leading: ProfileAvatar(
+                                            profile: tech,
+                                            radius: 40,
                                           ),
+                                          // leading: CircleAvatar(
+                                          //   backgroundImage: tech.photoUrl.isEmpty
+                                          //       ? null
+                                          //       : NetworkImage(
+                                          //           tech.photoUrl,
+                                          //         ),
+                                          //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                          // ),
                                           title: Text(tech.displayName),
                                           trailing: IconButton(
                                             icon: const Icon(FluentIcons.delete_24_regular),
@@ -623,15 +628,11 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                         child: ListTile(
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                                           onTap: () async {
-                                            //
+                                            await showDetailsProfileModelDailog(context, owner);
                                           },
-                                          leading: CircleAvatar(
-                                            backgroundImage: owner.photoUrl.isEmpty
-                                                ? null
-                                                : NetworkImage(
-                                                    owner.photoUrl,
-                                                  ),
-                                            child: owner.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                          leading: ProfileAvatar(
+                                            profile: owner,
+                                            radius: 40,
                                           ),
                                           title: Text(owner.displayName),
                                           trailing: IconButton(
