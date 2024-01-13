@@ -268,9 +268,11 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "../core"
-      relative: true
-    source: path
+      path: "."
+      ref: arch2
+      resolved-ref: "841fd8da2cba0261c224706bc2a2c512135c64a2"
+      url: "https://github.com/Modern-IT-Solutions/core.git"
+    source: git
     version: "0.0.1"
   country_pickers:
     dependency: transitive
@@ -1973,9 +1975,11 @@ packages:
   zplayer:
     dependency: "direct main"
     description:
-      path: "../zplayer"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "8dbdbd00eb2cbd521843df74b37832688dea87d6"
+      url: "https://github.com/Modern-IT-Solutions/z-player.git"
+    source: git
     version: "0.0.1"
 sdks:
   dart: ">=3.2.0 <3.7.0"
