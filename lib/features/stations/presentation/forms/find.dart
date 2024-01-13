@@ -2,6 +2,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:lib/lib.dart';
+import 'package:shared/shared.dart';
 
 import '../../data/models/station_model.dart';
 import '../../data/repositories/repository.dart';

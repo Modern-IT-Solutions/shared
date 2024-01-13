@@ -3,6 +3,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:lib/lib.dart';
 import 'package:shared/features/assistances/data/models/assistance_model.dart';
+import 'package:shared/shared.dart';
 
 import '../../data/repositories/repository.dart';
 import '../../domain/request/requests.dart';
