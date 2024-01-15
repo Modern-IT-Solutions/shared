@@ -201,7 +201,7 @@
     },
     {
       "name": "core",
-      "rootUri": "../../core",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-cd3aee332432ac17defca02dbc86690d24061174/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -777,7 +777,7 @@
     },
     {
       "name": "latlng_picker",
-      "rootUri": "file:///Users/mohamad/Desktop/projects/kflutter/latlng_picker",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/latlng_picker-0.0.4",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -1514,7 +1514,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-15T20:00:59.463829Z",
+  "generated": "2024-01-15T20:16:41.968562Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }

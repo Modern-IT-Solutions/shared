@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
 import 'package:lib/lib.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:muskey/muskey.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:latlng_picker/latlng_picker.dart';
 import 'package:shared/shared.dart';
 import '../../data/models/station_model.dart';
@@ -527,11 +529,21 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               margin: const EdgeInsets.symmetric(horizontal: 24),
                               initialValue: "${request.address?.location?.geopoint.latitude ?? "31.5"},${request.address?.location?.geopoint.longitude ?? "34.46667"}",
                               onTap: (v) async {
-                                var latlng = await showLatLngPickerDialog(context: context, length: 1);
+                                var latlng = await showLatLngPickerDialog(
+                                  context: context,
+                                  length: 1,
+                                  options: MapOptions(
+                                    center: LatLng(
+                                      request.address?.location?.geopoint.latitude ?? 31.5,
+                                      request.address?.location?.geopoint.longitude ?? 34.46667,
+                                    ),
+                                    zoom: 14,
+                                ),
+                                );
                                 if (latlng != null) {
                                   setState(() {
                                     request.address = request.address?.copyWith(
-                                      location: GeoFirePoint(GeoPoint(latlng.first.latitude, latlng.first.latitude)),
+                                      location: GeoFirePoint(GeoPoint(latlng.first.latitude, latlng.first.longitude)),
                                     );
                                   });
                                 }

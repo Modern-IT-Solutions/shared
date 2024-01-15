@@ -268,9 +268,11 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "../core"
-      relative: true
-    source: path
+      path: "."
+      ref: arch2
+      resolved-ref: cd3aee332432ac17defca02dbc86690d24061174
+      url: "https://github.com/Modern-IT-Solutions/core.git"
+    source: git
     version: "0.0.1"
   country_pickers:
     dependency: transitive
@@ -1023,10 +1025,11 @@ packages:
   latlng_picker:
     dependency: transitive
     description:
-      path: "/Users/mohamad/Desktop/projects/kflutter/latlng_picker"
-      relative: false
-    source: path
-    version: "0.0.3"
+      name: latlng_picker
+      sha256: "57e89906df52af1db442b26d81190d8081335f308f52e523e9f1c801de1b5574"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   latlong2:
     dependency: transitive
     description:
