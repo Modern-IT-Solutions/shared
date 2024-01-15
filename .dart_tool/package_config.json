@@ -201,7 +201,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-e2fc50073c0840870f930936f363b56e22033e53/",
+      "rootUri": "../../core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -566,6 +566,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_map_cached_tile_provider",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_map_cached_tile_provider-0.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "flutter_plugin_android_lifecycle",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17",
       "packageUri": "lib/",
@@ -768,6 +774,12 @@
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/json_serializable-6.7.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "latlng_picker",
+      "rootUri": "file:///Users/mohamad/Desktop/projects/kflutter/latlng_picker",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "latlong2",
@@ -1485,7 +1497,7 @@
     },
     {
       "name": "youtube_explode_dart",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/youtube_explode_dart-2.0.4",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/youtube_explode_dart-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -1502,7 +1514,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-13T12:44:35.902900Z",
+  "generated": "2024-01-15T20:00:59.463829Z",
   "generator": "pub",
   "generatorVersion": "3.3.0-102.0.dev"
 }

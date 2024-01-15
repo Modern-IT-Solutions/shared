@@ -9,6 +9,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
 import 'package:lib/lib.dart';
 import 'package:muskey/muskey.dart';
+import 'package:latlng_picker/latlng_picker.dart';
 import 'package:shared/shared.dart';
 import '../../data/models/station_model.dart';
 import '../../data/repositories/repository.dart';
@@ -237,7 +238,6 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                             ],
                           ),
                         ),
-                  
                   titleTextStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -445,7 +445,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 children: [
                                   Expanded(
                                     child: AppTextFormField(
-                                      key:  Key((request.address?.state).toString()),
+                                      key: Key((request.address?.state).toString()),
                                       initialValue: (request.address?.state),
                                       onTap: (v) async {
                                         var state = await showStatePicker(context);
@@ -476,7 +476,7 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: AppTextFormField(
-                                      key:  Key((request.address?.city).toString()),
+                                      key: Key((request.address?.city).toString()),
                                       initialValue: (request.address?.city),
                                       onTap: (value) async {
                                         var city = await showCityPicker(context, state: request.address?.state);
@@ -522,6 +522,31 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 helperText: 'The raw address, required *',
                               ),
                             ),
+                            AppTextFormField(
+                              key: UniqueKey(),
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              initialValue: "${request.address?.location?.geopoint.latitude ?? "31.5"},${request.address?.location?.geopoint.longitude ?? "34.46667"}",
+                              onTap: (v) async {
+                                var latlng = await showLatLngPickerDialog(context: context, length: 1);
+                                if (latlng != null) {
+                                  setState(() {
+                                    request.address = request.address?.copyWith(
+                                      location: GeoFirePoint(GeoPoint(latlng.first.latitude, latlng.first.latitude)),
+                                    );
+                                  });
+                                }
+                              },
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              decoration: InputDecoration(
+                                errorText: _errors['location'],
+                                prefixIcon: const Icon(Icons.satellite_alt),
+                                label: const Text('Location'),
+                                alignLabelWithHint: true,
+                                helperText: 'The location of the address, required',
+                              ),
+                            ),
                             const Divider(),
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -552,45 +577,43 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               ),
                             ),
                             Column(
-                                  children: [
-                                    for (ProfileModel tech in 
-                                    request.technicians ?? []
-                                    )
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                                        child: ListTile(
-                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                                          onTap: () async {
-                                            await showDetailsProfileModelDailog(context, tech);
-                                          },
-                                          leading: ProfileAvatar(
-                                            profile: tech,
-                                            radius: 40,
-                                          ),
-                                          // leading: CircleAvatar(
-                                          //   backgroundImage: tech.photoUrl.isEmpty
-                                          //       ? null
-                                          //       : CachedNetworkImageProvider(
-                                          //           tech.photoUrl,
-                                          //         ),
-                                          //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
-                                          // ),
-                                          title: Text(tech.displayName),
-                                          trailing: IconButton(
-                                            icon: const Icon(FluentIcons.delete_24_regular),
-                                            onPressed: () {
-                                              // _technicians.value = {
-                                              //   ..._technicians.value,
-                                              // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
-                                              setState(() {
-                                                request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
-                                              });
-                                            },
-                                          ),
-                                        ),
+                              children: [
+                                for (ProfileModel tech in request.technicians ?? [])
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      onTap: () async {
+                                        await showDetailsProfileModelDailog(context, tech);
+                                      },
+                                      leading: ProfileAvatar(
+                                        profile: tech,
+                                        radius: 40,
                                       ),
-                                  ],
-                                ),
+                                      // leading: CircleAvatar(
+                                      //   backgroundImage: tech.photoUrl.isEmpty
+                                      //       ? null
+                                      //       : CachedNetworkImageProvider(
+                                      //           tech.photoUrl,
+                                      //         ),
+                                      //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                      // ),
+                                      title: Text(tech.displayName),
+                                      trailing: IconButton(
+                                        icon: const Icon(FluentIcons.delete_24_regular),
+                                        onPressed: () {
+                                          // _technicians.value = {
+                                          //   ..._technicians.value,
+                                          // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                          setState(() {
+                                            request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                             const Divider(),
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -621,33 +644,33 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                               ),
                             ),
                             Column(
-                                  children: [
-                                    for (ProfileModel owner in request.owners ?? [])
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                                        child: ListTile(
-                                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                                          onTap: () async {
-                                            await showDetailsProfileModelDailog(context, owner);
-                                          },
-                                          leading: ProfileAvatar(
-                                            profile: owner,
-                                            radius: 40,
-                                          ),
-                                          title: Text(owner.displayName),
-                                          trailing: IconButton(
-                                            icon: const Icon(FluentIcons.delete_24_regular),
-                                            onPressed: () {
-                                              setState(() {
-                                                request.owners = request.owners!.where((e) => e.ref.path != owner.ref.path).toList();
-                                              });
-                                            },
-                                          ),
-                                        ),
+                              children: [
+                                for (ProfileModel owner in request.owners ?? [])
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      onTap: () async {
+                                        await showDetailsProfileModelDailog(context, owner);
+                                      },
+                                      leading: ProfileAvatar(
+                                        profile: owner,
+                                        radius: 40,
                                       ),
-                                  ],
-                                ),
-                                SizedBox(height: 24),
+                                      title: Text(owner.displayName),
+                                      trailing: IconButton(
+                                        icon: const Icon(FluentIcons.delete_24_regular),
+                                        onPressed: () {
+                                          setState(() {
+                                            request.owners = request.owners!.where((e) => e.ref.path != owner.ref.path).toList();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            SizedBox(height: 24),
                           ],
                         ),
                       ),

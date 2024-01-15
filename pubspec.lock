@@ -268,11 +268,9 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: arch2
-      resolved-ref: e2fc50073c0840870f930936f363b56e22033e53
-      url: "https://github.com/Modern-IT-Solutions/core.git"
-    source: git
+      path: "../core"
+      relative: true
+    source: path
     version: "0.0.1"
   country_pickers:
     dependency: transitive
@@ -748,6 +746,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  flutter_map_cached_tile_provider:
+    dependency: transitive
+    description:
+      name: flutter_map_cached_tile_provider
+      sha256: b47d0773721b1fd8fb06e37670b79eb4a2cb44f472a12854dcb78d8a2aa9d091
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -1014,6 +1020,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.7.1"
+  latlng_picker:
+    dependency: transitive
+    description:
+      path: "/Users/mohamad/Desktop/projects/kflutter/latlng_picker"
+      relative: false
+    source: path
+    version: "0.0.3"
   latlong2:
     dependency: transitive
     description:
@@ -1968,10 +1981,10 @@ packages:
     dependency: transitive
     description:
       name: youtube_explode_dart
-      sha256: "89aff5ac7de139c492ecea4bfc9189d33791632fa57e7e438e598873b040b077"
+      sha256: "77a55747579c76b5d071bca3941cfca141207f064b3f0322994573cb4a0c2831"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4"
+    version: "2.1.0"
   zplayer:
     dependency: "direct main"
     description:
@@ -1982,5 +1995,5 @@ packages:
     source: git
     version: "0.0.1"
 sdks:
-  dart: ">=3.2.0 <3.7.0"
+  dart: ">=3.3.0-102.0.dev <3.7.0"
   flutter: ">=3.16.0"
