@@ -13,6 +13,11 @@ import 'package:shared/shared.dart';
 import '../../data/models/station_model.dart';
 import '../../data/repositories/repository.dart';
 import '../../domain/request/requests.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:latlng_picker/latlng_picker.dart';
+import 'package:shared/shared.dart';
+import 'package:osm_nominatim/osm_nominatim.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 /// [CreateStationForm] is a form to create a new user
 class CreateStationForm extends StatefulWidget {
@@ -482,7 +487,8 @@ class _CreateStationFormState extends State<CreateStationForm> {
                             ),
                             // raw
                             AppTextFormField(
-                              initialValue: request.address?.raw,
+                              key: Key(request.address.raw),
+                              initialValue: request.address.raw,
                               margin: const EdgeInsets.symmetric(horizontal: 24),
                               onChanged: (v) async {
                                 request.address = request.address.copyWith(raw: v);
@@ -496,6 +502,63 @@ class _CreateStationFormState extends State<CreateStationForm> {
                                 label: const Text('Raw'),
                                 alignLabelWithHint: true,
                                 helperText: 'The raw address, required *',
+                              ),
+                            ),
+
+                            AppTextFormField(
+                              key: UniqueKey(),
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              initialValue: "${request.address?.location?.geopoint.latitude ?? "31.5"},${request.address?.location?.geopoint.longitude ?? "34.46667"}",
+                              onTap: (v) async {
+                                var latlng = await showLatLngPickerDialog(
+                                  context: context,
+                                  length: 1,
+                                  options: MapOptions(
+                                    center: LatLng(
+                                      request.address.location?.geopoint.latitude ?? 31.5,
+                                      request.address.location?.geopoint.longitude ?? 34.46667,
+                                    ),
+                                    zoom: 14,
+                                ),
+                                );
+                                if (latlng != null) {
+                                  setState(() {
+                                    request.address = request.address.copyWith(
+                                      location: GeoFirePoint(GeoPoint(latlng.first.latitude, latlng.first.longitude)),
+                                    );
+                                  });
+                                  try {
+                                    final result = await Nominatim.reverseSearch(
+                                      lat: latlng.first.latitude,
+                                      lon: latlng.first.longitude,
+                                      addressDetails: true,
+                                      extraTags: true,
+                                      nameDetails: true,
+                                      language: "fr"
+                                    );
+                                    setState(() {
+                                      request.address = request.address.copyWith(
+                                        state: result.address?["state"],
+                                        city: result.address?["town"] ?? result.address?["city"],
+                                        raw: result.displayName,
+                                        country: result.address?["country"],
+                                        zip: result.address?["postcode"],
+                                      );
+                                    });
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                }
+                              },
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                              decoration: InputDecoration(
+                                errorText: _errors['location'],
+                                prefixIcon: const Icon(Icons.satellite_alt),
+                                label: const Text('Location'),
+                                alignLabelWithHint: true,
+                                helperText: 'The location of the address, required',
                               ),
                             ),
                             const Divider(),

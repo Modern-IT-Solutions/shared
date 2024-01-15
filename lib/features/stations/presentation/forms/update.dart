@@ -13,6 +13,7 @@ import 'package:muskey/muskey.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:latlng_picker/latlng_picker.dart';
 import 'package:shared/shared.dart';
+import 'package:osm_nominatim/osm_nominatim.dart';
 import '../../data/models/station_model.dart';
 import '../../data/repositories/repository.dart';
 import '../../domain/request/requests.dart';
@@ -546,6 +547,27 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                       location: GeoFirePoint(GeoPoint(latlng.first.latitude, latlng.first.longitude)),
                                     );
                                   });
+                                  try {
+                                    final result = await Nominatim.reverseSearch(
+                                      lat: latlng.first.latitude,
+                                      lon: latlng.first.longitude,
+                                      addressDetails: true,
+                                      extraTags: true,
+                                      nameDetails: true,
+                                      language: "en"
+                                    );
+                                    setState(() {
+                                      request.address = request.address?.copyWith(
+                                        state: result.address?["state"],
+                                        city: result.address?["town"],
+                                        raw: result.displayName,
+                                        country: result.address?["country"],
+                                        zip: result.address?["postcode"],
+                                      );
+                                    });
+                                  } catch (e) {
+                                    print(e);
+                                  }
                                 }
                               },
                               validator: FormBuilderValidators.compose([
