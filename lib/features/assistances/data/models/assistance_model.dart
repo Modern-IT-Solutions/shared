@@ -1,4 +1,5 @@
 
+import 'package:core/modules/chat/room/embedded_chat_room_model.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/features/assistances/data/models/assistance_feedback.dart';
@@ -27,6 +28,8 @@ class AssistanceModel with _$AssistanceModel implements Model {
     required List<AttachmentModel> attachments,
     required ProfileModel? reviewer,
     required InterventionModel? intervention,
+    // embedded chat room
+    EmbeddedChatRoomModel? embeddedChatRoom,
     // feedback
     AssistanceFeedback? feedback,
     // metadata

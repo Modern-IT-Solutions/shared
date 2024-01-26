@@ -32,6 +32,8 @@ mixin _$AssistanceModel {
   List<AttachmentModel> get attachments => throw _privateConstructorUsedError;
   ProfileModel? get reviewer => throw _privateConstructorUsedError;
   InterventionModel? get intervention =>
+      throw _privateConstructorUsedError; // embedded chat room
+  EmbeddedChatRoomModel? get embeddedChatRoom =>
       throw _privateConstructorUsedError; // feedback
   AssistanceFeedback? get feedback =>
       throw _privateConstructorUsedError; // metadata
@@ -68,6 +70,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
       List<AttachmentModel> attachments,
       ProfileModel? reviewer,
       InterventionModel? intervention,
+      EmbeddedChatRoomModel? embeddedChatRoom,
       AssistanceFeedback? feedback,
       Map<String, dynamic> metadata,
       @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
@@ -78,6 +81,7 @@ abstract class $AssistanceModelCopyWith<$Res> {
   $StationModelCopyWith<$Res> get station;
   $ProfileModelCopyWith<$Res>? get reviewer;
   $InterventionModelCopyWith<$Res>? get intervention;
+  $EmbeddedChatRoomModelCopyWith<$Res>? get embeddedChatRoom;
   $AssistanceFeedbackCopyWith<$Res>? get feedback;
 }
 
@@ -104,6 +108,7 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
     Object? attachments = null,
     Object? reviewer = freezed,
     Object? intervention = freezed,
+    Object? embeddedChatRoom = freezed,
     Object? feedback = freezed,
     Object? metadata = null,
     Object? nextInterventionDate = freezed,
@@ -152,6 +157,10 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
           ? _value.intervention
           : intervention // ignore: cast_nullable_to_non_nullable
               as InterventionModel?,
+      embeddedChatRoom: freezed == embeddedChatRoom
+          ? _value.embeddedChatRoom
+          : embeddedChatRoom // ignore: cast_nullable_to_non_nullable
+              as EmbeddedChatRoomModel?,
       feedback: freezed == feedback
           ? _value.feedback
           : feedback // ignore: cast_nullable_to_non_nullable
@@ -213,6 +222,19 @@ class _$AssistanceModelCopyWithImpl<$Res, $Val extends AssistanceModel>
 
   @override
   @pragma('vm:prefer-inline')
+  $EmbeddedChatRoomModelCopyWith<$Res>? get embeddedChatRoom {
+    if (_value.embeddedChatRoom == null) {
+      return null;
+    }
+
+    return $EmbeddedChatRoomModelCopyWith<$Res>(_value.embeddedChatRoom!,
+        (value) {
+      return _then(_value.copyWith(embeddedChatRoom: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
   $AssistanceFeedbackCopyWith<$Res>? get feedback {
     if (_value.feedback == null) {
       return null;
@@ -243,6 +265,7 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
       List<AttachmentModel> attachments,
       ProfileModel? reviewer,
       InterventionModel? intervention,
+      EmbeddedChatRoomModel? embeddedChatRoom,
       AssistanceFeedback? feedback,
       Map<String, dynamic> metadata,
       @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
@@ -256,6 +279,8 @@ abstract class _$$AssistanceModelImplCopyWith<$Res>
   $ProfileModelCopyWith<$Res>? get reviewer;
   @override
   $InterventionModelCopyWith<$Res>? get intervention;
+  @override
+  $EmbeddedChatRoomModelCopyWith<$Res>? get embeddedChatRoom;
   @override
   $AssistanceFeedbackCopyWith<$Res>? get feedback;
 }
@@ -281,6 +306,7 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
     Object? attachments = null,
     Object? reviewer = freezed,
     Object? intervention = freezed,
+    Object? embeddedChatRoom = freezed,
     Object? feedback = freezed,
     Object? metadata = null,
     Object? nextInterventionDate = freezed,
@@ -329,6 +355,10 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
           ? _value.intervention
           : intervention // ignore: cast_nullable_to_non_nullable
               as InterventionModel?,
+      embeddedChatRoom: freezed == embeddedChatRoom
+          ? _value.embeddedChatRoom
+          : embeddedChatRoom // ignore: cast_nullable_to_non_nullable
+              as EmbeddedChatRoomModel?,
       feedback: freezed == feedback
           ? _value.feedback
           : feedback // ignore: cast_nullable_to_non_nullable
@@ -371,6 +401,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       required final List<AttachmentModel> attachments,
       required this.reviewer,
       required this.intervention,
+      this.embeddedChatRoom,
       this.feedback,
       final Map<String, dynamic> metadata = const {},
       @NullableTimestampDateTimeSerializer() this.nextInterventionDate,
@@ -425,6 +456,9 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   final ProfileModel? reviewer;
   @override
   final InterventionModel? intervention;
+// embedded chat room
+  @override
+  final EmbeddedChatRoomModel? embeddedChatRoom;
 // feedback
   @override
   final AssistanceFeedback? feedback;
@@ -454,7 +488,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
 
   @override
   String toString() {
-    return 'AssistanceModel(ref: $ref, station: $station, technicians: $technicians, techniciansRefs: $techniciansRefs, status: $status, date: $date, note: $note, attachments: $attachments, reviewer: $reviewer, intervention: $intervention, feedback: $feedback, metadata: $metadata, nextInterventionDate: $nextInterventionDate, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'AssistanceModel(ref: $ref, station: $station, technicians: $technicians, techniciansRefs: $techniciansRefs, status: $status, date: $date, note: $note, attachments: $attachments, reviewer: $reviewer, intervention: $intervention, embeddedChatRoom: $embeddedChatRoom, feedback: $feedback, metadata: $metadata, nextInterventionDate: $nextInterventionDate, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -477,6 +511,8 @@ class _$AssistanceModelImpl implements _AssistanceModel {
                 other.reviewer == reviewer) &&
             (identical(other.intervention, intervention) ||
                 other.intervention == intervention) &&
+            (identical(other.embeddedChatRoom, embeddedChatRoom) ||
+                other.embeddedChatRoom == embeddedChatRoom) &&
             (identical(other.feedback, feedback) ||
                 other.feedback == feedback) &&
             const DeepCollectionEquality().equals(other._metadata, _metadata) &&
@@ -504,6 +540,7 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       const DeepCollectionEquality().hash(_attachments),
       reviewer,
       intervention,
+      embeddedChatRoom,
       feedback,
       const DeepCollectionEquality().hash(_metadata),
       nextInterventionDate,
@@ -538,6 +575,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           required final List<AttachmentModel> attachments,
           required final ProfileModel? reviewer,
           required final InterventionModel? intervention,
+          final EmbeddedChatRoomModel? embeddedChatRoom,
           final AssistanceFeedback? feedback,
           final Map<String, dynamic> metadata,
           @NullableTimestampDateTimeSerializer()
@@ -572,6 +610,8 @@ abstract class _AssistanceModel implements AssistanceModel {
   ProfileModel? get reviewer;
   @override
   InterventionModel? get intervention;
+  @override // embedded chat room
+  EmbeddedChatRoomModel? get embeddedChatRoom;
   @override // feedback
   AssistanceFeedback? get feedback;
   @override // metadata

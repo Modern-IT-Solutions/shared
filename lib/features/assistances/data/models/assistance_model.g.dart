@@ -30,6 +30,10 @@ _$AssistanceModelImpl _$$AssistanceModelImplFromJson(
           ? null
           : InterventionModel.fromJson(
               json['intervention'] as Map<String, dynamic>),
+      embeddedChatRoom: json['embeddedChatRoom'] == null
+          ? null
+          : EmbeddedChatRoomModel.fromJson(
+              json['embeddedChatRoom'] as Map<String, dynamic>),
       feedback: json['feedback'] == null
           ? null
           : AssistanceFeedback.fromJson(
@@ -58,6 +62,7 @@ Map<String, dynamic> _$$AssistanceModelImplToJson(
       'attachments': instance.attachments.map((e) => e.toJson()).toList(),
       'reviewer': instance.reviewer?.toJson(),
       'intervention': instance.intervention?.toJson(),
+      'embeddedChatRoom': instance.embeddedChatRoom?.toJson(),
       'feedback': instance.feedback?.toJson(),
       'metadata': instance.metadata,
       'nextInterventionDate': const NullableTimestampDateTimeSerializer()
