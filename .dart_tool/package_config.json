@@ -50,6 +50,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "blurhash_dart",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/blurhash_dart-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -201,7 +207,7 @@
     },
     {
       "name": "core",
-      "rootUri": "../../core",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-99392f153ed130c07248c0c7c45ce0075f9b26fa/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1430,6 +1436,18 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "video_player_media_kit",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/video_player_media_kit-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "video_player_platform_interface",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/video_player_platform_interface-6.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "visibility_detector",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/visibility_detector-0.4.0+2",
       "packageUri": "lib/",
@@ -1532,7 +1550,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-27T02:05:54.622312Z",
+  "generated": "2024-01-27T19:48:43.222933Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-24.0.dev"
 }

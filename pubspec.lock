@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  blurhash_dart:
+    dependency: transitive
+    description:
+      name: blurhash_dart
+      sha256: "43955b6c2e30a7d440028d1af0fa185852f3534b795cc6eb81fbf397b464409f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -268,9 +276,11 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "../core"
-      relative: true
-    source: path
+      path: "."
+      ref: arch2
+      resolved-ref: "99392f153ed130c07248c0c7c45ce0075f9b26fa"
+      url: "https://github.com/Modern-IT-Solutions/core.git"
+    source: git
     version: "0.0.1"
   country_pickers:
     dependency: transitive
@@ -1889,6 +1899,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  video_player_media_kit:
+    dependency: transitive
+    description:
+      name: video_player_media_kit
+      sha256: eadf78b85d0ecc6f65bb5ca84c5ad9546a8609c6c0ee207e81673f7969461f3b
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
+  video_player_platform_interface:
+    dependency: transitive
+    description:
+      name: video_player_platform_interface
+      sha256: "236454725fafcacf98f0f39af0d7c7ab2ce84762e3b63f2cbb3ef9a7e0550bc6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.2"
   visibility_detector:
     dependency: "direct main"
     description:
