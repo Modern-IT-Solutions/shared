@@ -15,7 +15,10 @@ part 'assistance_model.g.dart';
 
 @freezed
 class AssistanceModel with _$AssistanceModel implements Model {
-  factory AssistanceModel({
+
+  const AssistanceModel._();
+
+  const factory AssistanceModel({
     @ModelRefSerializer()
     required ModelRef ref,
     required StationModel station,
@@ -45,7 +48,6 @@ class AssistanceModel with _$AssistanceModel implements Model {
   }) = _AssistanceModel;
 
   factory AssistanceModel.fromJson(Map<String, dynamic> json) => _$AssistanceModelFromJson(json);
-
 
   static ModelDescription<AssistanceModel> get description => ModelDescription<AssistanceModel>(
         fields: {

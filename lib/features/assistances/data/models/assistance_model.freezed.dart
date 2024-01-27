@@ -389,8 +389,8 @@ class __$$AssistanceModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AssistanceModelImpl implements _AssistanceModel {
-  _$AssistanceModelImpl(
+class _$AssistanceModelImpl extends _AssistanceModel {
+  const _$AssistanceModelImpl(
       {@ModelRefSerializer() required this.ref,
       required this.station,
       required final List<ProfileModel> technicians,
@@ -411,7 +411,8 @@ class _$AssistanceModelImpl implements _AssistanceModel {
       : _technicians = technicians,
         _techniciansRefs = techniciansRefs,
         _attachments = attachments,
-        _metadata = metadata;
+        _metadata = metadata,
+        super._();
 
   factory _$AssistanceModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AssistanceModelImplFromJson(json);
@@ -563,8 +564,8 @@ class _$AssistanceModelImpl implements _AssistanceModel {
   }
 }
 
-abstract class _AssistanceModel implements AssistanceModel {
-  factory _AssistanceModel(
+abstract class _AssistanceModel extends AssistanceModel {
+  const factory _AssistanceModel(
           {@ModelRefSerializer() required final ModelRef ref,
           required final StationModel station,
           required final List<ProfileModel> technicians,
@@ -584,6 +585,7 @@ abstract class _AssistanceModel implements AssistanceModel {
           @TimestampDateTimeSerializer() required final DateTime updatedAt,
           @NullableTimestampDateTimeSerializer() final DateTime? deletedAt}) =
       _$AssistanceModelImpl;
+  const _AssistanceModel._() : super._();
 
   factory _AssistanceModel.fromJson(Map<String, dynamic> json) =
       _$AssistanceModelImpl.fromJson;

@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-65.0.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-66.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -27,7 +27,7 @@
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/analyzer-6.3.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/analyzer-6.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -99,7 +99,7 @@
     },
     {
       "name": "built_value",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/built_value-8.8.1",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/built_value-8.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -243,7 +243,7 @@
     },
     {
       "name": "desktop_webview_auth",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/desktop_webview_auth-0.0.14",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/desktop_webview_auth-0.0.15",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -501,7 +501,7 @@
     },
     {
       "name": "fluentui_system_icons",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/fluentui_system_icons-1.1.224",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/fluentui_system_icons-1.1.225",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -921,9 +921,9 @@
     },
     {
       "name": "mime",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/mime-1.0.4",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/mime-1.0.5",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.2"
     },
     {
       "name": "muskey",
@@ -1077,7 +1077,7 @@
     },
     {
       "name": "puncher",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/puncher-0.0.1",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/puncher-0.0.4",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -1146,6 +1146,12 @@
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/screen_capture_event-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.15"
+    },
+    {
+      "name": "shaper",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/shaper-0.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "shared_preferences",
@@ -1233,13 +1239,13 @@
     },
     {
       "name": "sqflite",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/sqflite-2.3.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/sqflite-2.3.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/sqflite_common-2.5.0+2",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/sqflite_common-2.5.3",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -1347,7 +1353,7 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/url_launcher-6.2.3",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/url_launcher-6.2.4",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1526,7 +1532,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-26T21:29:50.254968Z",
+  "generated": "2024-01-27T02:05:54.622312Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-24.0.dev"
 }
