@@ -32,6 +32,7 @@ dependencies:
     git:
      url: https://github.com/Modern-IT-Solutions/z-player.git
      ref: main
+  image_picker:
 
   fast_rsa:
   convert:
