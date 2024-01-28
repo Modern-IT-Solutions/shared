@@ -1,3 +1,7 @@
+core
+3.1
+file:///Users/mohamad/.pub-cache/git/core-a646a5daa315fdef76e5c94a4e953ee7aed6d806/
+file:///Users/mohamad/.pub-cache/git/core-a646a5daa315fdef76e5c94a4e953ee7aed6d806/lib/
 lib
 3.0
 file:///Users/mohamad/.pub-cache/git/lib-487b7859224ccccf9614745a0dcd1b8192dc28b8/
@@ -558,6 +562,10 @@ json_serializable
 3.0
 file:///Users/mohamad/.pub-cache/hosted/pub.dev/json_serializable-6.7.1/
 file:///Users/mohamad/.pub-cache/hosted/pub.dev/json_serializable-6.7.1/lib/
+latlng_picker
+3.0
+file:///Users/mohamad/.pub-cache/hosted/pub.dev/latlng_picker-0.0.5/
+file:///Users/mohamad/.pub-cache/hosted/pub.dev/latlng_picker-0.0.5/lib/
 latlong2
 3.0
 file:///Users/mohamad/.pub-cache/hosted/pub.dev/latlong2-0.9.0/
@@ -1054,14 +1062,6 @@ youtube_explode_dart
 3.0
 file:///Users/mohamad/.pub-cache/hosted/pub.dev/youtube_explode_dart-2.1.0/
 file:///Users/mohamad/.pub-cache/hosted/pub.dev/youtube_explode_dart-2.1.0/lib/
-latlng_picker
-3.0
-file:///Users/mohamad/Desktop/projects/kflutter/latlng_picker/
-file:///Users/mohamad/Desktop/projects/kflutter/latlng_picker/lib/
-core
-3.1
-file:///Users/mohamad/Desktop/projects/packages/core/
-file:///Users/mohamad/Desktop/projects/packages/core/lib/
 shared
 3.1
 file:///Users/mohamad/Desktop/projects/packages/shared/
