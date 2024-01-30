@@ -207,15 +207,9 @@
     },
     {
       "name": "core",
-      "rootUri": "../../core",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-ed7249f0380d21634017148ca2e5fcc65fdaadc2/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
-    },
-    {
-      "name": "country_pickers",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/country_pickers-2.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "cross_file",
@@ -554,12 +548,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "flutter_form_builder",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_form_builder-9.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
       "name": "flutter_json_view",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/flutter_json_view-1.1.4",
       "packageUri": "lib/",
@@ -630,12 +618,6 @@
       "rootUri": "file:///Users/mohamad/dev/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
-    },
-    {
-      "name": "form_builder_phone_field",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/form_builder_phone_field-2.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "form_builder_validators",
@@ -1104,12 +1086,6 @@
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/petitparser-6.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.2"
-    },
-    {
-      "name": "phone_number",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/phone_number-2.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
     },
     {
       "name": "photo_view",
@@ -1634,7 +1610,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-01-28T01:06:06.884787Z",
+  "generated": "2024-01-30T13:43:12.690695Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-24.0.dev"
 }

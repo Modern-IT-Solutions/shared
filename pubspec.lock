@@ -276,18 +276,12 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "../core"
-      relative: true
-    source: path
+      path: "."
+      ref: arch2
+      resolved-ref: ed7249f0380d21634017148ca2e5fcc65fdaadc2
+      url: "https://github.com/Modern-IT-Solutions/core.git"
+    source: git
     version: "0.0.1"
-  country_pickers:
-    dependency: transitive
-    description:
-      name: country_pickers
-      sha256: a71df4a061b25f07b202a881c43a057edc842a30b3410d511382103c68afebc2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   cross_file:
     dependency: transitive
     description:
@@ -733,14 +727,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  flutter_form_builder:
-    dependency: transitive
-    description:
-      name: flutter_form_builder
-      sha256: "8973beed34b6d951d36bf688b52e9e3040b47b763c35c320bd6f4c2f6b13f3a2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.1.1"
   flutter_json_view:
     dependency: transitive
     description:
@@ -828,14 +814,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  form_builder_phone_field:
-    dependency: transitive
-    description:
-      name: form_builder_phone_field
-      sha256: b959f560ad94f4ecbc48830d5485b187aa02d87a02a97cdb874bc6ddd87d0dcb
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   form_builder_validators:
     dependency: transitive
     description:
@@ -1461,14 +1439,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
-  phone_number:
-    dependency: transitive
-    description:
-      name: phone_number
-      sha256: "509033faaed1e95f778b9dd6679a458d4e2641c579d40bee0db1cb674de8efac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   photo_view:
     dependency: "direct main"
     description:
