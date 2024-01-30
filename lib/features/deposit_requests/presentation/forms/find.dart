@@ -883,9 +883,9 @@ class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                              Theme.of(context).colorScheme.background.withOpacity(0.8),
+                              Theme.of(context).colorScheme.background.withOpacity(0.1),
+                              Theme.of(context).colorScheme.background.withOpacity(0.5),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -1059,7 +1059,7 @@ class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
                       icon: const Icon(FluentIcons.copy_24_regular),
                     ),
                   ),
-                  for (var phoneNumber in giftCardOrder?.shipping.phoneNumbers ?? [])
+                  for (String phoneNumber in giftCardOrder?.shipping.phoneNumbers ?? [])
                     ListTile(
                       onTap: () async {
                         if (giftCardOrder != null) {
@@ -1069,7 +1069,7 @@ class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
                       leading: const Icon(FluentIcons.phone_20_regular),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 24),
                       visualDensity: const VisualDensity(vertical: -3),
-                      title: Text(phoneNumber),
+                      title:phoneNumber.isEmpty? DataFlagWidget.empty() :Text(phoneNumber),
                       subtitle: const Text(
                         'Phone',
                         style: TextStyle(
