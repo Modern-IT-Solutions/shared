@@ -239,7 +239,7 @@ class _$BillModelImpl implements _BillModel {
       this.description,
       required this.amount,
       this.currency = "DZD",
-      this.status = BillStatus.panding,
+      this.status = BillStatus.pending,
       required this.paymentMethod,
       required final List<BillingItemModel> items,
       final Map<String, dynamic> metadata = const {},

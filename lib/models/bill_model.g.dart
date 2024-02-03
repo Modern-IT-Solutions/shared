@@ -13,7 +13,7 @@ _$BillModelImpl _$$BillModelImplFromJson(Map<String, dynamic> json) =>
       amount: (json['amount'] as num).toDouble(),
       currency: json['currency'] as String? ?? "DZD",
       status: $enumDecodeNullable(_$BillStatusEnumMap, json['status']) ??
-          BillStatus.panding,
+          BillStatus.pending,
       paymentMethod: $enumDecode(_$PaymentMethodEnumMap, json['paymentMethod']),
       items: (json['items'] as List<dynamic>)
           .map((e) => BillingItemModel.fromJson(e as Map<String, dynamic>))
@@ -46,9 +46,10 @@ Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
     };
 
 const _$BillStatusEnumMap = {
-  BillStatus.panding: 'panding',
+  BillStatus.pending: 'pending',
   BillStatus.paid: 'paid',
-  BillStatus.cancelled: 'cancelled',
+  BillStatus.unpaid: 'unpaid',
+  BillStatus.received: 'received',
 };
 
 const _$PaymentMethodEnumMap = {

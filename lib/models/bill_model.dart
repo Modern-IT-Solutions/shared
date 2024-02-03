@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'billing_item_model.dart';
@@ -7,10 +8,13 @@ part 'bill_model.freezed.dart';
 part 'bill_model.g.dart';
 
 enum BillStatus {
-  panding,
-  paid,
-  // partiallyPaid,
-  cancelled,
+  pending(Colors.orange),
+  unpaid(Colors.red),
+  paid(Colors.green),
+  received(Colors.blue);
+
+  const BillStatus(this.color);
+  final Color color;
 }
 
 enum PaymentMethod {
@@ -32,7 +36,7 @@ class BillModel with _$BillModel implements Model {
     // the paid part of the bill, user can pay a part of the bill and the rest later
     // required double paidAmount,
     @Default("DZD") String currency,
-    @Default(BillStatus.panding) BillStatus status,
+    @Default(BillStatus.pending) BillStatus status,
     // payment method
     required PaymentMethod paymentMethod,
     required List<BillingItemModel> items,

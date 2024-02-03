@@ -12,6 +12,7 @@ import 'package:shared/shared.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../data/models/assistant_modification_history.dart';
 import '../../domain/request/requests.dart';
 
 /// [UpdateAssistanceForm] is a form to update a new user
@@ -70,7 +71,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
     _errors = {};
   }
 
-  Future<void> _submit() async {
+  Future<void> _submit([String? changeMessage]) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _errors = {};
@@ -79,6 +80,14 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
       });
       var data = {
         ...request.data,
+        if (changeMessage != null) 
+        "metadata.timeline": FieldValue.arrayUnion([
+          AssistantModificationHistory(
+            date: DateTime.now(),
+            profile: getCurrentProfile()!,
+            note: changeMessage,
+          ).toJson(),
+        ]),
       };
 
       try {
@@ -100,8 +109,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
             updatedAt: request.updatedAt ?? widget.model?.updatedAt ?? DateTime.now(),
           ));
         } else if (widget.ref.nullIfEmpty != null) {
-          var item = AssistanceModel.fromJson(data);
-          await setDocument(path: request.ref.path, data: data);
+          var item = AssistanceModel.fromJson(request.data);
+          await setDocument(path: request.ref.path, data: request.data);
           widget.onCreated?.call(item);
         } else {
           throw Exception('CODE:IAE, ref is empty, can not create new item without ref ');
@@ -191,7 +200,10 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 title: Text(request.station?.name ?? "Station"),
                 subtitle: Text(request.station?.address.raw ?? "Address"),
                 onTap: () {
-                  showDetailsStationModelDailog(context, request.station!);
+                  // if (getCurrentProfile()!.roles.first.can("permission")) {
+                    
+                  // }
+                  showDetailsStationModelDailog(context, request.station!, showEdit :false);
                 },
               ),
 
@@ -222,7 +234,11 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             : () => setState(
                                   () {
                                     request.status = item;
-                                    _submit();
+
+                                    _submit(
+                                      "Status changed to ${item.name.titleCase}",
+                                    );
+
                                   },
                                 ),
                       ),
@@ -281,7 +297,9 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                       ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
                                       ...profiles
                                     ];
-                                    _submit();
+                                    _submit(
+                                      "Add ${profiles.map((e) => e.displayName).join(", ")} as technicians",
+                                    );
                                   });
                                 },
                               ),
@@ -319,7 +337,9 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                             request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
                                           });
                                           // save
-                                          _submit();
+                                          _submit(
+                                            "Remove ${tech.displayName} from technicians",
+                                          );
                                         },
                                       ),
                                     ),
@@ -456,10 +476,26 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
               AppTextFormField(
                 enabled: false,
                 mode: AppTextFormFieldMode.dateTime,
+                initialValue: widget.model?.nextInterventionDate?.toIso8601String(),
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                onChanged: (v) async {
+                  // request.date = DateTime.tryParse(v);
+                },
+                validator: (v) {
+                  if (v == null || v.isEmpty) {
+                    return "Date is required";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(errorText: _errors['date'], prefixIcon: const Icon(FluentIcons.calendar_32_regular), label: const Text('estimated intervention date'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
+              ),
+              AppTextFormField(
+                enabled: false,
+                mode: AppTextFormFieldMode.dateTime,
                 initialValue: request.date?.toIso8601String(),
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 onChanged: (v) async {
-                  request.date = DateTime.tryParse(v);
+                  // request.date = DateTime.tryParse(v);
                 },
                 validator: (v) {
                   if (v == null || v.isEmpty) {
@@ -477,6 +513,15 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   request.note = v;
                 },
                 decoration: InputDecoration(errorText: _errors['note'], prefixIcon: const Icon(FluentIcons.note_24_regular), label: const Text('Client note'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
+              ),
+              // callDuration 
+              AppTextFormField(
+                enabled: false,
+                initialValue: (widget.model?.intervention?.metadata["callDuration"]).toString()+" min",
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                onChanged: (v) async {
+                },
+                decoration: InputDecoration(errorText: _errors['callDuration'], prefixIcon: const Icon(FluentIcons.timer_24_regular), label: const Text('Call duration'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
               ),
               Divider(),
               const ListTile(

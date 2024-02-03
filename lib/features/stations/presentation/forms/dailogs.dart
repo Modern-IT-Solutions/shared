@@ -150,7 +150,7 @@ Future<bool?> showDeleteStationModelDailog(BuildContext context, StationModel mo
 }
 
 @override
-Future<void> showDetailsStationModelDailog(BuildContext context, StationModel model) async {
+Future<void> showDetailsStationModelDailog(BuildContext context, StationModel model,{bool showEdit=true}) async {
   var child = Container(
     constraints: const BoxConstraints(maxWidth: 500),
     child: FindStationForm(
@@ -158,6 +158,7 @@ Future<void> showDetailsStationModelDailog(BuildContext context, StationModel mo
       model: model,
       actions: [
         // edit
+        if (showEdit)
         IconButton(
           onPressed: () {
             Navigator.of(context).pop();
