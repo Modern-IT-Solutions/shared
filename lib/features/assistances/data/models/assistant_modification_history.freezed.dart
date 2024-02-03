@@ -26,6 +26,7 @@ mixin _$AssistantModificationHistory {
   String? get note => throw _privateConstructorUsedError;
   ProfileModel get profile => throw _privateConstructorUsedError;
   Map<String, dynamic>? get changes => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
   Map<String, dynamic> get metadata => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $AssistantModificationHistoryCopyWith<$Res> {
       String? note,
       ProfileModel profile,
       Map<String, dynamic>? changes,
+      String? status,
       Map<String, dynamic> metadata});
 
   $ProfileModelCopyWith<$Res> get profile;
@@ -70,6 +72,7 @@ class _$AssistantModificationHistoryCopyWithImpl<$Res,
     Object? note = freezed,
     Object? profile = null,
     Object? changes = freezed,
+    Object? status = freezed,
     Object? metadata = null,
   }) {
     return _then(_value.copyWith(
@@ -89,6 +92,10 @@ class _$AssistantModificationHistoryCopyWithImpl<$Res,
           ? _value.changes
           : changes // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
       metadata: null == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -119,6 +126,7 @@ abstract class _$$AssistantModificationHistoryImplCopyWith<$Res>
       String? note,
       ProfileModel profile,
       Map<String, dynamic>? changes,
+      String? status,
       Map<String, dynamic> metadata});
 
   @override
@@ -142,6 +150,7 @@ class __$$AssistantModificationHistoryImplCopyWithImpl<$Res>
     Object? note = freezed,
     Object? profile = null,
     Object? changes = freezed,
+    Object? status = freezed,
     Object? metadata = null,
   }) {
     return _then(_$AssistantModificationHistoryImpl(
@@ -161,6 +170,10 @@ class __$$AssistantModificationHistoryImplCopyWithImpl<$Res>
           ? _value._changes
           : changes // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
       metadata: null == metadata
           ? _value._metadata
           : metadata // ignore: cast_nullable_to_non_nullable
@@ -178,6 +191,7 @@ class _$AssistantModificationHistoryImpl
       this.note,
       required this.profile,
       final Map<String, dynamic>? changes,
+      this.status,
       final Map<String, dynamic> metadata = const {}})
       : _changes = changes,
         _metadata = metadata;
@@ -203,6 +217,8 @@ class _$AssistantModificationHistoryImpl
     return EqualUnmodifiableMapView(value);
   }
 
+  @override
+  final String? status;
   final Map<String, dynamic> _metadata;
   @override
   @JsonKey()
@@ -214,7 +230,7 @@ class _$AssistantModificationHistoryImpl
 
   @override
   String toString() {
-    return 'AssistantModificationHistory(date: $date, note: $note, profile: $profile, changes: $changes, metadata: $metadata)';
+    return 'AssistantModificationHistory(date: $date, note: $note, profile: $profile, changes: $changes, status: $status, metadata: $metadata)';
   }
 
   @override
@@ -226,6 +242,7 @@ class _$AssistantModificationHistoryImpl
             (identical(other.note, note) || other.note == note) &&
             (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other._changes, _changes) &&
+            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._metadata, _metadata));
   }
 
@@ -237,6 +254,7 @@ class _$AssistantModificationHistoryImpl
       note,
       profile,
       const DeepCollectionEquality().hash(_changes),
+      status,
       const DeepCollectionEquality().hash(_metadata));
 
   @JsonKey(ignore: true)
@@ -262,6 +280,7 @@ abstract class _AssistantModificationHistory
           final String? note,
           required final ProfileModel profile,
           final Map<String, dynamic>? changes,
+          final String? status,
           final Map<String, dynamic> metadata}) =
       _$AssistantModificationHistoryImpl;
 
@@ -277,6 +296,8 @@ abstract class _AssistantModificationHistory
   ProfileModel get profile;
   @override
   Map<String, dynamic>? get changes;
+  @override
+  String? get status;
   @override
   Map<String, dynamic> get metadata;
   @override

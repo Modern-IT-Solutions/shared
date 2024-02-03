@@ -80,14 +80,14 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
       });
       var data = {
         ...request.data,
-        if (changeMessage != null) 
-        "metadata.timeline": FieldValue.arrayUnion([
-          AssistantModificationHistory(
-            date: DateTime.now(),
-            profile: getCurrentProfile()!,
-            note: changeMessage,
-          ).toJson(),
-        ]),
+        if (changeMessage != null)
+          "metadata.timeline": FieldValue.arrayUnion([
+            AssistantModificationHistory(
+              date: DateTime.now(),
+              profile: getCurrentProfile()!,
+              note: changeMessage,
+            ).toJson(),
+          ]),
       };
 
       try {
@@ -201,9 +201,9 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 subtitle: Text(request.station?.address.raw ?? "Address"),
                 onTap: () {
                   // if (getCurrentProfile()!.roles.first.can("permission")) {
-                    
+
                   // }
-                  showDetailsStationModelDailog(context, request.station!, showEdit :false);
+                  showDetailsStationModelDailog(context, request.station!, showEdit: false);
                 },
               ),
 
@@ -238,7 +238,6 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                     _submit(
                                       "Status changed to ${item.name.titleCase}",
                                     );
-
                                   },
                                 ),
                       ),
@@ -272,81 +271,109 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   },
                 ),
               ),
-                            const Divider(),
-                            ListTile(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
-                              visualDensity: const VisualDensity(vertical: -3),
-                              title: const Text("Technicians"),
-                              enabled: false,
-                              trailing: IconButton(
-                                icon: const Icon(FluentIcons.add_24_regular),
-                                onPressed: () async {
-                                  var profiles = await showProfilesPickerDialog(context, filters: [
-                                    IndexViewFilter(
-                                      name: "Technicians",
-                                      active: true,
-                                      local: (model) => model.roles.map((e) => e.name).contains("technician"),
-                                      remote: (query) => query.where("roles", arrayContains: "technician"),
-                                      strict: false,
-                                      fixed: true,
-                                    )
-                                  ]);
-                                  if (profiles == null) return;
-                                  setState(() {
-                                    request.technicians = [
-                                      ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
-                                      ...profiles
-                                    ];
-                                    _submit(
-                                      "Add ${profiles.map((e) => e.displayName).join(", ")} as technicians",
-                                    );
-                                  });
-                                },
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                for (ProfileModel tech in request.technicians ?? [])
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                                    child: ListTile(
-                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                                      onTap: () async {
-                                        await showDetailsProfileModelDailog(context, tech);
-                                      },
-                                      leading: ProfileAvatar(
-                                        profile: tech,
-                                        radius: 40,
-                                      ),
-                                      // leading: CircleAvatar(
-                                      //   backgroundImage: tech.photoUrl.isEmpty
-                                      //       ? null
-                                      //       : CachedNetworkImageProvider(
-                                      //           tech.photoUrl,
-                                      //         ),
-                                      //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
-                                      // ),
-                                      title: Text(tech.displayName),
-                                      trailing: IconButton(
-                                        icon: const Icon(FluentIcons.delete_24_regular),
-                                        onPressed: () {
-                                          // _technicians.value = {
-                                          //   ..._technicians.value,
-                                          // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
-                                          setState(() {
-                                            request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
-                                          });
-                                          // save
-                                          _submit(
-                                            "Remove ${tech.displayName} from technicians",
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-             
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: ListTile(
+                  leading: Icon(
+                    FluentIcons.calendar_48_regular,
+                  ),
+                  contentPadding: EdgeInsets.only(left: 12),
+                  visualDensity: VisualDensity(vertical: -3),
+                  title: Text(request.nextInterventionDate?.toIso8601String() ?? "No date"),
+                  subtitle: Text("Next Intervention Date"),
+                  trailing:getCurrentProfile()!.hasRoleString("admin") || getCurrentProfile()!.hasRoleString("commercial")? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: const Icon(FluentIcons.edit_16_regular),
+                  ):null,
+                  onTap: () async {
+                    if (getCurrentProfile()!.hasRoleString("admin") || getCurrentProfile()!.hasRoleString("commercial")) {
+                      
+                    }
+                    var date = await showDatePicker(context: context, firstDate: DateTime.now().add(Duration(days: -1000)), lastDate: DateTime.now().add(Duration(days: 1000)));
+                    if (date != null) {
+                      request.nextInterventionDate = date;
+                      _submit("Change estimated date to $date");
+                    }
+                  },
+                ),
+              ),
+
+              const Divider(),
+              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                visualDensity: const VisualDensity(vertical: -3),
+                title: const Text("Technicians"),
+                enabled: false,
+                trailing: IconButton(
+                  icon: const Icon(FluentIcons.add_24_regular),
+                  onPressed: () async {
+                    var profiles = await showProfilesPickerDialog(context, filters: [
+                      IndexViewFilter(
+                        name: "Technicians",
+                        active: true,
+                        local: (model) => model.roles.map((e) => e.name).contains("technician"),
+                        remote: (query) => query.where("roles", arrayContains: "technician"),
+                        strict: false,
+                        fixed: true,
+                      )
+                    ]);
+                    if (profiles == null) return;
+                    setState(() {
+                      request.technicians = [
+                        ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                        ...profiles
+                      ];
+                      _submit(
+                        "Add ${profiles.map((e) => e.displayName).join(", ")} as technicians",
+                      );
+                    });
+                  },
+                ),
+              ),
+              Column(
+                children: [
+                  for (ProfileModel tech in request.technicians ?? [])
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                        onTap: () async {
+                          await showDetailsProfileModelDailog(context, tech);
+                        },
+                        leading: ProfileAvatar(
+                          profile: tech,
+                          radius: 40,
+                        ),
+                        // leading: CircleAvatar(
+                        //   backgroundImage: tech.photoUrl.isEmpty
+                        //       ? null
+                        //       : CachedNetworkImageProvider(
+                        //           tech.photoUrl,
+                        //         ),
+                        //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                        // ),
+                        title: Text(tech.displayName),
+                        trailing: IconButton(
+                          icon: const Icon(FluentIcons.delete_24_regular),
+                          onPressed: () {
+                            // _technicians.value = {
+                            //   ..._technicians.value,
+                            // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                            setState(() {
+                              request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
+                            });
+                            // save
+                            _submit(
+                              "Remove ${tech.displayName} from technicians",
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+
               // Divider(),
               // const ListTile(
               //   leading: Icon(FluentIcons.person_24_regular),
@@ -403,10 +430,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             children: [
                               Text(widget.model!.feedback!.profile.displayName),
                               const SizedBox(width: 8),
-                              if (widget.model?.feedback?.profile != null)
-                              DataFlagWidget(
-                                custom: widget.model!.feedback!.profile.roles.firstOrNull?.name ?? "?"
-                              ),
+                              if (widget.model?.feedback?.profile != null) DataFlagWidget(custom: widget.model!.feedback!.profile.roles.firstOrNull?.name ?? "?"),
                             ],
                           ),
                           subtitle: Column(
@@ -476,22 +500,6 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
               AppTextFormField(
                 enabled: false,
                 mode: AppTextFormFieldMode.dateTime,
-                initialValue: widget.model?.nextInterventionDate?.toIso8601String(),
-                margin: const EdgeInsets.symmetric(horizontal: 24),
-                onChanged: (v) async {
-                  // request.date = DateTime.tryParse(v);
-                },
-                validator: (v) {
-                  if (v == null || v.isEmpty) {
-                    return "Date is required";
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(errorText: _errors['date'], prefixIcon: const Icon(FluentIcons.calendar_32_regular), label: const Text('estimated intervention date'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
-              ),
-              AppTextFormField(
-                enabled: false,
-                mode: AppTextFormFieldMode.dateTime,
                 initialValue: request.date?.toIso8601String(),
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 onChanged: (v) async {
@@ -514,13 +522,12 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 },
                 decoration: InputDecoration(errorText: _errors['note'], prefixIcon: const Icon(FluentIcons.note_24_regular), label: const Text('Client note'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
               ),
-              // callDuration 
+              // callDuration
               AppTextFormField(
                 enabled: false,
-                initialValue: (widget.model?.intervention?.metadata["callDuration"]).toString()+" min",
+                initialValue: (widget.model?.intervention?.metadata["callDuration"]).toString() + " min",
                 margin: const EdgeInsets.symmetric(horizontal: 24),
-                onChanged: (v) async {
-                },
+                onChanged: (v) async {},
                 decoration: InputDecoration(errorText: _errors['callDuration'], prefixIcon: const Icon(FluentIcons.timer_24_regular), label: const Text('Call duration'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
               ),
               Divider(),
@@ -566,8 +573,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                         IndexViewFilter(
                           name: "Technicians",
                           active: true,
-                                    local: (model) => model.roles.map((e) => e.name).contains("technician"),
-
+                          local: (model) => model.roles.map((e) => e.name).contains("technician"),
                           remote: (query) => query.where("roles", arrayContains: "technician"),
                           strict: false,
                           fixed: true,

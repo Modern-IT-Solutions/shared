@@ -23,7 +23,8 @@ mixin _$BillModel {
   @ModelRefSerializer()
   ModelRef get ref => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  double get amount =>
+  double get amount => throw _privateConstructorUsedError;
+  double get received =>
       throw _privateConstructorUsedError; // the paid part of the bill, user can pay a part of the bill and the rest later
 // required double paidAmount,
   String get currency => throw _privateConstructorUsedError;
@@ -53,6 +54,7 @@ abstract class $BillModelCopyWith<$Res> {
       {@ModelRefSerializer() ModelRef ref,
       String? description,
       double amount,
+      double received,
       String currency,
       BillStatus status,
       PaymentMethod paymentMethod,
@@ -79,6 +81,7 @@ class _$BillModelCopyWithImpl<$Res, $Val extends BillModel>
     Object? ref = null,
     Object? description = freezed,
     Object? amount = null,
+    Object? received = null,
     Object? currency = null,
     Object? status = null,
     Object? paymentMethod = null,
@@ -100,6 +103,10 @@ class _$BillModelCopyWithImpl<$Res, $Val extends BillModel>
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      received: null == received
+          ? _value.received
+          : received // ignore: cast_nullable_to_non_nullable
               as double,
       currency: null == currency
           ? _value.currency
@@ -149,6 +156,7 @@ abstract class _$$BillModelImplCopyWith<$Res>
       {@ModelRefSerializer() ModelRef ref,
       String? description,
       double amount,
+      double received,
       String currency,
       BillStatus status,
       PaymentMethod paymentMethod,
@@ -173,6 +181,7 @@ class __$$BillModelImplCopyWithImpl<$Res>
     Object? ref = null,
     Object? description = freezed,
     Object? amount = null,
+    Object? received = null,
     Object? currency = null,
     Object? status = null,
     Object? paymentMethod = null,
@@ -194,6 +203,10 @@ class __$$BillModelImplCopyWithImpl<$Res>
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      received: null == received
+          ? _value.received
+          : received // ignore: cast_nullable_to_non_nullable
               as double,
       currency: null == currency
           ? _value.currency
@@ -238,6 +251,7 @@ class _$BillModelImpl implements _BillModel {
       {@ModelRefSerializer() required this.ref,
       this.description,
       required this.amount,
+      this.received = 0.0,
       this.currency = "DZD",
       this.status = BillStatus.pending,
       required this.paymentMethod,
@@ -259,6 +273,9 @@ class _$BillModelImpl implements _BillModel {
   final String? description;
   @override
   final double amount;
+  @override
+  @JsonKey()
+  final double received;
 // the paid part of the bill, user can pay a part of the bill and the rest later
 // required double paidAmount,
   @override
@@ -299,7 +316,7 @@ class _$BillModelImpl implements _BillModel {
 
   @override
   String toString() {
-    return 'BillModel(ref: $ref, description: $description, amount: $amount, currency: $currency, status: $status, paymentMethod: $paymentMethod, items: $items, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'BillModel(ref: $ref, description: $description, amount: $amount, received: $received, currency: $currency, status: $status, paymentMethod: $paymentMethod, items: $items, metadata: $metadata, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -311,6 +328,8 @@ class _$BillModelImpl implements _BillModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.received, received) ||
+                other.received == received) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.status, status) || other.status == status) &&
@@ -333,6 +352,7 @@ class _$BillModelImpl implements _BillModel {
       ref,
       description,
       amount,
+      received,
       currency,
       status,
       paymentMethod,
@@ -361,6 +381,7 @@ abstract class _BillModel implements BillModel {
           {@ModelRefSerializer() required final ModelRef ref,
           final String? description,
           required final double amount,
+          final double received,
           final String currency,
           final BillStatus status,
           required final PaymentMethod paymentMethod,
@@ -381,6 +402,8 @@ abstract class _BillModel implements BillModel {
   String? get description;
   @override
   double get amount;
+  @override
+  double get received;
   @override // the paid part of the bill, user can pay a part of the bill and the rest later
 // required double paidAmount,
   String get currency;

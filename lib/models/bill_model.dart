@@ -33,6 +33,7 @@ class BillModel with _$BillModel implements Model {
     required ModelRef ref,
     String? description,
     required double amount,
+    @Default(0.0) double received,
     // the paid part of the bill, user can pay a part of the bill and the rest later
     // required double paidAmount,
     @Default("DZD") String currency,

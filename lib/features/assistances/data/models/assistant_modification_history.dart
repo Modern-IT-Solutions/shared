@@ -13,6 +13,7 @@ class AssistantModificationHistory with _$AssistantModificationHistory {
     String? note,
     required ProfileModel profile,
     Map<String,dynamic>? changes,
+    String? status,
     @Default({}) Map<String,dynamic> metadata,
   }) = _AssistantModificationHistory;
 

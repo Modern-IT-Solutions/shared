@@ -11,6 +11,7 @@ _$BillModelImpl _$$BillModelImplFromJson(Map<String, dynamic> json) =>
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
       description: json['description'] as String?,
       amount: (json['amount'] as num).toDouble(),
+      received: (json['received'] as num?)?.toDouble() ?? 0.0,
       currency: json['currency'] as String? ?? "DZD",
       status: $enumDecodeNullable(_$BillStatusEnumMap, json['status']) ??
           BillStatus.pending,
@@ -32,6 +33,7 @@ Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
       'ref': const ModelRefSerializer().toJson(instance.ref),
       'description': instance.description,
       'amount': instance.amount,
+      'received': instance.received,
       'currency': instance.currency,
       'status': _$BillStatusEnumMap[instance.status]!,
       'paymentMethod': _$PaymentMethodEnumMap[instance.paymentMethod]!,
@@ -47,8 +49,8 @@ Map<String, dynamic> _$$BillModelImplToJson(_$BillModelImpl instance) =>
 
 const _$BillStatusEnumMap = {
   BillStatus.pending: 'pending',
-  BillStatus.paid: 'paid',
   BillStatus.unpaid: 'unpaid',
+  BillStatus.paid: 'paid',
   BillStatus.received: 'received',
 };
 

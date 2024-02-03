@@ -13,6 +13,7 @@ _$AssistantModificationHistoryImpl _$$AssistantModificationHistoryImplFromJson(
       note: json['note'] as String?,
       profile: ProfileModel.fromJson(json['profile'] as Map<String, dynamic>),
       changes: json['changes'] as Map<String, dynamic>?,
+      status: json['status'] as String?,
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$AssistantModificationHistoryImplToJson(
       'note': instance.note,
       'profile': instance.profile.toJson(),
       'changes': instance.changes,
+      'status': instance.status,
       'metadata': instance.metadata,
     };
