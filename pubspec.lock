@@ -276,11 +276,9 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: arch2
-      resolved-ref: ed7249f0380d21634017148ca2e5fcc65fdaadc2
-      url: "https://github.com/Modern-IT-Solutions/core.git"
-    source: git
+      path: "../core"
+      relative: true
+    source: path
     version: "0.0.1"
   cross_file:
     dependency: transitive
