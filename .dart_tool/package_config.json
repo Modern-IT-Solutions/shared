@@ -207,7 +207,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-fa593f0955924e62598ce72a213c460d1fc7be88/",
+      "rootUri": "../../core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1154,6 +1154,48 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "record",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record-5.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "record_android",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record_android-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "record_darwin",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record_darwin-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "record_linux",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record_linux-0.7.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "record_platform_interface",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "record_web",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record_web-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "record_windows",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/record_windows-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "rxdart",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/rxdart-0.27.7",
       "packageUri": "lib/",
@@ -1610,7 +1652,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-02-03T15:54:17.639715Z",
+  "generated": "2024-02-04T15:17:47.717199Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-24.0.dev"
 }
