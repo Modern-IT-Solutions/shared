@@ -325,7 +325,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                         ...profiles
                       ];
                       _submit(
-                        "Add ${profiles.map((e) => e.displayName).join(", ")} as technicians",
+                        "${profiles.map((e) => e.displayName).join(", ")} was added",
                       );
                     });
                   },
@@ -365,7 +365,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             });
                             // save
                             _submit(
-                              "Remove ${tech.displayName} from technicians",
+                              "${tech.displayName} was removed",
                             );
                           },
                         ),
