@@ -239,6 +239,11 @@ extension PreferencesEx on PreferencesService {
     return getOption<bool>('showWallet', defaults: true)!;
   }
 
+  // max sessions per user
+  int get maxSessionsPerUser {
+    return getOption<int>('maxSessionsPerUser', defaults: 5)!;
+  }
+
   bool? get iosShowWallet {
     return getOption<bool>('iosShowWallet', defaults: false);
   }

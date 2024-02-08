@@ -581,6 +581,76 @@ class _UpdateStationFormState extends State<UpdateStationForm> {
                                 helperText: 'The location of the address, required',
                               ),
                             ),
+                            
+                            const Divider(),
+
+
+                            ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                              visualDensity: const VisualDensity(vertical: -3),
+                              title: const Text("Technicians"),
+                              enabled: false,
+                              trailing: IconButton(
+                                icon: const Icon(FluentIcons.add_24_regular),
+                                onPressed: () async {
+                                  var profiles = await showProfilesPickerDialog(context, filters: [
+                                    IndexViewFilter(
+                                      name: "Technicians",
+                                      active: true,
+                                      local: (model) => model.roles.map((e) => e.name).contains("technician"),
+                                      remote: (query) => query.where("roles", arrayContains: "technician"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ]);
+                                  if (profiles == null) return;
+                                  setState(() {
+                                    request.technicians = [
+                                      ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                                      ...profiles
+                                    ];
+                                  });
+                                },
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                for (ProfileModel tech in request.technicians ?? [])
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      onTap: () async {
+                                        await showDetailsProfileModelDailog(context, tech);
+                                      },
+                                      leading: ProfileAvatar(
+                                        profile: tech,
+                                        radius: 40,
+                                      ),
+                                      // leading: CircleAvatar(
+                                      //   backgroundImage: tech.photoUrl.isEmpty
+                                      //       ? null
+                                      //       : CachedNetworkImageProvider(
+                                      //           tech.photoUrl,
+                                      //         ),
+                                      //   child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                                      // ),
+                                      title: Text(tech.displayName),
+                                      trailing: IconButton(
+                                        icon: const Icon(FluentIcons.delete_24_regular),
+                                        onPressed: () {
+                                          // _technicians.value = {
+                                          //   ..._technicians.value,
+                                          // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
+                                          setState(() {
+                                            request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                             const Divider(),
                             ListTile(
                               contentPadding: const EdgeInsets.symmetric(horizontal: 24),
