@@ -50,6 +50,48 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "audioplayers",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_android",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers_android-4.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_darwin",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers_darwin-5.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_linux",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers_linux-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_platform_interface",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers_platform_interface-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_web",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers_web-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_windows",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/audioplayers_windows-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "blurhash_dart",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/blurhash_dart-1.2.1",
       "packageUri": "lib/",
@@ -195,7 +237,7 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/collection-1.17.2",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/collection-1.18.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -207,7 +249,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-1b3ed5a7e37606ca2b10af8cbe604822a4efc24c/",
+      "rootUri": "../../core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -539,7 +581,7 @@
       "name": "flutter",
       "rootUri": "file:///Users/mohamad/dev/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_cache_manager",
@@ -581,7 +623,7 @@
       "name": "flutter_localizations",
       "rootUri": "file:///Users/mohamad/dev/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_map",
@@ -611,13 +653,13 @@
       "name": "flutter_test",
       "rootUri": "file:///Users/mohamad/dev/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter_web_plugins",
       "rootUri": "file:///Users/mohamad/dev/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "form_builder_validators",
@@ -957,7 +999,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/meta-1.9.1",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/meta-1.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1301,7 +1343,7 @@
       "name": "sky_engine",
       "rootUri": "file:///Users/mohamad/dev/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "source_gen",
@@ -1341,15 +1383,15 @@
     },
     {
       "name": "stack_trace",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/stack_trace-1.11.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/stack_trace-1.11.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "stream_channel",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/stream_channel-2.1.1",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/stream_channel-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.19"
     },
     {
       "name": "stream_transform",
@@ -1377,9 +1419,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/test_api-0.6.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/test_api-0.6.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "timeago",
@@ -1563,9 +1605,9 @@
     },
     {
       "name": "web",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/web-0.1.4-beta",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/web-0.3.0",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "web_socket_channel",
@@ -1628,7 +1670,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-02-05T00:58:45.912146Z",
+  "generated": "2024-02-14T11:43:17.339318Z",
   "generator": "pub",
-  "generatorVersion": "3.1.2"
+  "generatorVersion": "3.2.6"
 }

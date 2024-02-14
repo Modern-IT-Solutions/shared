@@ -198,7 +198,7 @@ Future<void> showGiftCardOrderModelHistoryDailog(
                   config: const FlexTableItemConfig.flex(2),
                   builder: (model) {
                     return Text(
-                      timeago.format(model.updatedAt),
+                      getPrefs().formatDate(model.updatedAt) ?? "--",
                       style: Theme.of(context).textTheme.caption,
                     );
                   }
@@ -455,7 +455,7 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
                   config: const FlexTableItemConfig.flex(2),
                   builder: (model) {
                     return Text(
-                      timeago.format(model.updatedAt),
+                      getPrefs().formatDate(model.updatedAt) ?? "--",
                       style: Theme.of(context).textTheme.caption,
                     );
                   }
@@ -706,7 +706,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                           config: const FlexTableItemConfig.flex(2),
                           builder: (model) {
                             return Text(
-                              timeago.format(model.updatedAt),
+                              getPrefs().formatDate(model.updatedAt) ?? "--",
                               style: Theme.of(context).textTheme.caption,
                             );
                           }
@@ -844,7 +844,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                           config: const FlexTableItemConfig.flex(2),
                           builder: (model) {
                             return Text(
-                              timeago.format(model.updatedAt),
+                              getPrefs().formatDate(model.updatedAt) ?? "--",
                               style: Theme.of(context).textTheme.caption,
                             );
                           }
@@ -955,7 +955,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                                 config: const FlexTableItemConfig.flex(2),
                                 builder: (model) {
                                   return Text(
-                                    timeago.format(model.updatedAt),
+                                    getPrefs().formatDate(model.updatedAt) ?? "--",
                                     style: Theme.of(context).textTheme.bodySmall,
                                   );
                                 }
