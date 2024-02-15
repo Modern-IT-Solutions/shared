@@ -40,7 +40,7 @@ class GiftCardModel with _$GiftCardModel implements Model {
  static ModelDescription<GiftCardModel> get description => ModelDescription<GiftCardModel>(
         fields: {
           FieldDescription(
-            name: "Code",
+            name: "code",
             path: "code",
             nullable: true,
             type: FieldType.text,

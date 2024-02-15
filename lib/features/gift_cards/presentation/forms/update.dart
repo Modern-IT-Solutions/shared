@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:core/features/users/presentation/dailogs.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -326,8 +327,7 @@ class _UpdateGiftCardFormState extends State<UpdateGiftCardForm> {
                                   IndexViewFilter(
                                     name: "Suppliers",
                                     active: true,
-                                                                        local: (model) => model.roles.map((e) => e.name).contains("supplier"),
-
+                                    local: (model) => model.roles.map((e) => e.name).contains("supplier"),
                                     remote: (query) => query.where("roles", arrayContains: "supplier"),
                                     strict: false,
                                     fixed: true,
@@ -395,6 +395,34 @@ class _UpdateGiftCardFormState extends State<UpdateGiftCardForm> {
                           fillColor: Colors.transparent,
                         ),
                       ),
+                      AppTextFormField(
+                        enabled: false,
+                        mode: AppTextFormFieldMode.dateTime,
+                        initialValue: (request.transaction != null ? request.transaction!.createdAt : null)?.toIso8601String() ?? "(Not used)",
+                        margin: const EdgeInsets.symmetric(horizontal: 24),
+                        onChanged: (v) async {},
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(FluentIcons.calendar_32_regular),
+                          label: const Text('USED AT'),
+                          alignLabelWithHint: true,
+                          border: InputBorder.none,
+                          fillColor: Colors.transparent,
+                        ),
+                      ),
+                      // used by
+                      if (request.transaction != null)
+                        ListTile(
+                          leading: const Icon(FluentIcons.people_team_24_regular),
+                          contentPadding: const EdgeInsets.only(left: 12),
+                          visualDensity: const VisualDensity(vertical: -3),
+                          title: Text(request.transaction!.uid),
+                          subtitle: Text("Used by"),
+                          trailing: const Icon(FluentIcons.chevron_right_24_regular),
+                          onTap: () async {
+                            var model = await getModelDocument(path: "profiles/${request.transaction!.uid}", fromJson: ProfileModel.fromJson);
+                            if (model != null) await showDetailsProfileModelDailog(context, model);
+                          },
+                        ),
 
                       const SizedBox(height: 20),
                     ],

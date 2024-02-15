@@ -28,7 +28,11 @@ Future<GiftCardOrderModel?> showDetailsGiftCardOrderModellDailog(BuildContext co
 
           IconButton(
             onPressed: () {
-              showGiftCardOrderModelHistoryDailog(context, excludeRefs: [model.ref.path], isUidEqualTo: model.profile.uid);
+              showGiftCardOrderModelHistoryDailog(context,
+                  excludeRefs: [
+                    model.ref.path
+                  ],
+                  isUidEqualTo: model.profile.uid);
             },
             icon: const Icon(FluentIcons.search_20_regular),
           ),
@@ -73,17 +77,22 @@ Future<void> showGiftCardOrderModelHistoryDailog(
   List<String> excludeRefs = const [],
 }) async {
   bool _defaultFilter(Model _model) {
-            var r=true;
-            if (isUidEqualTo != null) {
-              r = _model.ref != isUidEqualTo;
-            }
-            if (excludeRefs.isNotEmpty) {
-              r = r && !excludeRefs.contains(_model.ref.path);
-            }
-            return r;
-          };
+    var r = true;
+    if (isUidEqualTo != null) {
+      r = _model.ref != isUidEqualTo;
+    }
+    if (excludeRefs.isNotEmpty) {
+      r = r && !excludeRefs.contains(_model.ref.path);
+    }
+    return r;
+  }
+
+  ;
   var controller = ModelListViewController<GiftCardOrderModel>(
     value: ModelListViewValue(
+      profilesFilters: [
+        const ModelListProfileFilter(path: "profile.uid"),
+      ],
       forceFilter: true,
       filters: [
         IndexViewFilter(
@@ -98,7 +107,7 @@ Future<void> showGiftCardOrderModelHistoryDailog(
             if (excludeRefs.isNotEmpty) {
               q = q.where("ref", whereNotIn: excludeRefs);
             }
-            return q;//.orderBy("updatedAt", descending: false);
+            return q; //.orderBy("updatedAt", descending: false);
           },
           strict: false,
           fixed: true,
@@ -116,7 +125,7 @@ Future<void> showGiftCardOrderModelHistoryDailog(
               if (excludeRefs.isNotEmpty) {
                 q = q.where("ref", whereNotIn: excludeRefs);
               }
-              return q.where("status", isEqualTo: status.name);//.orderBy("updatedAt", descending: false);
+              return q.where("status", isEqualTo: status.name); //.orderBy("updatedAt", descending: false);
             },
             strict: false,
             fixed: true,
@@ -291,6 +300,9 @@ Future<DepositRequestModel?> showDetailsDepositRequestModellDailog(BuildContext 
 Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositRequestModel model) async {
   var controller = ModelListViewController<DepositRequestModel>(
     value: ModelListViewValue(
+      profilesFilters: [
+        const ModelListProfileFilter(path: "profile.uid"),
+      ],
       forceFilter: true,
       filters: [
         IndexViewFilter(
@@ -603,6 +615,9 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                     ModelListView<DepositRequestModel>(
                       controller: ModelListViewController<DepositRequestModel>(
                         value: ModelListViewValue(
+                          profilesFilters: [
+                            const ModelListProfileFilter(path: "profile.uid"),
+                          ],
                           forceFilter: true,
                           filters: [
                             IndexViewFilter(
@@ -753,6 +768,10 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                     ModelListView<TransactionModel>(
                       controller: ModelListViewController<TransactionModel>(
                         value: ModelListViewValue(
+                          profilesFilters: [
+                            const ModelListProfileFilter(name: "income", path: "to"),
+                            const ModelListProfileFilter(name: "outcome", path: "from"),
+                          ],
                           forceFilter: true,
                           filters: [
                             IndexViewFilter(
@@ -963,6 +982,9 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                             ],
                             controller: ModelListViewController<UnitModel>(
                               value: ModelListViewValue(
+                                profilesFilters: [
+                                  const ModelListProfileFilter(path: "profile.uid"),
+                                ],
                                 forceFilter: true,
                                 filters: [
                                   //all

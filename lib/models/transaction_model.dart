@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../shared.dart';
@@ -129,13 +130,19 @@ class TransactionModel with _$TransactionModel implements Model {
 /// enum [TransactionStatus] is an enum that represents the status of the transaction.
 enum TransactionStatus {
   /// TransactionStatus.pending
-  pending,
+  pending(Colors.blue),
 
   /// TransactionStatus.success
-  success,
+  success(Colors.green),
 
   /// TransactionStatus.failed
-  failed,
+  failed(Colors.red);
+
+  /// canceled
+  // canceled(Colors.red);
+
+  const TransactionStatus(this.color);
+  final Color color;
 }
 
 enum TransactionType {

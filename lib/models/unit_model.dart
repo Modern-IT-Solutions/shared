@@ -24,6 +24,8 @@ class UnitModel with _$UnitModel implements Model {
     required double price,
     required String title,
     required UnitStatisticsModel statistics,
+    // metadata
+    @Default({}) Map<String, dynamic> metadata,
     // visibility
     @Default(ModelVisibility.visible) ModelVisibility visibility,
     required ProfileModel teacher,

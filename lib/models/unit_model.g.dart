@@ -20,6 +20,7 @@ _$UnitModelImpl _$$UnitModelImplFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       statistics: UnitStatisticsModel.fromJson(
           json['statistics'] as Map<String, dynamic>),
+      metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       visibility:
           $enumDecodeNullable(_$ModelVisibilityEnumMap, json['visibility']) ??
               ModelVisibility.visible,
@@ -46,6 +47,7 @@ Map<String, dynamic> _$$UnitModelImplToJson(_$UnitModelImpl instance) =>
       'price': instance.price,
       'title': instance.title,
       'statistics': instance.statistics.toJson(),
+      'metadata': instance.metadata,
       'visibility': _$ModelVisibilityEnumMap[instance.visibility]!,
       'teacher': instance.teacher.toJson(),
       'subject': instance.subject.toJson(),

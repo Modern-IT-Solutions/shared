@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+// import 'package:cloud_functions/cloud_functions.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -87,30 +87,7 @@ class _CreateAssistanceFormState extends State<CreateAssistanceForm> {
         widget.onCreated
             ?.call(await AssistanceRepository.instance.create(createRequest));
       }
-      // FirebaseFunctionsException
-      on FirebaseFunctionsException catch (e) {
-        setState(() {
-          _error = e.message;
-          if (e.details != null &&
-              e.details['code'].toString().contains('phone')) {
-            _errors['phone'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().contains('email')) {
-            _errors['email'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().contains('password')) {
-            _errors['password'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().toLowerCase().contains('name')) {
-            _errors['name'] = e.details['message'];
-          } else if (e.details != null &&
-              e.details['code'].toString().toLowerCase().contains('photo')) {
-            _errors['photo'] = e.details['message'];
-          } else {
-            _error = e.message;
-          }
-        });
-      } catch (e) {
+      catch (e) {
         setState(() {
           _error = e.toString();
         });

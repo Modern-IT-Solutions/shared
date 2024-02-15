@@ -32,6 +32,8 @@ mixin _$UnitModel {
   double get price => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   UnitStatisticsModel get statistics =>
+      throw _privateConstructorUsedError; // metadata
+  Map<String, dynamic> get metadata =>
       throw _privateConstructorUsedError; // visibility
   ModelVisibility get visibility => throw _privateConstructorUsedError;
   ProfileModel get teacher => throw _privateConstructorUsedError;
@@ -65,6 +67,7 @@ abstract class $UnitModelCopyWith<$Res> {
       double price,
       String title,
       UnitStatisticsModel statistics,
+      Map<String, dynamic> metadata,
       ModelVisibility visibility,
       ProfileModel teacher,
       UnitSubjectModel subject,
@@ -100,6 +103,7 @@ class _$UnitModelCopyWithImpl<$Res, $Val extends UnitModel>
     Object? price = null,
     Object? title = null,
     Object? statistics = null,
+    Object? metadata = null,
     Object? visibility = null,
     Object? teacher = null,
     Object? subject = null,
@@ -148,6 +152,10 @@ class _$UnitModelCopyWithImpl<$Res, $Val extends UnitModel>
           ? _value.statistics
           : statistics // ignore: cast_nullable_to_non_nullable
               as UnitStatisticsModel,
+      metadata: null == metadata
+          ? _value.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       visibility: null == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
@@ -219,6 +227,7 @@ abstract class _$$UnitModelImplCopyWith<$Res>
       double price,
       String title,
       UnitStatisticsModel statistics,
+      Map<String, dynamic> metadata,
       ModelVisibility visibility,
       ProfileModel teacher,
       UnitSubjectModel subject,
@@ -255,6 +264,7 @@ class __$$UnitModelImplCopyWithImpl<$Res>
     Object? price = null,
     Object? title = null,
     Object? statistics = null,
+    Object? metadata = null,
     Object? visibility = null,
     Object? teacher = null,
     Object? subject = null,
@@ -303,6 +313,10 @@ class __$$UnitModelImplCopyWithImpl<$Res>
           ? _value.statistics
           : statistics // ignore: cast_nullable_to_non_nullable
               as UnitStatisticsModel,
+      metadata: null == metadata
+          ? _value._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
       visibility: null == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
@@ -345,13 +359,15 @@ class _$UnitModelImpl implements _UnitModel {
       required this.price,
       required this.title,
       required this.statistics,
+      final Map<String, dynamic> metadata = const {},
       this.visibility = ModelVisibility.visible,
       required this.teacher,
       required this.subject,
       @TimestampDateTimeSerializer() required this.createdAt,
       @TimestampDateTimeSerializer() required this.updatedAt,
       @NullableTimestampDateTimeSerializer() this.deletedAt})
-      : _fields = fields;
+      : _fields = fields,
+        _metadata = metadata;
 
   factory _$UnitModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UnitModelImplFromJson(json);
@@ -385,6 +401,17 @@ class _$UnitModelImpl implements _UnitModel {
   final String title;
   @override
   final UnitStatisticsModel statistics;
+// metadata
+  final Map<String, dynamic> _metadata;
+// metadata
+  @override
+  @JsonKey()
+  Map<String, dynamic> get metadata {
+    if (_metadata is EqualUnmodifiableMapView) return _metadata;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_metadata);
+  }
+
 // visibility
   @override
   @JsonKey()
@@ -405,7 +432,7 @@ class _$UnitModelImpl implements _UnitModel {
 
   @override
   String toString() {
-    return 'UnitModel(ref: $ref, color: $color, description: $description, discount: $discount, duration: $duration, fields: $fields, name: $name, price: $price, title: $title, statistics: $statistics, visibility: $visibility, teacher: $teacher, subject: $subject, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'UnitModel(ref: $ref, color: $color, description: $description, discount: $discount, duration: $duration, fields: $fields, name: $name, price: $price, title: $title, statistics: $statistics, metadata: $metadata, visibility: $visibility, teacher: $teacher, subject: $subject, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -427,6 +454,7 @@ class _$UnitModelImpl implements _UnitModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.statistics, statistics) ||
                 other.statistics == statistics) &&
+            const DeepCollectionEquality().equals(other._metadata, _metadata) &&
             (identical(other.visibility, visibility) ||
                 other.visibility == visibility) &&
             (identical(other.teacher, teacher) || other.teacher == teacher) &&
@@ -453,6 +481,7 @@ class _$UnitModelImpl implements _UnitModel {
       price,
       title,
       statistics,
+      const DeepCollectionEquality().hash(_metadata),
       visibility,
       teacher,
       subject,
@@ -486,6 +515,7 @@ abstract class _UnitModel implements UnitModel {
           required final double price,
           required final String title,
           required final UnitStatisticsModel statistics,
+          final Map<String, dynamic> metadata,
           final ModelVisibility visibility,
           required final ProfileModel teacher,
           required final UnitSubjectModel subject,
@@ -519,6 +549,8 @@ abstract class _UnitModel implements UnitModel {
   String get title;
   @override
   UnitStatisticsModel get statistics;
+  @override // metadata
+  Map<String, dynamic> get metadata;
   @override // visibility
   ModelVisibility get visibility;
   @override
