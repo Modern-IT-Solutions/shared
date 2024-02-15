@@ -484,7 +484,7 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
   Future<void> _accept() async {
     var amount = TextEditingController(text: depositRequest?.amount.toString());
     bool loading = false;
-    var result = await showDialog(
+    var result = await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -581,7 +581,7 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
     var reason = TextEditingController();
     bool loading = false;
     var result = await showDialog(
-      context: context,
+      context: context,useRootNavigator: false,
       builder: (context) {
         return AlertDialog(
           title: const Text('Reject Deposit Request'),

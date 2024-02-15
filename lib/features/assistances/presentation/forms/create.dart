@@ -473,7 +473,7 @@ class _CreateAssistanceFormState extends State<CreateAssistanceForm> {
                                 onPressed: () async {
                                   var technicians =
                                       await showDialog<Map<String,ProfileModel>>(
-                                    context: context,
+                                    context: context,useRootNavigator: false,
                                     builder: (context) {
                                       return SelectTechniciansDialog(
                                           selected: _technicians.value);

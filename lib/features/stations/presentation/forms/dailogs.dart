@@ -37,7 +37,7 @@ Future<StationModel?> showCreateStationModelDailog(BuildContext context) async {
     ),
   );
   return await showDialog<StationModel?>(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -81,7 +81,7 @@ Future<StationModel?> showUpdateStationModelDailog(BuildContext context, Station
     ),
   );
   return await showDialog<StationModel?>(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -101,7 +101,7 @@ Future<StationModel?> showUpdateStationModelDailog(BuildContext context, Station
 Future<bool?> showDeleteStationModelDailog(BuildContext context, StationModel model) async {
   bool _loading = false;
   return await showDialog(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) => AlertDialog(
       title: const Text('Confirm delete'),
       content: const Text('this action cannot be undone, are you sure you want to continue?'),
@@ -172,7 +172,7 @@ Future<void> showDetailsStationModelDailog(BuildContext context, StationModel mo
       ],
     ),
   );
-  await showDialog(
+  await showDialog(useRootNavigator: false,
     context: context,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {

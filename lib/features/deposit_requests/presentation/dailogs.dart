@@ -55,7 +55,7 @@ Future<GiftCardOrderModel?> showDetailsGiftCardOrderModellDailog(BuildContext co
   }
 
   return await showDialog<GiftCardOrderModel?>(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -222,7 +222,7 @@ Future<void> showGiftCardOrderModelHistoryDailog(
   }
 
   await showDialog(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       // if (MediaQuery.of(context).size.width > 600) {
       return Dialog(
@@ -281,7 +281,7 @@ Future<DepositRequestModel?> showDetailsDepositRequestModellDailog(BuildContext 
   }
 
   return await showDialog<DepositRequestModel?>(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -515,7 +515,7 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
   }
 
   await showDialog(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       // if (MediaQuery.of(context).size.width > 600) {
       return Dialog(
@@ -1045,7 +1045,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
   }
 
   return await showDialog<DepositRequestModel?>(
-    context: context,
+    context: context,useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(

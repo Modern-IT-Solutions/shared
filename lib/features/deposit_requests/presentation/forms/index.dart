@@ -674,7 +674,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
       ),
     );
     await showDialog(
-      context: context,
+      context: context,useRootNavigator: false,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600) {
           return Dialog(
@@ -694,7 +694,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
   @override
   Future<void> showDeleteModelDailog(BuildContext context, DepositRequestModel model) async {
     bool _loading = false;
-    await showDialog(
+    await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm delete'),
@@ -797,7 +797,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
       );
     }
 
-    await showDialog(
+    await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600) {
@@ -848,7 +848,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
     }
 
     await showDialog(
-      context: context,
+      context: context,useRootNavigator: false,
       builder: (context) {
         // if (MediaQuery.of(context).size.width > 600) {
           return Dialog(

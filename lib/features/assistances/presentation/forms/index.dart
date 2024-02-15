@@ -487,7 +487,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
         },
       ),
     );
-    await showDialog(
+    await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
@@ -531,7 +531,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
         },
       ),
     );
-    await showDialog(
+    await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
@@ -551,7 +551,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
   Future<void> showDeleteModelDailog(
       BuildContext context, AssistanceModel model) async {
     bool _loading = false;
-    await showDialog(
+    await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm delete'),
@@ -627,7 +627,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
         ],
       ),
     );
-    await showDialog(
+    await showDialog(useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
