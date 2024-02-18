@@ -1044,19 +1044,28 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
     );
   }
 
-  return await showDialog<DepositRequestModel?>(
-    context: context,useRootNavigator: false,
-    builder: (context) {
-      if (MediaQuery.of(context).size.width > 600) {
-        return Dialog(
-          clipBehavior: Clip.antiAlias,
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) {
+        return Material(
+          // dailog background color
+          color: Theme.of(context).colorScheme.background,
           child: child(context),
         );
-      } else {
-        return Dialog.fullscreen(
-          child: child(context),
-        );
-      }
-    },
+      },
+    ),
   );
+
+  // return await showDialog<DepositRequestModel?>(
+  //   context: context,useRootNavigator: false,
+  //   builder: (context) {
+  //     if (MediaQuery.of(context).size.width > 600) {
+  //       return Material(child: child(context));
+  //     } else {
+  //       return Dialog.fullscreen(
+  //         child: child(context),
+  //       );
+  //     }
+  //   },
+  // );
 }

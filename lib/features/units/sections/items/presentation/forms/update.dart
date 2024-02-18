@@ -373,20 +373,20 @@ class _UpdateUnitSectionItemFormState extends State<UpdateUnitSectionItemForm> {
                                 ),
                               ),
                             // useYoutubePlayer
-                            if (request.type == UnitSectionItemType.video)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
-                                child: SwitchListTile(
-                                  secondary: const Icon(FluentIcons.video_security_24_regular),
-                                  contentPadding: EdgeInsets.only(left: 12),
-                                  visualDensity: VisualDensity(vertical: -3),
-                                  title: Text('useYoutubePlayer'),
-                                  value: request.useYoutubePlayer ?? false,
-                                  onChanged: (e) => setState(() {
-                                    request.useYoutubePlayer = e;
-                                  }),
-                                ),
-                              ),
+                            // if (request.type == UnitSectionItemType.video)
+                            //   Padding(
+                            //     padding: const EdgeInsets.symmetric(horizontal: 12),
+                            //     child: SwitchListTile(
+                            //       secondary: const Icon(FluentIcons.video_security_24_regular),
+                            //       contentPadding: EdgeInsets.only(left: 12),
+                            //       visualDensity: VisualDensity(vertical: -3),
+                            //       title: Text('useYoutubePlayer'),
+                            //       value: request.useYoutubePlayer ?? false,
+                            //       onChanged: (e) => setState(() {
+                            //         request.useYoutubePlayer = e;
+                            //       }),
+                            //     ),
+                            //   ),
                             // isFree
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 12),

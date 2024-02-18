@@ -45,7 +45,7 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
     fields: widget.model?.fields,
     statistics: widget.model?.statistics ?? UnitStatisticsModel(),
     subject: widget.model?.subject,
-    teacher: widget.model?.teacher,
+    teacher: widget.model?.teacher ?? getCurrentProfile(),
   );
 
   bool _loading = false;
@@ -263,21 +263,20 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                           FormBuilderValidators.numeric(),
                         ]),
                         decoration: InputDecoration(
-                          errorText: _errors['duration'],
-                          prefixIcon: const SizedBox(child: Icon(FluentIcons.app_title_24_regular)),
-                          label: const Text('duration'),
-                          alignLabelWithHint: true,
-                          suffixIcon: SizedBox(
-                            width: 70,
-                            child: Center(
-                              child: const Text("minutes"),
-                            ),
-                          )
-                        ),
+                            errorText: _errors['duration'],
+                            prefixIcon: const SizedBox(child: Icon(FluentIcons.app_title_24_regular)),
+                            label: const Text('duration'),
+                            alignLabelWithHint: true,
+                            suffixIcon: SizedBox(
+                              width: 70,
+                              child: Center(
+                                child: const Text("minutes"),
+                              ),
+                            )),
                       ),
                       const SizedBox(height: 10),
                       AppTextFormField(
-                        key:  Key(request.color.toString()),
+                        key: Key(request.color.toString()),
                         onTap: (v) async {
                           request.color = await showColorPickerDialog(context, request.color ?? Theme.of(context).colorScheme.primary);
                           setState(() {});
@@ -341,51 +340,51 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                       const SizedBox(height: 10),
 
                       FutureBuilder(
-                        future: getUnitsSettings(),
-                        builder: (context, snapshot) {
-                          List<String> fields = snapshot.data?.fields ?? [
-                            "رياضيات",
-                            "علوم تجريبية",
-                            "تقني رياضي",
-                            "آداب و فلسفة",
-                          ];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                            child: SizedBox(
-                              height: 60,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  const SizedBox(width: 24),
-                                  // selectable chips for roles
-                                  for (String field in fields) ...[
-                                    InputChip(
-                                      onSelected: (selected) {
-                                        setState(() {
-                                          if (selected) {
-                                            request.fields = [
-                                              ...request.fields ?? [],
-                                              field,
-                                            ];
-                                          } else {
-                                            // request.fields!.remove(field);
-                                            request.fields = request.fields?.where((element) => element != field).toList() ?? [];
-                                          }
-                                        });
-                                      },
-                                      selected: request.fields?.contains(field) ?? false,
-                                      label: Text(field.titleCase),
-                                    ),
-                                    const SizedBox(width: 10)
+                          future: getUnitsSettings(),
+                          builder: (context, snapshot) {
+                            List<String> fields = snapshot.data?.fields ??
+                                [
+                                  "رياضيات",
+                                  "علوم تجريبية",
+                                  "تقني رياضي",
+                                  "آداب و فلسفة",
+                                ];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 0),
+                              child: SizedBox(
+                                height: 60,
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    const SizedBox(width: 24),
+                                    // selectable chips for roles
+                                    for (String field in fields) ...[
+                                      InputChip(
+                                        onSelected: (selected) {
+                                          setState(() {
+                                            if (selected) {
+                                              request.fields = [
+                                                ...request.fields ?? [],
+                                                field,
+                                              ];
+                                            } else {
+                                              // request.fields!.remove(field);
+                                              request.fields = request.fields?.where((element) => element != field).toList() ?? [];
+                                            }
+                                          });
+                                        },
+                                        selected: request.fields?.contains(field) ?? false,
+                                        label: Text(field.titleCase),
+                                      ),
+                                      const SizedBox(width: 10)
+                                    ],
+
+                                    const SizedBox(width: 24),
                                   ],
-                          
-                                  const SizedBox(width: 24),
-                                ],
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      ),
+                            );
+                          }),
                       // AppTextFormField(
                       //   margin: const EdgeInsets.symmetric(horizontal: 24),
                       //   initialValue: request.fields?.join(","),
@@ -422,7 +421,7 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                         validator: FormBuilderValidators.compose([
                           // must be positive and <= price
                           (n) {
-                            var v = double.tryParse(n.toString()); 
+                            var v = double.tryParse(n.toString());
                             if (v == null) return "required";
                             if (v! < 0) return "must be positive";
                             if (request.price != null && v! > request.price!) return "must be <= price";
@@ -449,7 +448,7 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                           FormBuilderValidators.numeric(),
                           // must be positive and >= discount
                           (v) {
-                            var n = double.tryParse(v.toString()); 
+                            var n = double.tryParse(v.toString());
                             if (n == null) return "required";
                             if (n < 0) return "must be positive";
                             if (request.discount != null && n < request.discount!) return "must be >= discount";
@@ -491,107 +490,114 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                       // const SizedBox(height: 10),
 
                       FutureBuilder(
-                        future: getUnitsSettings(),
-                        builder: (context, snapshot) {
-                          List<String> subjects = snapshot.data?.subjects ?? [
-                            "الرياضيات",
-                            "اللغة العربية",
-                            "اللغة الفرنسية",
-                            "اللغة الانجليزية",
-                            "اللغة الاسبانية",
-                            "الفلسفة",
-                            "التاريخ والجغرافيا",
-                            "التربية الاسلامية",
-                            "الفيزياء",
-                          ];
-                          print(subjects);
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: MenuAnchor(
-                              menuChildren: <Widget>[
-                                for (String item in subjects)
-                                  MenuItemButton(
-                                    child: Text(item),
-                                    onPressed: request.subject?.name == item
-                                        ? null
-                                        : () => setState(
-                                              () {
-                                                request.subject = UnitSubjectModel(
-                                                  // ref: ref, name: name, createdAt: createdAt, updatedAt: updatedAt
-                                                  ref: ModelRef("subjects/$item"),
-                                                  name: item,
-                                                  createdAt: DateTime.now(),
-                                                  updatedAt: DateTime.now(),
-                                                );
-                                              },
-                                            ),
-                                  ),
-                              ],
-                              builder: (BuildContext context, MenuController controller, Widget? child) {
-                                return ListTile(
-                                  leading: const Icon(FluentIcons.class_24_regular),
-                                  contentPadding: EdgeInsets.only(left: 12),
-                                  visualDensity: VisualDensity(vertical: -3),
-                                  title: Text(request.subject?.name ?? "Select subject"),
-                                  subtitle: Text("Select subject"),
-                                  trailing: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                                    child: const Icon(FluentIcons.chevron_down_24_regular),
-                                  ),
-                                  onTap: () {
-                                    if (controller.isOpen) {
-                                      controller.close();
-                                    } else {
-                                      controller.open();
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      ),
+                          future: getUnitsSettings(),
+                          builder: (context, snapshot) {
+                            List<String> subjects = snapshot.data?.subjects ??
+                                [
+                                  "الرياضيات",
+                                  "اللغة العربية",
+                                  "اللغة الفرنسية",
+                                  "اللغة الانجليزية",
+                                  "اللغة الاسبانية",
+                                  "الفلسفة",
+                                  "التاريخ والجغرافيا",
+                                  "التربية الاسلامية",
+                                  "الفيزياء",
+                                ];
+                            print(subjects);
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              child: MenuAnchor(
+                                menuChildren: <Widget>[
+                                  for (String item in subjects)
+                                    MenuItemButton(
+                                      child: Text(item),
+                                      onPressed: request.subject?.name == item
+                                          ? null
+                                          : () => setState(
+                                                () {
+                                                  request.subject = UnitSubjectModel(
+                                                    // ref: ref, name: name, createdAt: createdAt, updatedAt: updatedAt
+                                                    ref: ModelRef("subjects/$item"),
+                                                    name: item,
+                                                    createdAt: DateTime.now(),
+                                                    updatedAt: DateTime.now(),
+                                                  );
+                                                },
+                                              ),
+                                    ),
+                                ],
+                                builder: (BuildContext context, MenuController controller, Widget? child) {
+                                  return ListTile(
+                                    leading: const Icon(FluentIcons.class_24_regular),
+                                    contentPadding: EdgeInsets.only(left: 12),
+                                    visualDensity: VisualDensity(vertical: -3),
+                                    title: Text(request.subject?.name ?? "Select subject"),
+                                    subtitle: Text("Select subject"),
+                                    trailing: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      child: const Icon(FluentIcons.chevron_down_24_regular),
+                                    ),
+                                    onTap: () {
+                                      if (controller.isOpen) {
+                                        controller.close();
+                                      } else {
+                                        controller.open();
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                          }),
                       const SizedBox(height: 10),
 
                       // select teacher
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: ListTile(
-                          leading: request.teacher?.photoUrl.nullIfEmpty != null
-                              ? ProfileAvatar(
-                                  profile: request.teacher!,
-                                )
-                              : const Icon(FluentIcons.people_team_24_regular),
-                          contentPadding: EdgeInsets.only(left: 12),
-                          visualDensity: VisualDensity(vertical: -3),
-                          title: Text(request.teacher?.displayName ?? "Select teacher"),
-                          subtitle: Text("Select teacher"),
-                          trailing: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: const Icon(FluentIcons.chevron_down_24_regular),
-                          ),
-                          onTap: () async {
-                            var profiles = await showProfilesPickerDialog(context,
-                                filters: [
-                                  IndexViewFilter(
-                                    name: "Teachers",
-                                    active: true,
-                                      local: (model) => model.roles.map((e) => e.name).contains("teacher"),
-                                    remote: (query) => query.where("roles", arrayContains: "teacher"),
-                                    strict: false,
-                                    fixed: true,
+                      ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: ListTile(
+                            leading: request.teacher?.photoUrl.nullIfEmpty != null
+                                ? ProfileAvatar(
+                                    profile: request.teacher!,
                                   )
-                                ],
-                                length: 1);
-                            if (profiles != null && profiles.isNotEmpty) {
-                              request.teacher = profiles.first;
-                              setState(() {});
-                            }
-                          },
+                                : const Icon(FluentIcons.people_team_24_regular),
+                            contentPadding: EdgeInsets.only(left: 12),
+                            visualDensity: VisualDensity(vertical: -3),
+                            title: Text(request.teacher?.displayName ?? "Select teacher"),
+                            subtitle: Text("Select teacher"),
+                            trailing: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              child: const Icon(FluentIcons.chevron_down_24_regular),
+                            ),
+                            onTap: () async {
+                              if ((can("units.update.any") && widget.model != null) || (can("units.create.any") && widget.model == null)) {
+                                setState(() {
+                                  request.teacher = getCurrentProfile();
+                                });
+                                return;
+                              }
+                              var profiles = await showProfilesPickerDialog(context,
+                                  filters: [
+                                    IndexViewFilter(
+                                      name: "Teachers",
+                                      active: true,
+                                      local: (model) => model.roles.map((e) => e.name).contains("teacher"),
+                                      remote: (query) => query.where("roles", arrayContains: "teacher"),
+                                      strict: false,
+                                      fixed: true,
+                                    )
+                                  ],
+                                  length: 1);
+                              if (profiles != null && profiles.isNotEmpty) {
+                                request.teacher = profiles.first;
+                                setState(() {});
+                              }
+                            },
+                          ),
                         ),
-                      ),
-
-                      Divider(),
+                        Divider(),
+                      ],
                       const ListTile(
                         leading: Icon(FluentIcons.table_move_right_28_regular),
                         contentPadding: EdgeInsets.symmetric(horizontal: 24),

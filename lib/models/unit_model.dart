@@ -61,6 +61,7 @@ extension UnitModelEx on UnitModel {
   }
 }
 
+//
 enum ModelVisibility {
   visible(Colors.green, Icons.visibility),
   hidden(Colors.red, Icons.visibility_off);
