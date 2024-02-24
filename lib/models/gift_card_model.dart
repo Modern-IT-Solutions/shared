@@ -44,7 +44,7 @@ class GiftCardModel with _$GiftCardModel implements Model {
             path: "code",
             nullable: true,
             type: FieldType.text,
-            map: (m) => m.owner?.uid,
+            map: (m) => m.code,
             group: FieldGroup.primary,
           ),
           FieldDescription(
@@ -52,7 +52,17 @@ class GiftCardModel with _$GiftCardModel implements Model {
             path: "owner.uid",
             nullable: true,
             type: FieldType.text,
-            map: (m) => m.owner?.uid,
+            map: (m) {
+              return m.owner?.uid;
+            },
+            group: FieldGroup.primary,
+          ),
+          FieldDescription(
+            name: "transaction user id",
+            path: "transaction.uid",
+            nullable: true,
+            type: FieldType.text,
+            map: (m) => m.transaction?.uid,
             group: FieldGroup.primary,
           ),
           FieldDescription(

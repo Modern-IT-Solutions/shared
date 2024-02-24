@@ -57,6 +57,13 @@ class DepositRequestModel with _$DepositRequestModel implements Model {
   static ModelDescription<DepositRequestModel> get description => ModelDescription<DepositRequestModel>(
         fields: {
           FieldDescription(
+            name: "uid",
+            path: "uid",
+            type: FieldType.text,
+            map: (m) => m.profile.uid,
+            group: FieldGroup.secondary,
+          ),
+          FieldDescription(
             name: "firstName",
             path: "firstName",
             type: FieldType.text,
@@ -70,8 +77,20 @@ class DepositRequestModel with _$DepositRequestModel implements Model {
             map: (m) => m.lastName,
             group: FieldGroup.secondary,
           ),
-          
-
+          FieldDescription(
+            name: "email",
+            path: "email",
+            type: FieldType.email,
+            map: (m) => m.profile.email,
+            group: FieldGroup.secondary,
+          ),
+          FieldDescription(
+            name: "phoneNumber",
+            path: "phoneNumber",
+            type: FieldType.phone,
+            map: (m) => m.phoneNumber,
+            group: FieldGroup.secondary,
+          ),
           FieldDescription(
             name: "status",
             path: "status",

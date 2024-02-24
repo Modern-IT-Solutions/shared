@@ -162,6 +162,7 @@ Future<void> showGiftCardOrderModelHistoryDailog(
           child: ModelListView<GiftCardOrderModel>(
             onModelTap: (model) async {
               await showDetailsGiftCardOrderModellDailog(context, model);
+              await controller.load();
             },
             flexTableItemBuilders: [
               (
@@ -371,7 +372,7 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
         return Container(
           child: ModelListView<DepositRequestModel>(
             onModelTap: (model) async {
-              await showDetailsDepositRequestModellDailog(context, model);
+              await showDetailsDepositRequestModellDailog(context, model);await controller.load();
             },
             flexTableItemBuilders: [
               (
@@ -1044,7 +1045,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
     );
   }
 
-  Navigator.of(context).push(
+  return Navigator.of(context).push(
     MaterialPageRoute(
       builder: (context) {
         return Material(

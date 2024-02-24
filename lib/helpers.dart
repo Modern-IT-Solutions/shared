@@ -328,7 +328,7 @@ extension PreferencesEx on PreferencesService {
     if (Platforms.isAndroid && androidMinmumUpdateDuration != null) {
       return androidMinmumUpdateDuration!;
     }
-    return getOption<Duration>('minmumUpdateDuration', defaults: const Duration(seconds: 0))!;
+    return getOption<Duration>('minmumUpdateDuration', defaults: const Duration(seconds: 5))!;
   }
 
   Duration? get iosMinmumUpdateDuration {
