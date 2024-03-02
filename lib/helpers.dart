@@ -239,6 +239,10 @@ extension PreferencesEx on PreferencesService {
     return getOption<bool>('showWallet', defaults: true)!;
   }
 
+  bool get forceCacheUnits {
+    return getOption<bool>('forceCacheUnits', defaults: false)!;
+  }
+
   // max sessions per user
   int get maxSessionsPerUser {
     return getOption<int>('maxSessionsPerUser', defaults: 5)!;

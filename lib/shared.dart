@@ -13,6 +13,8 @@ export './models/wallet_model.dart';
 export './models/event_preference.dart';
 export './models/cached_document.dart';
 
+/// dailogs
+export './features/units/dailogs.dart';
 
 /// helpers
 export './helpers.dart';

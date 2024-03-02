@@ -139,9 +139,9 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                              Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
+                              Theme.of(context).colorScheme.onPrimary.withOpacity(0.1),
+                              Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,

@@ -6,6 +6,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:shared/features/profiles/dailogs.dart';
 import 'package:shared/models/gift_card_model.dart';
 import 'package:shared/shared.dart';
 
@@ -420,7 +421,7 @@ class _UpdateGiftCardFormState extends State<UpdateGiftCardForm> {
                           trailing: const Icon(FluentIcons.chevron_right_24_regular),
                           onTap: () async {
                             var model = await getModelDocument(path: "profiles/${request.transaction!.uid}", fromJson: ProfileModel.fromJson);
-                            if (model != null) await showDetailsProfileModelDailog(context, model);
+                            if (model != null) await showExtendedStudentModelDailog(context, model);
                           },
                         ),
 

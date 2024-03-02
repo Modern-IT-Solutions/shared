@@ -193,3 +193,84 @@
 
 
 
+
+
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
+import 'package:shared/models/unit_model.dart';
+import 'package:shared/shared.dart';
+
+/// showProfilesPickerDialog
+Future<List<UnitModel>?> showUnitsPickerDialog(BuildContext context, {bool allowLess = false, List<IndexViewFilter<UnitModel>> filters = const [], int? length}) async {
+  late var controller = ModelListViewController<UnitModel>(
+    value: ModelListViewValue(
+      filters: [
+        ...filters,
+      ],
+    ),
+    description: UnitModel.modelDescription.copyWith(
+      actions: [
+        // ModelAction(
+        //   group: "CRUD",
+        //   label: "show details",
+        //   icon: const Icon(FluentIcons.open_24_filled),
+        //   single: (context, model) async {
+        //     if (model != null) {
+        //       await showDetailsProfileModelDailog(context, model);
+        //     }
+        //     return null;
+        //   },
+        // ),
+      ],
+    ),
+  );
+  // ignore: use_build_context_synchronously
+  return await showDialog(
+    useRootNavigator: false,
+    context: context,
+    builder: (context) {
+      return Dialog(
+        clipBehavior: Clip.antiAlias,
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Select Units'),
+                actions: [
+                  ValueListenableBuilder(
+                      valueListenable: controller,
+                      builder: (context, _, __) {
+                        bool enable = allowLess || controller.value?.selectedModels.isNotEmpty == true;
+                        if (length != null) {
+                          if (controller.value!.selectedModels.length > length) {
+                            var temp = controller.value!.selectedModels.toList();
+                            enable = false;
+                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              controller.value = controller.value!.copyWith(selectedModels: temp.sublist(temp.length - length).toSet());
+                            });
+                          }
+                          enable = enable && controller.value!.selectedModels.length == length;
+                        }
+                        return TextButton.icon(
+                          onPressed: () async {
+                            Navigator.pop(context, controller.value?.selectedModels.toList());
+                          },
+                          icon: const Icon(FluentIcons.check_24_regular),
+                          label: const Text('Select'),
+                        );
+                      }),
+                ],
+              ),
+              body: ModelListView<UnitModel>(
+                enableSelectOnTap: true,
+                controller: controller,
+              ),
+            );
+          }),
+        ),
+      );
+    },
+  );
+}

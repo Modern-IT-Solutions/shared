@@ -8,43 +8,37 @@ part 'gift_card_model.g.dart';
 
 @freezed
 class GiftCardModel with _$GiftCardModel implements Model {
-
   factory GiftCardModel({
-    @ModelRefSerializer()
-    required ModelRef ref,
+    @ModelRefSerializer() required ModelRef ref,
     ProfileModel? owner,
-    
-    ///
     /// Gift Card info
     required String code,
     // expiration date
-    @NullableTimestampDateTimeSerializer()
-    DateTime? expiresAt,
+    @NullableTimestampDateTimeSerializer() DateTime? expiresAt,
     required double amount,
     required String currency,
     TransactionModel? transaction,
     // freezed
-    @Default(false) bool freezed,    
+    @Default(false) bool freezed,
     // next intervention date
-    @Default({}) Map<String,dynamic> metadata,
-    @TimestampDateTimeSerializer()
-    required DateTime createdAt,
-    @TimestampDateTimeSerializer()
-    required DateTime updatedAt,
-    @NullableTimestampDateTimeSerializer()
-    DateTime? deletedAt,
+    @Default({}) Map<String, dynamic> metadata,
+    @TimestampDateTimeSerializer() required DateTime createdAt,
+    @TimestampDateTimeSerializer() required DateTime updatedAt,
+    @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
   }) = _GiftCardModel;
 
   factory GiftCardModel.fromJson(Map<String, dynamic> json) => _$GiftCardModelFromJson(json);
 
- static ModelDescription<GiftCardModel> get description => ModelDescription<GiftCardModel>(
+  static ModelDescription<GiftCardModel> get description => ModelDescription<GiftCardModel>(
         fields: {
           FieldDescription(
-            name: "code",
-            path: "code",
+            name: "owner name",
+            path: "owner.displayName",
             nullable: true,
             type: FieldType.text,
-            map: (m) => m.code,
+            map: (m) {
+              return m.owner?.displayName;
+            },
             group: FieldGroup.primary,
           ),
           FieldDescription(
@@ -58,11 +52,21 @@ class GiftCardModel with _$GiftCardModel implements Model {
             group: FieldGroup.primary,
           ),
           FieldDescription(
-            name: "transaction user id",
+            name: "user (student) uid",
             path: "transaction.uid",
             nullable: true,
             type: FieldType.text,
-            map: (m) => m.transaction?.uid,
+            map: (m) {
+              return m.transaction?.uid;
+            },
+            group: FieldGroup.primary,
+          ),
+          FieldDescription(
+            name: "code",
+            path: "code",
+            nullable: true,
+            type: FieldType.text,
+            map: (m) => m.code,
             group: FieldGroup.primary,
           ),
           FieldDescription(
@@ -92,9 +96,6 @@ class GiftCardModel with _$GiftCardModel implements Model {
             map: (m) => m.transaction?.createdAt,
             group: FieldGroup.metadata,
           ),
-          
-
-
           FieldDescription(
             name: "ref",
             path: "ref",
@@ -133,5 +134,4 @@ class GiftCardModel with _$GiftCardModel implements Model {
         ),
         actions: [],
       );
-
 }

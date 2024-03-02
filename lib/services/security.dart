@@ -129,7 +129,7 @@ class SecurityService extends Service {
     if (!Platform.isAndroid && !Platform.isIOS) {
       log.warning('App~Service: Only Android and iOS are supported for Mock location detection');
     } else {
-      _canMockLocation = await SafeDevice.canMockLocation;
+      // _canMockLocation = await SafeDevice.isMockLocation;
     }
     if (!Platform.isAndroid) {
       log.warning('App~Service: Only Android is supported for External storage detection');

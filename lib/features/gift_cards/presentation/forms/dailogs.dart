@@ -193,3 +193,136 @@
 
 
 
+
+
+
+
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:shared/features/gift_cards/presentation/forms/update.dart';
+import 'package:shared/models/gift_card_model.dart';
+
+import 'create.dart';
+
+/// showUpdateGiftCardDailog
+Future<GiftCardModel?> showUpdateGiftCardDailog(BuildContext context, {GiftCardModel? model, String? collection}) async {
+  var child = Container(
+    constraints: const BoxConstraints(maxWidth: 500),
+    child: UpdateGiftCardForm(
+      model: model,
+      onUpdated: (model) {
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            width: 400.0,
+            content: Text('GiftCard ${model.ref.id} updated'),
+            action: SnackBarAction(
+              label: 'Show',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                // showUpdateStationModelDailog(context, model);
+              },
+            ),
+          ),
+        );
+        Navigator.of(context).pop(model);
+        // load();
+      },
+      onCreated: (model) {
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            width: 400.0,
+            content: Text('GiftCard ${model.ref.id} created'),
+            action: SnackBarAction(
+              label: 'Edit',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                showUpdateGiftCardDailog(context, model: model);
+              },
+            ),
+          ),
+        );
+        Navigator.of(context).pop(model);
+        // load();
+      },
+      ref: model?.ref.path ?? ("giftCards/${Random().nextInt(100000000)}"),
+    ),
+  );
+  return await showDialog<GiftCardModel?>(
+    context: context,useRootNavigator: false,
+    builder: (context) {
+      if (MediaQuery.of(context).size.width > 600) {
+        return Dialog(
+          clipBehavior: Clip.antiAlias,
+          child: child,
+        );
+      } else {
+        return Dialog.fullscreen(
+          child: child,
+        );
+      }
+    },
+  );
+}
+
+/// showCreateGiftCardDailog
+Future<GiftCardModel?> showCreateGiftCardDailog(BuildContext context) async {
+  var child = Container(
+    constraints: const BoxConstraints(maxWidth: 500),
+    child: CreateGiftCardForm(
+      onCreated: (model) {
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            width: 400.0,
+            content: Text('GiftCard ${model.ref.id} created'),
+            action: SnackBarAction(
+              label: 'Edit',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                showUpdateGiftCardDailog(context, model: model);
+              },
+            ),
+          ),
+        );
+              Navigator.of(context).pop();
+
+      },
+      onCreateMultiple: (models) {
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            width: 400.0,
+            content: Text('${models.length} GiftCards created'),
+            action: SnackBarAction(
+              label: 'Show',
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                // showUpdateStationModelDailog(context, model);
+              },
+            ),
+          ),
+        );
+        Navigator.of(context).pop();
+        // load();
+      },
+    ),
+  );
+  return await showDialog<GiftCardModel?>(
+    context: context,useRootNavigator: false,
+    builder: (context) {
+      if (MediaQuery.of(context).size.width > 600) {
+        return Dialog(
+          clipBehavior: Clip.antiAlias,
+          child: child,
+        );
+      } else {
+        return Dialog.fullscreen(
+          child: child,
+        );
+      }
+    },
+  );
+}
