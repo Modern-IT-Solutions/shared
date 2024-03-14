@@ -301,6 +301,7 @@ class _UpdateUnitSectionItemFormState extends State<UpdateUnitSectionItemForm> {
                             /// url AppTextFormField.upload
                             if (request.type == UnitSectionItemType.doc)
                               AppTextFormField.upload(
+                                uploadPath: request.ref.path,
                                 // key: Key(request.url ?? ""),
                                 margin: const EdgeInsets.symmetric(horizontal: 24),
                                 initialValue: request.url,

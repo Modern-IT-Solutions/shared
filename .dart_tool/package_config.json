@@ -249,7 +249,7 @@
     },
     {
       "name": "core",
-      "rootUri": "../../core",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-26d365d2869a89d79616d4b054cb39386c7db175/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -908,6 +908,24 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "leak_tracker",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/leak_tracker-10.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "leak_tracker_flutter_testing",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "leak_tracker_testing",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/leak_tracker_testing-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "lib",
       "rootUri": "file:///Users/mohamad/.pub-cache/git/lib-487b7859224ccccf9614745a0dcd1b8192dc28b8/",
       "packageUri": "lib/",
@@ -939,13 +957,13 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/matcher-0.12.16",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/material_color_utilities-0.5.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/material_color_utilities-0.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -1011,7 +1029,7 @@
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/meta-1.10.0",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/meta-1.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1071,9 +1089,9 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/path-1.8.3",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/path-1.9.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "path_parsing",
@@ -1592,6 +1610,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "vm_service",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/vm_service-13.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "volume_controller",
       "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/volume_controller-2.0.7",
       "packageUri": "lib/",
@@ -1682,7 +1706,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-03-09T01:16:14.117157Z",
+  "generated": "2024-03-14T17:10:13.023007Z",
   "generator": "pub",
-  "generatorVersion": "3.2.6"
+  "generatorVersion": "3.3.1"
 }
