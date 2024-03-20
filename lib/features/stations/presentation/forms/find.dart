@@ -213,8 +213,8 @@ class _FindStationFormState extends State<FindStationForm> {
                   ],
                 ),
                 SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(
+                  hasScrollBody: true,
+                  child: SingleChildScrollView(
                     child: ConstrainedBox(
                       /// max width is 600
                       constraints: BoxConstraints(maxWidth: 600),
