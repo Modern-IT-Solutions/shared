@@ -12,7 +12,7 @@ part of 'gift_card_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GiftCardModel _$GiftCardModelFromJson(Map<String, dynamic> json) {
   return _GiftCardModel.fromJson(json);
@@ -24,7 +24,6 @@ mixin _$GiftCardModel {
   ModelRef get ref => throw _privateConstructorUsedError;
   ProfileModel? get owner => throw _privateConstructorUsedError;
 
-  ///
   /// Gift Card info
   String get code => throw _privateConstructorUsedError; // expiration date
   @NullableTimestampDateTimeSerializer()
@@ -308,7 +307,6 @@ class _$GiftCardModelImpl implements _GiftCardModel {
   @override
   final ProfileModel? owner;
 
-  ///
   /// Gift Card info
   @override
   final String code;
@@ -434,7 +432,6 @@ abstract class _GiftCardModel implements GiftCardModel {
   ProfileModel? get owner;
   @override
 
-  ///
   /// Gift Card info
   String get code;
   @override // expiration date

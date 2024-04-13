@@ -12,7 +12,7 @@ part of 'wallet_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 WalletModel _$WalletModelFromJson(Map<String, dynamic> json) {
   return _WalletModel.fromJson(json);
@@ -20,8 +20,10 @@ WalletModel _$WalletModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$WalletModel {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   double get balance => throw _privateConstructorUsedError;
+  double? get icoming => throw _privateConstructorUsedError;
+  double? get outgoing => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,7 @@ abstract class $WalletModelCopyWith<$Res> {
           WalletModel value, $Res Function(WalletModel) then) =
       _$WalletModelCopyWithImpl<$Res, WalletModel>;
   @useResult
-  $Res call({String id, double balance});
+  $Res call({String? id, double balance, double? icoming, double? outgoing});
 }
 
 /// @nodoc
@@ -51,18 +53,28 @@ class _$WalletModelCopyWithImpl<$Res, $Val extends WalletModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? balance = null,
+    Object? icoming = freezed,
+    Object? outgoing = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double,
+      icoming: freezed == icoming
+          ? _value.icoming
+          : icoming // ignore: cast_nullable_to_non_nullable
+              as double?,
+      outgoing: freezed == outgoing
+          ? _value.outgoing
+          : outgoing // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -75,7 +87,7 @@ abstract class _$$WalletModelImplCopyWith<$Res>
       __$$WalletModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, double balance});
+  $Res call({String? id, double balance, double? icoming, double? outgoing});
 }
 
 /// @nodoc
@@ -89,18 +101,28 @@ class __$$WalletModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? balance = null,
+    Object? icoming = freezed,
+    Object? outgoing = freezed,
   }) {
     return _then(_$WalletModelImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double,
+      icoming: freezed == icoming
+          ? _value.icoming
+          : icoming // ignore: cast_nullable_to_non_nullable
+              as double?,
+      outgoing: freezed == outgoing
+          ? _value.outgoing
+          : outgoing // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -108,19 +130,24 @@ class __$$WalletModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$WalletModelImpl implements _WalletModel {
-  _$WalletModelImpl({required this.id, required this.balance});
+  _$WalletModelImpl(
+      {this.id, required this.balance, this.icoming, this.outgoing});
 
   factory _$WalletModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$WalletModelImplFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final double balance;
+  @override
+  final double? icoming;
+  @override
+  final double? outgoing;
 
   @override
   String toString() {
-    return 'WalletModel(id: $id, balance: $balance)';
+    return 'WalletModel(id: $id, balance: $balance, icoming: $icoming, outgoing: $outgoing)';
   }
 
   @override
@@ -129,12 +156,15 @@ class _$WalletModelImpl implements _WalletModel {
         (other.runtimeType == runtimeType &&
             other is _$WalletModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.balance, balance) || other.balance == balance));
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.icoming, icoming) || other.icoming == icoming) &&
+            (identical(other.outgoing, outgoing) ||
+                other.outgoing == outgoing));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, balance);
+  int get hashCode => Object.hash(runtimeType, id, balance, icoming, outgoing);
 
   @JsonKey(ignore: true)
   @override
@@ -152,16 +182,22 @@ class _$WalletModelImpl implements _WalletModel {
 
 abstract class _WalletModel implements WalletModel {
   factory _WalletModel(
-      {required final String id,
-      required final double balance}) = _$WalletModelImpl;
+      {final String? id,
+      required final double balance,
+      final double? icoming,
+      final double? outgoing}) = _$WalletModelImpl;
 
   factory _WalletModel.fromJson(Map<String, dynamic> json) =
       _$WalletModelImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   double get balance;
+  @override
+  double? get icoming;
+  @override
+  double? get outgoing;
   @override
   @JsonKey(ignore: true)
   _$$WalletModelImplCopyWith<_$WalletModelImpl> get copyWith =>

@@ -12,8 +12,8 @@ class TransactionModel with _$TransactionModel implements Model {
     @ModelRefSerializer() required ModelRef ref,
     required String uid,
     required TransactionStatus status,
-    @Default(TransactionType.transfer)
-    TransactionType type,
+    @Default(TransactionType.transfer) TransactionType type,
+
     /// [product] is the ref path of the product that the transaction is related to.
     String? product,
     required String from,
@@ -26,8 +26,7 @@ class TransactionModel with _$TransactionModel implements Model {
     String? details,
     @TimestampDateTimeSerializer() required DateTime createdAt,
     @TimestampDateTimeSerializer() required DateTime updatedAt,
-    
-  @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
+    @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
   }) = _TransactionModel;
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) => _$TransactionModelFromJson(json);
@@ -62,7 +61,6 @@ class TransactionModel with _$TransactionModel implements Model {
             type: FieldType.listText,
             map: (m) => m.uids,
           ),
-          
           FieldDescription(
             name: "from",
             path: "from",
@@ -84,9 +82,6 @@ class TransactionModel with _$TransactionModel implements Model {
             map: (m) => m.type,
             group: FieldGroup.secondary,
           ),
-
-
-
           FieldDescription(
             name: "ref",
             path: "ref",
