@@ -484,7 +484,8 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
   Future<void> _accept() async {
     var amount = TextEditingController(text: depositRequest?.amount.toString());
     bool loading = false;
-    var result = await showDialog(useRootNavigator: false,
+    var result = await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -581,7 +582,8 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
     var reason = TextEditingController();
     bool loading = false;
     var result = await showDialog(
-      context: context,useRootNavigator: false,
+      context: context,
+      useRootNavigator: false,
       builder: (context) {
         return AlertDialog(
           title: const Text('Reject Deposit Request'),
@@ -764,7 +766,6 @@ class CompereAttatchmentViewer extends StatelessWidget {
   }
 }
 
-
 /// [FindGiftCardOrderForm] is a form to update a new user
 class FindGiftCardOrderForm extends StatefulWidget {
   final String id;
@@ -837,7 +838,7 @@ class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
   }
 
   String? get _firstImageUrl {
-    return giftCardOrder?.profile.photoUrl.nullIfEmpty;
+    return giftCardOrder?.profile?.photoUrl.nullIfEmpty;
   }
 
   @override
@@ -1069,7 +1070,7 @@ class _FindGiftCardOrderFormState extends State<FindGiftCardOrderForm> {
                       leading: const Icon(FluentIcons.phone_20_regular),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 24),
                       visualDensity: const VisualDensity(vertical: -3),
-                      title:phoneNumber.isEmpty? DataFlagWidget.empty() :Text(phoneNumber),
+                      title: phoneNumber.isEmpty ? DataFlagWidget.empty() : Text(phoneNumber),
                       subtitle: const Text(
                         'Phone',
                         style: TextStyle(

@@ -32,7 +32,7 @@ Future<GiftCardOrderModel?> showDetailsGiftCardOrderModellDailog(BuildContext co
                   excludeRefs: [
                     model.ref.path
                   ],
-                  isUidEqualTo: model.profile.uid);
+                  isUidEqualTo: model.profile!.uid);
             },
             icon: const Icon(FluentIcons.search_20_regular),
           ),
@@ -55,7 +55,8 @@ Future<GiftCardOrderModel?> showDetailsGiftCardOrderModellDailog(BuildContext co
   }
 
   return await showDialog<GiftCardOrderModel?>(
-    context: context,useRootNavigator: false,
+    context: context,
+    useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -176,9 +177,9 @@ Future<void> showGiftCardOrderModelHistoryDailog(
                 header: const Text("customer"),
                 config: const FlexTableItemConfig.flex(2),
                 builder: (model) {
-                  if (model.profile.displayName.nullIfEmpty == null) return const DataFlagWidget.empty();
+                  if (model.profile?.displayName.nullIfEmpty == null) return const DataFlagWidget.empty();
                   return Text(
-                    model.profile.displayName,
+                    model.profile!.displayName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   );
@@ -223,7 +224,8 @@ Future<void> showGiftCardOrderModelHistoryDailog(
   }
 
   await showDialog(
-    context: context,useRootNavigator: false,
+    context: context,
+    useRootNavigator: false,
     builder: (context) {
       // if (MediaQuery.of(context).size.width > 600) {
       return Dialog(
@@ -282,7 +284,8 @@ Future<DepositRequestModel?> showDetailsDepositRequestModellDailog(BuildContext 
   }
 
   return await showDialog<DepositRequestModel?>(
-    context: context,useRootNavigator: false,
+    context: context,
+    useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -372,7 +375,8 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
         return Container(
           child: ModelListView<DepositRequestModel>(
             onModelTap: (model) async {
-              await showDetailsDepositRequestModellDailog(context, model);await controller.load();
+              await showDetailsDepositRequestModellDailog(context, model);
+              await controller.load();
             },
             flexTableItemBuilders: [
               (
@@ -516,7 +520,8 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
   }
 
   await showDialog(
-    context: context,useRootNavigator: false,
+    context: context,
+    useRootNavigator: false,
     builder: (context) {
       // if (MediaQuery.of(context).size.width > 600) {
       return Dialog(

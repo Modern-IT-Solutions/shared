@@ -365,215 +365,53 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
           ),
         ),
       ],
-      if (profile.rolesString.contains("student"))(
-        tab: const Tab(
-          text: "Deposit Requests",
-        ),
-        view: ModelListView<DepositRequestModel>(
-          controller: depositRequestsController,
-          onModelTap: (model) async {
-            await showDetailsDepositRequestModellDailog(context, model);
-            await depositRequestsController.load();
-          },
-          flexTableItemBuilders: [
-            (
-              header: const Text(""),
-              config: const FlexTableItemConfig.square(30),
-              builder: (model) {
-                return Center(
-                  child: Container(
-                    height: 15,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      color: model.status.color,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                );
-              }
-            ),
-            (
-              header: const Text("Amount"),
-              config: const FlexTableItemConfig.flex(1),
-              builder: (model) {
-                return Text("${model.amount} DZD");
-              }
-            ),
-            (
-              header: const Text("Note"),
-              config: const FlexTableItemConfig.flex(2),
-              builder: (model) {
-                return Text(
-                  model.note ?? "(No note)",
-                  style: Theme.of(context).textTheme.caption,
-                );
-              }
-            ),
-            (
-              header: const Text("UpdatedAt"),
-              config: const FlexTableItemConfig.flex(2),
-              builder: (model) {
-                return Text(
-                  getPrefs().formatDate(model.updatedAt) ?? "--",
-                  style: Theme.of(context).textTheme.caption,
-                );
-              }
-            ),
-            (
-              header: const Text("Address"),
-              config: const FlexTableItemConfig.flex(2),
-              builder: (model) {
-                return Text(model.address ?? "(No address)");
-              }
-            ),
-          ],
-        ),
-      ),
       if (profile.rolesString.contains("student"))
-      (
-        tab: const Tab(
-          text: "Gift Cards",
-        ),
-        view: ModelListView<GiftCardModel>(
-          onModelTap: (model) async {
-            await showUpdateGiftCardDailog(context, model: model);
-            await giftCardsController.load();
-          },
-          onAddPressed: () async {
-            await showCreateGiftCardDailog(context);
-            await giftCardsController.load();
-          },
-          flexTableItemBuilders: [
-            (
-              header: const SizedBox(),
-              config: const FlexTableItemConfig.square(40),
-              builder: (model) {
-                return ProfileAvatar(profile: model.owner);
-              }
-            ),
-            (
-              header: const Text("owner"),
-              config: const FlexTableItemConfig.flex(2),
-              builder: (model) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      model.owner?.displayName ?? "(No owner yet)",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    DataFlagWidget(
-                      custom: "#${model.ref.id}",
-                    ),
-                  ],
-                );
-              }
-            ),
-            // amount
-            (
-              header: const Text("amount"),
-              config: const FlexTableItemConfig.flex(1),
-              builder: (model) {
-                return Text("${model.amount} ${model.currency}");
-              }
-            ),
-            if (MediaQuery.sizeOf(context).width > 800) ...[
+        (
+          tab: const Tab(
+            text: "Deposit Requests",
+          ),
+          view: ModelListView<DepositRequestModel>(
+            controller: depositRequestsController,
+            onModelTap: (model) async {
+              await showDetailsDepositRequestModellDailog(context, model);
+              await depositRequestsController.load();
+            },
+            flexTableItemBuilders: [
               (
-                header: const Text("Expires At"),
-                config: const FlexTableItemConfig.flex(2),
+                header: const Text(""),
+                config: const FlexTableItemConfig.square(30),
                 builder: (model) {
-                  return Text(
-                    model.expiresAt == null ? "No expiry" : DateFormat.yMMMd().format(model.expiresAt!),
-                    // red if expired, green if not
-                    style: TextStyle(
-                      color: model.expiresAt == null || model.expiresAt!.isAfter(DateTime.now()) ? Colors.green : Colors.red,
+                  return Center(
+                    child: Container(
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: model.status.color,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   );
                 }
               ),
               (
-                header: const Text("code"),
-                config: const FlexTableItemConfig.flex(2),
-                builder: (model) {
-                  return Text(model.code.substring(0, 3) + ("*" * (model.code.length - 6)) + model.code.substring(model.code.length - 3));
-                }
-              ),
-            ],
-            if (MediaQuery.sizeOf(context).width > 1000) ...[
-              (
-                header: const Text("updatedAt"),
-                config: const FlexTableItemConfig.flex(2),
-                builder: (model) {
-                  return Text(
-                    getPrefs().formatDate(model.updatedAt) ?? "--",
-                    style: Theme.of(context).textTheme.caption,
-                  );
-                }
-              ),
-            ],
-          ],
-          controller: giftCardsController,
-        ),
-      ),
-      if (profile.rolesString.contains("student"))
-      (
-        tab: const Tab(
-          text: "GC Orders",
-        ),
-        view: ModelListView<GiftCardOrderModel>(
-          onModelTap: (model) async {
-            await showDetailsGiftCardOrderModellDailog(
-              context,
-              model,
-            );
-            await giftCardOrdersController.load();
-          },
-          flexTableItemBuilders: [
-            (
-              header: const SizedBox(),
-              config: const FlexTableItemConfig.square(40),
-              builder: (model) {
-                return ProfileAvatar(profile: model.profile);
-              },
-            ),
-            (
-              header: const Text("customer"),
-              config: const FlexTableItemConfig.flex(2),
-              builder: (model) {
-                if (model.profile.displayName.nullIfEmpty == null) return const DataFlagWidget.empty();
-                return Text(
-                  model.profile.displayName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                );
-              },
-            ),
-            // amount
-            (
-              header: const Text("amount"),
-              config: const FlexTableItemConfig.flex(1),
-              builder: (model) {
-                return Text("${model.amount} din");
-              }
-            ),
-            if (MediaQuery.sizeOf(context).width > 800) ...[
-              //status
-              (
-                header: const Text("status"),
+                header: const Text("Amount"),
                 config: const FlexTableItemConfig.flex(1),
                 builder: (model) {
-                  return DataFlagWidget(
-                    color: model.status.color,
-                    custom: model.status.name,
+                  return Text("${model.amount} DZD");
+                }
+              ),
+              (
+                header: const Text("Note"),
+                config: const FlexTableItemConfig.flex(2),
+                builder: (model) {
+                  return Text(
+                    model.note ?? "(No note)",
+                    style: Theme.of(context).textTheme.caption,
                   );
                 }
               ),
-            ],
-            if (MediaQuery.sizeOf(context).width > 1000) ...[
               (
-                header: const Text("updatedAt"),
+                header: const Text("UpdatedAt"),
                 config: const FlexTableItemConfig.flex(2),
                 builder: (model) {
                   return Text(
@@ -582,11 +420,174 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                   );
                 }
               ),
+              (
+                header: const Text("Address"),
+                config: const FlexTableItemConfig.flex(2),
+                builder: (model) {
+                  return Text(model.address ?? "(No address)");
+                }
+              ),
             ],
-          ],
-          controller: giftCardOrdersController,
+          ),
         ),
-      ),
+      if (profile.rolesString.contains("student"))
+        (
+          tab: const Tab(
+            text: "Gift Cards",
+          ),
+          view: ModelListView<GiftCardModel>(
+            onModelTap: (model) async {
+              await showUpdateGiftCardDailog(context, model: model);
+              await giftCardsController.load();
+            },
+            onAddPressed: () async {
+              await showCreateGiftCardDailog(context);
+              await giftCardsController.load();
+            },
+            flexTableItemBuilders: [
+              (
+                header: const SizedBox(),
+                config: const FlexTableItemConfig.square(40),
+                builder: (model) {
+                  return ProfileAvatar(profile: model.owner);
+                }
+              ),
+              (
+                header: const Text("owner"),
+                config: const FlexTableItemConfig.flex(2),
+                builder: (model) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model.owner?.displayName ?? "(No owner yet)",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      DataFlagWidget(
+                        custom: "#${model.ref.id}",
+                      ),
+                    ],
+                  );
+                }
+              ),
+              // amount
+              (
+                header: const Text("amount"),
+                config: const FlexTableItemConfig.flex(1),
+                builder: (model) {
+                  return Text("${model.amount} ${model.currency}");
+                }
+              ),
+              if (MediaQuery.sizeOf(context).width > 800) ...[
+                (
+                  header: const Text("Expires At"),
+                  config: const FlexTableItemConfig.flex(2),
+                  builder: (model) {
+                    return Text(
+                      model.expiresAt == null ? "No expiry" : DateFormat.yMMMd().format(model.expiresAt!),
+                      // red if expired, green if not
+                      style: TextStyle(
+                        color: model.expiresAt == null || model.expiresAt!.isAfter(DateTime.now()) ? Colors.green : Colors.red,
+                      ),
+                    );
+                  }
+                ),
+                (
+                  header: const Text("code"),
+                  config: const FlexTableItemConfig.flex(2),
+                  builder: (model) {
+                    return Text(model.code.substring(0, 3) + ("*" * (model.code.length - 6)) + model.code.substring(model.code.length - 3));
+                  }
+                ),
+              ],
+              if (MediaQuery.sizeOf(context).width > 1000) ...[
+                (
+                  header: const Text("updatedAt"),
+                  config: const FlexTableItemConfig.flex(2),
+                  builder: (model) {
+                    return Text(
+                      getPrefs().formatDate(model.updatedAt) ?? "--",
+                      style: Theme.of(context).textTheme.caption,
+                    );
+                  }
+                ),
+              ],
+            ],
+            controller: giftCardsController,
+          ),
+        ),
+      if (profile.rolesString.contains("student"))
+        (
+          tab: const Tab(
+            text: "GC Orders",
+          ),
+          view: ModelListView<GiftCardOrderModel>(
+            onModelTap: (model) async {
+              await showDetailsGiftCardOrderModellDailog(
+                context,
+                model,
+              );
+              await giftCardOrdersController.load();
+            },
+            flexTableItemBuilders: [
+              (
+                header: const SizedBox(),
+                config: const FlexTableItemConfig.square(40),
+                builder: (model) {
+                  return ProfileAvatar(profile: model.profile);
+                },
+              ),
+              (
+                header: const Text("customer"),
+                config: const FlexTableItemConfig.flex(2),
+                builder: (model) {
+                  if (model.profile?.displayName.nullIfEmpty == null) return const DataFlagWidget.empty();
+                  return Text(
+                    model.profile!.displayName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  );
+                },
+              ),
+              // amount
+              (
+                header: const Text("amount"),
+                config: const FlexTableItemConfig.flex(1),
+                builder: (model) {
+                  return Text("${model.amount} din");
+                }
+              ),
+              if (MediaQuery.sizeOf(context).width > 800) ...[
+                //status
+                (
+                  header: const Text("status"),
+                  config: const FlexTableItemConfig.flex(1),
+                  builder: (model) {
+                    return DataFlagWidget(
+                      color: model.status.color,
+                      custom: model.status.name,
+                    );
+                  }
+                ),
+              ],
+              if (MediaQuery.sizeOf(context).width > 1000) ...[
+                (
+                  header: const Text("updatedAt"),
+                  config: const FlexTableItemConfig.flex(2),
+                  builder: (model) {
+                    return Text(
+                      getPrefs().formatDate(model.updatedAt) ?? "--",
+                      style: Theme.of(context).textTheme.caption,
+                    );
+                  }
+                ),
+              ],
+            ],
+            controller: giftCardOrdersController,
+          ),
+        ),
       (
         tab: const Tab(
           text: "Transections",
@@ -696,10 +697,9 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                                         color: Theme.of(context).colorScheme.onPrimary,
                                       ),
                                     ),
-                                    title: Text("Buying ${selectedUnits.length} units",
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary)
-                                    ),
-                                    trailing: Text("${value}/${selectedUnits.length}",
+                                    title: Text("Buying ${selectedUnits.length} units", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
+                                    trailing: Text(
+                                      "${value}/${selectedUnits.length}",
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
                                     ),
                                   ),
@@ -717,7 +717,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                     for (var unit in selectedUnits) {
                       var transaction = TransactionModel(
                         ref: ModelRef.random("transactions"),
-                        from: userProfile.uid ,
+                        from: userProfile.uid,
                         to: getCurrentProfile()!.uid,
                         uid: userProfile.uid,
                         product: unit.ref.path,
@@ -725,12 +725,15 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                         details: "buy unit ${unit.name}",
                         type: TransactionType.purchase,
                         status: TransactionStatus.pending,
-                        uids: [userProfile.uid, getCurrentProfile()!.uid],
+                        uids: [
+                          userProfile.uid,
+                          getCurrentProfile()!.uid
+                        ],
                         createdAt: DateTime.now(),
                         updatedAt: DateTime.now(),
                       );
                       await setDocument(
-                        path: transaction.ref.path, 
+                        path: transaction.ref.path,
                         data: transaction.toJson(),
                       );
                       progress.value++;
@@ -894,12 +897,12 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
             text: "Units",
           ),
           view: ModelListView<UnitModel>(
-          onModelTap: (model) async {
-            await showUpdateUnitDailog(context, model: model);
-          },
-          onAddPressed: () async {
-            await showUpdateUnitDailog(context, collection: "units");
-          },
+            onModelTap: (model) async {
+              await showUpdateUnitDailog(context, model: model);
+            },
+            onAddPressed: () async {
+              await showUpdateUnitDailog(context, collection: "units");
+            },
             flexTableItemBuilders: [
               (
                 header: const SizedBox(),
@@ -1196,7 +1199,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                       const SizedBox(
                         width: 8,
                       ),
-                      for (var role in profile.rolesString)...[
+                      for (var role in profile.rolesString) ...[
                         DataFlagWidget(
                           custom: "${role}",
                           color: profile.rolesString.first == "student" ? Colors.green : Colors.red,
@@ -1252,10 +1255,3 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
     ),
   );
 }
-
-
-
-
-
-
-

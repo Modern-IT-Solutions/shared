@@ -22,16 +22,16 @@ extension StudentWalletEx on ProfileModel {
       });
 
   List<String> get products => List<String>.from([
-        ...(customClaims['products'] ?? []),
+        ...(customClaims['products'] ?? []).where((e) => e != null && e != 'null' && e.isNotEmpty),
         ...inAppPurchaseProducts,
-      ]);
+      ]).toList();
   List<String> get inAppPurchaseProducts => List<String>.from(metadata['inAppPurchaseProducts'] ?? []);
 
   List<String> completed(String? unit) {
     var list = List<String>.from(metadata['completed'] ?? []);
-    if (unit != null && unit.isNotEmpty){
+    if (unit != null && unit.isNotEmpty) {
       return list.where((e) => e.contains(unit)).toList();
     }
     return list;
-  } 
+  }
 }
