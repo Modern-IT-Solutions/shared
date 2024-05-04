@@ -332,9 +332,11 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "../core"
-      relative: true
-    source: path
+      path: "."
+      ref: arch2
+      resolved-ref: e856cb821d0c881c636b3b4733375387dbc80376
+      url: "https://github.com/Modern-IT-Solutions/core.git"
+    source: git
     version: "0.0.2"
   cross_file:
     dependency: transitive
@@ -2213,9 +2215,11 @@ packages:
   zplayer:
     dependency: transitive
     description:
-      path: "../zplayer"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "8dbdbd00eb2cbd521843df74b37832688dea87d6"
+      url: "https://github.com/Modern-IT-Solutions/z-player.git"
+    source: git
     version: "0.0.1"
 sdks:
   dart: ">=3.3.0 <3.7.0"
