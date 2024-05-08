@@ -332,11 +332,9 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: arch2
-      resolved-ref: e856cb821d0c881c636b3b4733375387dbc80376
-      url: "https://github.com/Modern-IT-Solutions/core.git"
-    source: git
+      path: "../core"
+      relative: true
+    source: path
     version: "0.0.2"
   cross_file:
     dependency: transitive
@@ -2217,10 +2215,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "8dbdbd00eb2cbd521843df74b37832688dea87d6"
-      url: "https://github.com/Modern-IT-Solutions/z-player.git"
+      resolved-ref: "0938c5b8bf4c63959546bcd6170f891ceaddf29b"
+      url: "https://github.com/Modern-IT-Solutions/z-player-2.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
 sdks:
   dart: ">=3.3.0 <3.7.0"
   flutter: ">=3.19.2"

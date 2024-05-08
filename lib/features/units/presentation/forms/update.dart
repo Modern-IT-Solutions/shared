@@ -571,12 +571,12 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                               child: const Icon(FluentIcons.chevron_down_24_regular),
                             ),
                             onTap: () async {
-                              if ((can("units.update.any") && widget.model != null) || (can("units.create.any") && widget.model == null)) {
-                                setState(() {
-                                  request.teacher = getCurrentProfile();
-                                });
-                                return;
-                              }
+                              // if ((can("units.update.any") && widget.model != null) || (can("units.create.any") && widget.model == null)) {
+                              //   setState(() {
+                              //     request.teacher = getCurrentProfile();
+                              //   });
+                              //   return;
+                              // }
                               var profiles = await showProfilesPickerDialog(context,
                                   filters: [
                                     IndexViewFilter(

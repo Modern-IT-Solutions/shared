@@ -249,7 +249,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-e856cb821d0c881c636b3b4733375387dbc80376/",
+      "rootUri": "../../core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1671,7 +1671,7 @@
     },
     {
       "name": "zplayer",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/z-player-8dbdbd00eb2cbd521843df74b37832688dea87d6/",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/z-player-2-0938c5b8bf4c63959546bcd6170f891ceaddf29b/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1682,7 +1682,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-05-04T17:38:24.880311Z",
+  "generated": "2024-05-08T12:34:21.052093Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

@@ -75,7 +75,11 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
 
       try {
         if (_creationType == "single") {
-          var item = GiftCardModel.fromJson(data);
+          var item = GiftCardModel.fromJson({
+            ...data,
+            "createdAt": Timestamp.now(),
+            "updatedAt": Timestamp.now(),
+          });
           await setDocument(path: request.ref.path, data: data);
           widget.onCreated?.call(item);
         } else {
@@ -90,11 +94,13 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
               "ref": request.ref.path + "_$i",
               "code": generateCode(),
               // inject rootid in metadata
-              "metadata": <String,dynamic>{
+              "metadata": <String, dynamic>{
                 ...(data['metadata'] ?? {}),
                 "rootId": request.ref.id,
                 "subId": i,
               },
+              "createdAt": Timestamp.now(),
+              "updatedAt": Timestamp.now(),
             });
             await setDocument(path: item.ref.path, data: item.toJson());
             items.add(item);
@@ -157,15 +163,14 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
                 onPressed: () async {
                   await _submit();
                 },
-                label: _loading && _progress != null?
-                SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    value: _progress,
-                  )
-                ) : const
-                 Text('Submit'),
+                label: _loading && _progress != null
+                    ? SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          value: _progress,
+                        ))
+                    : const Text('Submit'),
                 icon: const Icon(FluentIcons.checkmark_24_regular),
               ),
               const SizedBox(width: 12),
@@ -307,7 +312,6 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
                             FormBuilderValidators.numeric(),
                             FormBuilderValidators.min(1),
                             FormBuilderValidators.max(10000),
-
                           ]),
                           decoration: InputDecoration(
                             errorText: _errors['quantity'],
@@ -421,8 +425,7 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
                         key: UniqueKey(),
                         enabled: false,
                         mode: AppTextFormFieldMode.dateTime,
-                        initialValue:
-                        _creationType == "single" ? request.ref.path : request.ref.path+ "_{index}",
+                        initialValue: _creationType == "single" ? request.ref.path : request.ref.path + "_{index}",
                         margin: const EdgeInsets.symmetric(horizontal: 24),
                         onChanged: (v) async {
                           // request.date = DateTime.tryParse(v);
