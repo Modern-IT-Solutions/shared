@@ -68,7 +68,12 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
     loading.value = true;
     try {
       models.value = await widget.repository.list(
-        ListRequest(searchQuery: SearchQuery(field: type.name, value: query)),
+        ListRequest(
+            searchQuery: SearchQuery(
+          field: type.name,
+          value: query,
+          type: null,
+        )),
       ) as ListResult<M>;
     } catch (e) {
       print(e);
@@ -398,7 +403,8 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
         },
       ),
     );
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
@@ -440,7 +446,8 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
         },
       ),
     );
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
@@ -459,7 +466,8 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
   // delete station, a simple dialog with a text and two buttons
   Future<void> showDeleteModelDailog(BuildContext context, StationModel model) async {
     bool _loading = false;
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm delete'),
@@ -530,7 +538,8 @@ class ManageStationsViewState<M extends StationModel> extends State<ManageStatio
         ],
       ),
     );
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)

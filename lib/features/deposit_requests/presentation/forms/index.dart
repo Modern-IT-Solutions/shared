@@ -116,22 +116,21 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
 
       var data = await widget.repository.list(
         ListRequest(
-          searchQuery: query != null && query.isNotEmpty && type != null ? SearchQuery(field: type.name, value: query) : null,
-          queryBuilder: (query) {
-            for (QueryFilter<DepositRequestModel> filter in activeFilters) {
-              query = filter.server(query);
-            }
-            query = query.orderBy("updatedAt", descending: false);
-            if (startAfter != null) {
-              query = query.startAfter(startAfter);
-            }
-            return query;
-          },
-          limit: 10,
-          options: GetOptions(
-            source: Source.server,
-          )
-        ),
+            searchQuery: query != null && query.isNotEmpty && type != null ? SearchQuery(field: type.name, value: query, type: null) : null,
+            queryBuilder: (query) {
+              for (QueryFilter<DepositRequestModel> filter in activeFilters) {
+                query = filter.server(query);
+              }
+              query = query.orderBy("updatedAt", descending: false);
+              if (startAfter != null) {
+                query = query.startAfter(startAfter);
+              }
+              return query;
+            },
+            limit: 10,
+            options: GetOptions(
+              source: Source.server,
+            )),
       );
       if (concat) {
         models.value = ListResult(
@@ -590,6 +589,7 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
   bool get hasNext {
     return loading.value == false && filteredModels.isNotEmpty && nextStartAt != null && nextStartAt != currentStartAt;
   }
+
   DateTime? get nextStartAt => models.value?.items.lastOrNull?.updatedAt;
 
   // prevStartAt
@@ -674,7 +674,8 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
       ),
     );
     await showDialog(
-      context: context,useRootNavigator: false,
+      context: context,
+      useRootNavigator: false,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600) {
           return Dialog(
@@ -694,7 +695,8 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
   @override
   Future<void> showDeleteModelDailog(BuildContext context, DepositRequestModel model) async {
     bool _loading = false;
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm delete'),
@@ -797,7 +799,8 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
       );
     }
 
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600) {
@@ -817,12 +820,9 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
   Future<void> showHistoryDailog(BuildContext context, DepositRequestModel model) async {
     child(BuildContext context) {
       return ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 500,
-            maxHeight: MediaQuery.of(context).size.height * .8
-            ),
-
+        constraints: BoxConstraints(maxWidth: 500, maxHeight: MediaQuery.of(context).size.height * .8),
         child: SingleChildScrollView(
-        child: Container(
+          child: Container(
             padding: const EdgeInsets.all(18),
             child: ManageDepositRequestsView(
               filters: {
@@ -843,19 +843,20 @@ class ManageDepositRequestsViewState extends State<ManageDepositRequestsView> wi
               },
             ),
           ),
-      ),
+        ),
       );
     }
 
     await showDialog(
-      context: context,useRootNavigator: false,
+      context: context,
+      useRootNavigator: false,
       builder: (context) {
         // if (MediaQuery.of(context).size.width > 600) {
-          return Dialog(
-            insetPadding: EdgeInsets.all(15),
-            clipBehavior: Clip.antiAlias,
-            child: child(context),
-          );
+        return Dialog(
+          insetPadding: EdgeInsets.all(15),
+          clipBehavior: Clip.antiAlias,
+          child: child(context),
+        );
         // } else {
         //   return Dialog.fullscreen(
         //     child: child(context),

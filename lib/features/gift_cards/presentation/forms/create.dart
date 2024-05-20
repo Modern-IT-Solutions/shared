@@ -80,7 +80,7 @@ class _CreateGiftCardFormState extends State<CreateGiftCardForm> {
             "createdAt": Timestamp.now(),
             "updatedAt": Timestamp.now(),
           });
-          await setDocument(path: request.ref.path, data: data);
+          await setDocument(path: request.ref.path, data: item.toJson());
           widget.onCreated?.call(item);
         } else {
           setState(() {

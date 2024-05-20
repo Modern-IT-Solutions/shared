@@ -46,6 +46,9 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
     statistics: widget.model?.statistics ?? UnitStatisticsModel(),
     subject: widget.model?.subject,
     teacher: widget.model?.teacher ?? getCurrentProfile(),
+    metadata: {
+      ...?widget.model?.metadata
+    },
   );
 
   bool _loading = false;
@@ -461,6 +464,48 @@ class _UpdateUnitFormState extends State<UpdateUnitForm> {
                           label: const Text('price'),
                           alignLabelWithHint: true,
                           helperText: 'The price of the item, required *',
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // factor of the unit (multiplied by the price) saved in metadata.factor
+                      AppTextFormField(
+                        margin: const EdgeInsets.symmetric(horizontal: 24),
+                        initialValue: (request.metadata?['factor'] ?? "100").toString(),
+                        onChanged: (v) {
+                          request.metadata = request.metadata ?? {};
+                          request.metadata?['factor'] = double.tryParse(v);
+                        },
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.numeric(),
+                        ]),
+                        decoration: InputDecoration(
+                          errorText: _errors['factor'],
+                          prefixIcon: const SizedBox(child: Icon(FluentIcons.app_title_24_regular)),
+                          label: const Text('factor'),
+                          alignLabelWithHint: true,
+                          helperText: 'The factor of the item, required *',
+                          prefixText: "%",
+                        ),
+                      ),
+                      // errorFactor
+                      const SizedBox(height: 10),
+                      AppTextFormField(
+                        margin: const EdgeInsets.symmetric(horizontal: 24),
+                        initialValue: (request.metadata?['errorFactor'] ?? "0").toString(),
+                        onChanged: (v) {
+                          request.metadata = request.metadata ?? {};
+                          request.metadata?['errorFactor'] = double.tryParse(v);
+                        },
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.numeric(),
+                        ]),
+                        decoration: InputDecoration(
+                          errorText: _errors['errorFactor'],
+                          prefixIcon: const SizedBox(child: Icon(FluentIcons.app_title_24_regular)),
+                          label: const Text('errorFactor'),
+                          alignLabelWithHint: true,
+                          helperText: 'The errorFactor of the item, required *',
+                          prefixText: "%",
                         ),
                       ),
                       Divider(),

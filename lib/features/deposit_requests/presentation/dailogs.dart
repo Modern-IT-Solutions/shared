@@ -210,7 +210,7 @@ Future<void> showGiftCardOrderModelHistoryDailog(
                   builder: (model) {
                     return Text(
                       getPrefs().formatDate(model.updatedAt) ?? "--",
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     );
                   }
                 ),
@@ -463,7 +463,7 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
                   builder: (model) {
                     return Text(
                       model.note ?? "(No note)",
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     );
                   }
                 ),
@@ -473,7 +473,7 @@ Future<void> showDepositRequestModelHistoryDailog(BuildContext context, DepositR
                   builder: (model) {
                     return Text(
                       getPrefs().formatDate(model.updatedAt) ?? "--",
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     );
                   }
                 ),
@@ -718,7 +718,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                           builder: (model) {
                             return Text(
                               model.note ?? "(No note)",
-                              style: Theme.of(context).textTheme.caption,
+                              style: Theme.of(context).textTheme.bodySmall,
                             );
                           }
                         ),
@@ -728,7 +728,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                           builder: (model) {
                             return Text(
                               getPrefs().formatDate(model.updatedAt) ?? "--",
-                              style: Theme.of(context).textTheme.caption,
+                              style: Theme.of(context).textTheme.bodySmall,
                             );
                           }
                         ),
@@ -870,7 +870,7 @@ Future<DepositRequestModel?> showExtendedDepositRequestModelDailog(BuildContext 
                           builder: (model) {
                             return Text(
                               getPrefs().formatDate(model.updatedAt) ?? "--",
-                              style: Theme.of(context).textTheme.caption,
+                              style: Theme.of(context).textTheme.bodySmall,
                             );
                           }
                         ),

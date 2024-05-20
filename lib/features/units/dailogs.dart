@@ -1,4 +1,3 @@
-
 // show profile transactions
 import 'dart:math';
 
@@ -42,8 +41,20 @@ Future<void> showUnitSectionsDailog(BuildContext context, UnitModel model) async
                 return Text(model.description?.nullIfEmpty ?? "(No description)");
               }
             ),
+            // order
+            (
+              header: const Text("order"),
+              config: const FlexTableItemConfig.flex(1),
+              builder: (model) {
+                return Text(model.order.toString());
+              }
+            ),
           ],
           controller: ModelListViewController(
+            // sort by UnitSectionModel.order (int)
+            sortFunction: (b, a) {
+              return a.order.compareTo(b.order);
+            },
             value: const ModelListViewValue(
               filters: [],
             ),
@@ -132,8 +143,20 @@ Future<void> showUnitSectionItemsDailog(BuildContext context, UnitSectionModel m
                 return Text(model.description?.nullIfEmpty ?? "(No description)");
               }
             ),
+
+            // order
+            (
+              header: const Text("order"),
+              config: const FlexTableItemConfig.flex(1),
+              builder: (model) {
+                return Text(model.order.toString());
+              }
+            ),
           ],
           controller: ModelListViewController(
+            sortFunction: (b, a) {
+              return a.order.compareTo(b.order);
+            },
             value: const ModelListViewValue(
               filters: [],
             ),

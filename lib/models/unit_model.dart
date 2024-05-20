@@ -59,6 +59,44 @@ extension UnitModelEx on UnitModel {
   get total {
     return price - discount;
   }
+
+  double get factorError {
+    var fe = metadata["errorFactor"];
+    return double.tryParse(fe.toString()) ?? 0.0;
+  }
+
+  double get errorAmount {
+    return syncTotalAmountNoFactor * (factorError / 100);
+  }
+
+  // factor
+  double get factor {
+    var f = metadata["factor"];
+    return (double.tryParse(f.toString()) ?? 100.0);
+  }
+
+  // factor
+  double get factorSystem {
+    return 100 - factor;
+  }
+
+  // syncTotalAmount
+  double get syncTotalAmountNoFactor {
+    // return metadata["_sync_totalAmount"]*unit.factor
+    var stotalAmount = metadata["_sync_totalAmount"];
+    var syncTotalAmount = double.tryParse(stotalAmount.toString()) ?? 0.0;
+    return syncTotalAmount;
+  }
+
+  // syncTotalAmount
+  double get syncTotalAmount {
+    return (syncTotalAmountNoFactor) * ((factor - factorError) / 100) - errorAmount;
+  }
+
+  // syncTotalAmountRemaining
+  double get syncTotalAmountRemaining {
+    return (syncTotalAmountNoFactor) - syncTotalAmount - errorAmount;
+  }
 }
 
 //
@@ -66,7 +104,7 @@ enum ModelVisibility {
   visible(Colors.green, Icons.visibility),
   hidden(Colors.red, Icons.visibility_off);
 
-  const ModelVisibility(this.color,this.icon);
+  const ModelVisibility(this.color, this.icon);
   final Color color;
   final IconData icon;
 }

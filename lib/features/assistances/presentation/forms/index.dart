@@ -38,21 +38,18 @@ enum AssistancesSearchType implements SearchType {
 }
 
 /// [ManageAssistancesView] is a tab for assistances
-class ManageAssistancesView<M extends AssistanceModel>
-    extends ModelMnanagerView<M> {
+class ManageAssistancesView<M extends AssistanceModel> extends ModelMnanagerView<M> {
   final AssistanceRepositoryInterface<M> repository;
 
   ManageAssistancesView({
     super.key,
-  }) : repository =
-            AssistanceRepository.instance as AssistanceRepositoryInterface<M>;
+  }) : repository = AssistanceRepository.instance as AssistanceRepositoryInterface<M>;
 
   @override
   State<ManageAssistancesView> createState() => ManageAssistancesViewState<M>();
 }
 
-class ManageAssistancesViewState<M extends AssistanceModel>
-    extends State<ManageAssistancesView> with ModelMnanagerViewMixin<M> {
+class ManageAssistancesViewState<M extends AssistanceModel> extends State<ManageAssistancesView> with ModelMnanagerViewMixin<M> {
   var searchType = ValueNotifier(AssistancesSearchType.stationName);
 
   @override
@@ -66,8 +63,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
   Future<void> load() async {
     loading.value = true;
     try {
-      models.value =
-          await widget.repository.list(ListRequest()) as ListResult<M>;
+      models.value = await widget.repository.list(ListRequest()) as ListResult<M>;
     } catch (e) {
       print(e);
     }
@@ -81,7 +77,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
     loading.value = true;
     try {
       models.value = await widget.repository.list(
-        ListRequest(searchQuery: SearchQuery(field: type.field, value: query)),
+        ListRequest(searchQuery: SearchQuery(field: type.field, value: query, type: null)),
       ) as ListResult<M>;
       print(models.value);
     } catch (e) {
@@ -129,8 +125,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                   Expanded(
                     child: AppTextFormField.min(
                       enabled: !loading.value,
-                      onSubmitted: (String value) =>
-                          search(value, searchType.value),
+                      onSubmitted: (String value) => search(value, searchType.value),
                       controller: searchController,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(FluentIcons.search_24_regular),
@@ -146,18 +141,14 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                       FluentIcons.filter_24_regular,
                                     ),
                                     onPressed: () => controller.open(),
-                                    label:
-                                        Text(searchType.value.name.titleCase),
+                                    label: Text(searchType.value.name.titleCase),
                                   );
                                 },
                                 menuChildren: [
                                   for (var type in AssistancesSearchType.values)
                                     MenuItemButton(
                                       leadingIcon: Icon(type.icon),
-                                      trailingIcon: searchType.value == type
-                                          ? const Icon(
-                                              FluentIcons.checkmark_24_regular)
-                                          : null,
+                                      trailingIcon: searchType.value == type ? const Icon(FluentIcons.checkmark_24_regular) : null,
                                       onPressed: searchType.value == type
                                           ? null
                                           : () {
@@ -211,71 +202,41 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                             SizedBox(),
                           ]),
                         ),
-                        loading.value
-                            ? LinearProgressIndicator(minHeight: 2)
-                            : const Divider(height: 2),
+                        loading.value ? LinearProgressIndicator(minHeight: 2) : const Divider(height: 2),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             if (models.value != null)
-                              for (AssistanceModel assistanceRecord
-                                  in filteredAssistances)
+                              for (AssistanceModel assistanceRecord in filteredAssistances)
                                 InkWell(
-                                  highlightColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                                  focusColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                                  hoverColor: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
+                                  highlightColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  focusColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  hoverColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8),
                                   onTap: () {
-                                    showDetailsModelDailog(
-                                        context, assistanceRecord);
+                                    showDetailsModelDailog(context, assistanceRecord);
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                                     child: FlexTableItem(
                                       children: [
                                         CircleAvatar(
                                           radius: 15,
-                                          child: assistanceRecord
-                                                      .station.photoUrl ==
-                                                  null
+                                          child: assistanceRecord.station.photoUrl == null
                                               ? Text(
-                                                  assistanceRecord.station.name
-                                                              ?.isNotEmpty ==
-                                                          true
-                                                      ? assistanceRecord
-                                                          .station.name![0]
-                                                          .toUpperCase()
-                                                      : "?",
-                                                  style: const TextStyle(
-                                                      fontSize: 18),
+                                                  assistanceRecord.station.name?.isNotEmpty == true ? assistanceRecord.station.name![0].toUpperCase() : "?",
+                                                  style: const TextStyle(fontSize: 18),
                                                 )
                                               : null,
-                                          backgroundImage: assistanceRecord
-                                                      .station.photoUrl ==
-                                                  null
-                                              ? null
-                                              : CachedNetworkImageProvider(assistanceRecord
-                                                  .station.photoUrl!),
+                                          backgroundImage: assistanceRecord.station.photoUrl == null ? null : CachedNetworkImageProvider(assistanceRecord.station.photoUrl!),
                                         ),
                                         Text(
-                                          assistanceRecord.station.name ??
-                                              "No name",
+                                          assistanceRecord.station.name ?? "No name",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         Text(
-                                          assistanceRecord.station.address
-                                                  .toString(),
+                                          assistanceRecord.station.address.toString(),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -285,9 +246,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                           child: Wrap(
                                             spacing: 5,
                                             children: [
-                                              for (var technician
-                                                  in assistanceRecord
-                                                      .technicians)
+                                              for (var technician in assistanceRecord.technicians)
                                                 SizedBox(
                                                   width: 25,
                                                   height: 40,
@@ -299,48 +258,26 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                                         child: Container(
                                                           height: 40,
                                                           width: 40,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
                                                             border: Border.all(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .background,
+                                                              color: Theme.of(context).colorScheme.background,
                                                               width: 2,
                                                             ),
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .primaryContainer,
+                                                            color: Theme.of(context).colorScheme.primaryContainer,
 
                                                             /// if technician.photoUrl is not null and not empty show the image
-                                                            image: technician
-                                                                            .photoUrl !=
-                                                                        null &&
-                                                                    technician
-                                                                        .photoUrl!
-                                                                        .isNotEmpty
+                                                            image: technician.photoUrl != null && technician.photoUrl!.isNotEmpty
                                                                 ? DecorationImage(
-                                                                    image: CachedNetworkImageProvider(
-                                                                        technician
-                                                                            .photoUrl!),
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                    image: CachedNetworkImageProvider(technician.photoUrl!),
+                                                                    fit: BoxFit.cover,
                                                                   )
                                                                 : null,
                                                           ),
                                                           child: Center(
                                                             child: Text(
-                                                              technician
-                                                                  .displayName![
-                                                                      0]
-                                                                  .toUpperCase(),
-                                                              style:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          18),
+                                                              technician.displayName![0].toUpperCase(),
+                                                              style: const TextStyle(fontSize: 18),
                                                             ),
                                                           ),
                                                         ),
@@ -357,8 +294,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                         //   onPressed: () {},
                                         // ),
                                         MenuAnchor(
-                                          builder:
-                                              (context, controller, child) {
+                                          builder: (context, controller, child) {
                                             return IconButton(
                                               onPressed: () {
                                                 if (controller.isOpen) {
@@ -376,38 +312,28 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                             ),
                                             MenuItemButton(
                                               onPressed: () {},
-                                              leadingIcon: const Icon(
-                                                  FluentIcons
-                                                      .person_tag_28_regular),
+                                              leadingIcon: const Icon(FluentIcons.person_tag_28_regular),
                                               child: Text('change roles'),
                                             ),
                                             Divider(),
                                             MenuItemButton(
                                               onPressed: () {
-                                                showUpdateModelDailog(
-                                                    context, assistanceRecord);
+                                                showUpdateModelDailog(context, assistanceRecord);
                                               },
-                                              leadingIcon: const Icon(
-                                                  FluentIcons.edit_28_regular),
+                                              leadingIcon: const Icon(FluentIcons.edit_28_regular),
                                               child: Text('Edit'),
                                             ),
                                             MenuItemButton(
                                               onPressed: () {
-                                                showDeleteModelDailog(
-                                                    context, assistanceRecord);
+                                                showDeleteModelDailog(context, assistanceRecord);
                                               },
                                               leadingIcon: Icon(
                                                 FluentIcons.delete_28_regular,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .error,
+                                                color: Theme.of(context).colorScheme.error,
                                               ),
                                               child: Text(
                                                 'Remove',
-                                                style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .error),
+                                                style: TextStyle(color: Theme.of(context).colorScheme.error),
                                               ),
                                             ),
                                             SizedBox(
@@ -425,13 +351,10 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                                   margin: EdgeInsets.all(24.0),
                                   height: 20,
                                   width: 20,
-                                  child: CircularProgressIndicator.adaptive(
-                                      strokeWidth: 2),
+                                  child: CircularProgressIndicator.adaptive(strokeWidth: 2),
                                 ),
                               ),
-                            if (models.value != null &&
-                                models.value!.items.isEmpty &&
-                                !loading.value)
+                            if (models.value != null && models.value!.items.isEmpty && !loading.value)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -487,7 +410,8 @@ class ManageAssistancesViewState<M extends AssistanceModel>
         },
       ),
     );
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
@@ -504,8 +428,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
   }
 
   // update assistance
-  Future<void> showUpdateModelDailog(
-      BuildContext context, AssistanceModel assistance) async {
+  Future<void> showUpdateModelDailog(BuildContext context, AssistanceModel assistance) async {
     var child = Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: UpdateAssistanceForm(
@@ -531,7 +454,8 @@ class ManageAssistancesViewState<M extends AssistanceModel>
         },
       ),
     );
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)
@@ -548,15 +472,14 @@ class ManageAssistancesViewState<M extends AssistanceModel>
   }
 
   // delete assistance, a simple dialog with a text and two buttons
-  Future<void> showDeleteModelDailog(
-      BuildContext context, AssistanceModel model) async {
+  Future<void> showDeleteModelDailog(BuildContext context, AssistanceModel model) async {
     bool _loading = false;
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirm delete'),
-        content: Text(
-            'this action cannot be undone, are you sure you want to continue?'),
+        content: Text('this action cannot be undone, are you sure you want to continue?'),
         actions: [
           TextButton(
             onPressed: () {
@@ -582,8 +505,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                               action: SnackBarAction(
                                 label: 'Close',
                                 onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                 },
                               )),
                         );
@@ -594,9 +516,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
                         _loading = false;
                       });
                     },
-              child: _loading
-                  ? CircularProgressIndicator.adaptive()
-                  : const Text('Delete'),
+              child: _loading ? CircularProgressIndicator.adaptive() : const Text('Delete'),
             );
           }),
         ],
@@ -605,8 +525,7 @@ class ManageAssistancesViewState<M extends AssistanceModel>
   }
 
   @override
-  Future<void> showDetailsModelDailog(
-      BuildContext context, AssistanceModel model) async {
+  Future<void> showDetailsModelDailog(BuildContext context, AssistanceModel model) async {
     var child = Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: FindAssistanceForm(
@@ -627,7 +546,8 @@ class ManageAssistancesViewState<M extends AssistanceModel>
         ],
       ),
     );
-    await showDialog(useRootNavigator: false,
+    await showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (context) {
         if (MediaQuery.of(context).size.width > 600)

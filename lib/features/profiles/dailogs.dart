@@ -406,7 +406,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                 builder: (model) {
                   return Text(
                     model.note ?? "(No note)",
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   );
                 }
               ),
@@ -416,7 +416,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                 builder: (model) {
                   return Text(
                     getPrefs().formatDate(model.updatedAt) ?? "--",
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   );
                 }
               ),
@@ -509,7 +509,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                   builder: (model) {
                     return Text(
                       getPrefs().formatDate(model.updatedAt) ?? "--",
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     );
                   }
                 ),
@@ -579,7 +579,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
                   builder: (model) {
                     return Text(
                       getPrefs().formatDate(model.updatedAt) ?? "--",
-                      style: Theme.of(context).textTheme.caption,
+                      style: Theme.of(context).textTheme.bodySmall,
                     );
                   }
                 ),
@@ -636,7 +636,7 @@ Future<void> showExtendedStudentModelDailog(BuildContext context, ProfileModel p
               builder: (model) {
                 return Text(
                   getPrefs().formatDate(model.updatedAt) ?? "--",
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodySmall,
                 );
               }
             ),

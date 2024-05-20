@@ -40,6 +40,7 @@ class _UpdateGiftCardFormState extends State<UpdateGiftCardForm> {
     currency: widget.model?.currency.nullIfEmpty ?? "DZD",
     transaction: widget.model?.transaction,
     metadata: widget.model?.metadata,
+    freezed: widget.model?.freezed,
   );
 
   bool _loading = false;
@@ -98,6 +99,7 @@ class _UpdateGiftCardFormState extends State<UpdateGiftCardForm> {
             currency: request.currency ?? widget.model!.currency,
             metadata: request.metadata ?? widget.model!.metadata,
             transaction: request.transaction ?? widget.model!.transaction,
+            freezed: request.freezed ?? widget.model!.freezed,
           ));
         } else if (widget.ref.nullIfEmpty != null) {
           var item = GiftCardModel.fromJson(data);

@@ -8,8 +8,6 @@ import 'package:shared/shared.dart';
 
 import '../../data/models/station_model.dart';
 
-
-
 class UnitUpdateRequest<T extends UnitModel> extends UpdateRequest<T> {
   final ModelRef ref;
 
@@ -32,6 +30,8 @@ class UnitUpdateRequest<T extends UnitModel> extends UpdateRequest<T> {
   DateTime? updatedAt;
   DateTime? deletedAt;
 
+  Map<String, dynamic>? metadata;
+
   get data => toMap();
 
   UnitUpdateRequest({
@@ -52,6 +52,7 @@ class UnitUpdateRequest<T extends UnitModel> extends UpdateRequest<T> {
     this.statistics,
     this.subject,
     this.teacher,
+    this.metadata,
   }) : super(id: ref.id);
 
   @override
@@ -74,6 +75,7 @@ class UnitUpdateRequest<T extends UnitModel> extends UpdateRequest<T> {
       'statistics': statistics?.toJson() ?? {},
       'subject': subject?.toJson(),
       'teacher': teacher?.toJson(),
+      'metadata': metadata,
     };
   }
 }
