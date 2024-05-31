@@ -19,7 +19,9 @@ class UpdateUnitForm extends StatefulWidget {
   final VoidCallback? onCancel;
   final Null Function(UnitModel station)? onUpdated;
   final Null Function(UnitModel station)? onCreated;
-  const UpdateUnitForm({Key? key, this.onUpdated, this.onCreated, this.onCancel, required this.model, required this.ref}) : super(key: key);
+  // temporary
+  final bool onlyEstimates;
+  const UpdateUnitForm({Key? key, this.onlyEstimates = false, this.onUpdated, this.onCreated, this.onCancel, required this.model, required this.ref}) : super(key: key);
 
   @override
   State<UpdateUnitForm> createState() => _UpdateUnitFormState();
