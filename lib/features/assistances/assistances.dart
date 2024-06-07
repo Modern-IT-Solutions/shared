@@ -1,5 +1,3 @@
-
-
 /// exports.
 export './data/models/assistance_model.dart';
 export './data/datasources/datasource.dart';
