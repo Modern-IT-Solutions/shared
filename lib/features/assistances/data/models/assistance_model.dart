@@ -1,4 +1,3 @@
-
 import 'package:core/modules/chat/room/embedded_chat_room_model.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,18 +14,15 @@ part 'assistance_model.g.dart';
 
 @freezed
 class AssistanceModel with _$AssistanceModel implements Model {
-
   const AssistanceModel._();
 
   const factory AssistanceModel({
-    @ModelRefSerializer()
-    required ModelRef ref,
+    @ModelRefSerializer() required ModelRef ref,
     required StationModel station,
     required List<ProfileModel> technicians,
     required List<String> techniciansRefs,
     required AssistanceStatus status,
-    @TimestampDateTimeSerializer()
-    required DateTime date,
+    @TimestampDateTimeSerializer() required DateTime date,
     required String note,
     required List<AttachmentModel> attachments,
     required ProfileModel? reviewer,
@@ -36,15 +32,11 @@ class AssistanceModel with _$AssistanceModel implements Model {
     // feedback
     AssistanceFeedback? feedback,
     // metadata
-    @Default({}) Map<String,dynamic> metadata,    
-    @NullableTimestampDateTimeSerializer()
-    DateTime? nextInterventionDate,
-    @TimestampDateTimeSerializer()
-    required DateTime createdAt,
-    @TimestampDateTimeSerializer()
-    required DateTime updatedAt,
-    @NullableTimestampDateTimeSerializer()
-    DateTime? deletedAt,
+    @Default({}) Map<String, dynamic> metadata,
+    @NullableTimestampDateTimeSerializer() DateTime? nextInterventionDate,
+    @TimestampDateTimeSerializer() required DateTime createdAt,
+    @TimestampDateTimeSerializer() required DateTime updatedAt,
+    @NullableTimestampDateTimeSerializer() DateTime? deletedAt,
   }) = _AssistanceModel;
 
   factory AssistanceModel.fromJson(Map<String, dynamic> json) => _$AssistanceModelFromJson(json);
@@ -52,7 +44,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
   static ModelDescription<AssistanceModel> get description => ModelDescription<AssistanceModel>(
         fields: {
           FieldDescription(
-            name: "station name",
+            name: "station.name",
             path: "station.name",
             nullable: true,
             type: FieldType.text,
@@ -112,7 +104,7 @@ class AssistanceModel with _$AssistanceModel implements Model {
             type: FieldType.datetime,
             map: (m) => m.intervention?.updatedAt,
             group: FieldGroup.primary,
-          ),  
+          ),
           // intervention deletedAt
           FieldDescription(
             name: "intervention deletedAt",
@@ -184,15 +176,10 @@ class AssistanceModel with _$AssistanceModel implements Model {
         name: "Assistances Requests",
         path: "assistances",
         fromJson: AssistanceModel.fromJson,
-        tileBuilder: (model) => ModelGeneralData(
-          title: model.station.name,
-          subtitle: model.reviewer?.displayName ?? ("(No reviewer)")
-        ),
+        tileBuilder: (model) => ModelGeneralData(title: model.station.name, subtitle: model.reviewer?.displayName ?? ("(No reviewer)")),
         actions: [],
       );
 }
-
-
 
 /// [AssistanceStatus] is enum that represents the status of the request assistance.
 ///  it contains : [Draft], [Pending], [InReview], [Resolved]
@@ -226,7 +213,6 @@ enum AssistanceStatus {
     return map[this] ?? "";
   }
 }
-
 
 // extention for AssistantModificationHistory
 extension AssistantHistoryEx on AssistanceModel {
