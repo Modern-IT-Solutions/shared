@@ -190,13 +190,6 @@
 
 // // editO
 
-
-
-
-
-
-
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -206,7 +199,8 @@ import 'package:shared/models/gift_card_model.dart';
 import 'create.dart';
 
 /// showUpdateGiftCardDailog
-Future<GiftCardModel?> showUpdateGiftCardDailog(BuildContext context, {GiftCardModel? model, String? collection}) async {
+Future<GiftCardModel?> showUpdateGiftCardDailog(BuildContext context,
+    {GiftCardModel? model, String? collection}) async {
   var child = Container(
     constraints: const BoxConstraints(maxWidth: 500),
     child: UpdateGiftCardForm(
@@ -251,7 +245,8 @@ Future<GiftCardModel?> showUpdateGiftCardDailog(BuildContext context, {GiftCardM
     ),
   );
   return await showDialog<GiftCardModel?>(
-    context: context,useRootNavigator: false,
+    context: context,
+    useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(
@@ -287,8 +282,7 @@ Future<GiftCardModel?> showCreateGiftCardDailog(BuildContext context) async {
             ),
           ),
         );
-              Navigator.of(context).pop();
-
+        Navigator.of(context).pop();
       },
       onCreateMultiple: (models) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
@@ -311,7 +305,8 @@ Future<GiftCardModel?> showCreateGiftCardDailog(BuildContext context) async {
     ),
   );
   return await showDialog<GiftCardModel?>(
-    context: context,useRootNavigator: false,
+    context: context,
+    useRootNavigator: false,
     builder: (context) {
       if (MediaQuery.of(context).size.width > 600) {
         return Dialog(

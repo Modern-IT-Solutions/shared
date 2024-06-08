@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core/features/users/presentation/dailogs.dart';
 import 'package:core/features/users/presentation/forms/create_profile.dart';
+import 'package:core/models/intervention_model.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
@@ -22,7 +23,14 @@ class UpdateAssistanceForm extends StatefulWidget {
   final VoidCallback? onCancel;
   final Null Function(AssistanceModel station)? onUpdated;
   final Null Function(AssistanceModel station)? onCreated;
-  const UpdateAssistanceForm({Key? key, this.onUpdated, this.onCreated, this.onCancel, required this.model, required this.ref}) : super(key: key);
+  const UpdateAssistanceForm(
+      {Key? key,
+      this.onUpdated,
+      this.onCreated,
+      this.onCancel,
+      required this.model,
+      required this.ref})
+      : super(key: key);
 
   @override
   State<UpdateAssistanceForm> createState() => _UpdateAssistanceFormState();
@@ -98,22 +106,26 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
             attachments: request.attachments ?? widget.model?.attachments ?? [],
             date: request.date ?? widget.model!.date,
             intervention: request.intervention ?? widget.model?.intervention,
-            nextInterventionDate: request.nextInterventionDate ?? widget.model?.nextInterventionDate,
+            nextInterventionDate: request.nextInterventionDate ??
+                widget.model?.nextInterventionDate,
             note: request.note ?? widget.model?.note ?? "",
             reviewer: request.reviewer ?? widget.model?.reviewer,
             station: request.station ?? widget.model!.station,
             status: request.status ?? widget.model!.status,
             technicians: request.technicians ?? widget.model!.technicians,
-            createdAt: request.createdAt ?? widget.model?.createdAt ?? DateTime.now(),
+            createdAt:
+                request.createdAt ?? widget.model?.createdAt ?? DateTime.now(),
             deletedAt: request.deletedAt ?? widget.model?.deletedAt,
-            updatedAt: request.updatedAt ?? widget.model?.updatedAt ?? DateTime.now(),
+            updatedAt:
+                request.updatedAt ?? widget.model?.updatedAt ?? DateTime.now(),
           ));
         } else if (widget.ref.nullIfEmpty != null) {
           var item = AssistanceModel.fromJson(request.data);
           await setDocument(path: request.ref.path, data: request.data);
           widget.onCreated?.call(item);
         } else {
-          throw Exception('CODE:IAE, ref is empty, can not create new item without ref ');
+          throw Exception(
+              'CODE:IAE, ref is empty, can not create new item without ref ');
         }
       }
       // FirebaseFunctionsException
@@ -192,8 +204,12 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
               ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.background,
-                  backgroundImage: request.station?.photoUrl.nullIfEmpty == null ? null : CachedNetworkImageProvider(request.station!.photoUrl),
-                  child: request.station?.photoUrl.nullIfEmpty != null ? null : Text(request.station!.name.firstCharOrNull),
+                  backgroundImage: request.station?.photoUrl.nullIfEmpty == null
+                      ? null
+                      : CachedNetworkImageProvider(request.station!.photoUrl),
+                  child: request.station?.photoUrl.nullIfEmpty != null
+                      ? null
+                      : Text(request.station!.name.firstCharOrNull),
                 ),
                 contentPadding: EdgeInsets.symmetric(horizontal: 24),
                 visualDensity: VisualDensity(vertical: -3),
@@ -203,7 +219,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   // if (getCurrentProfile()!.roles.first.can("permission")) {
 
                   // }
-                  showDetailsStationModelDailog(context, request.station!, showEdit: false);
+                  showDetailsStationModelDailog(context, request.station!,
+                      showEdit: false);
                 },
               ),
 
@@ -242,7 +259,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                 ),
                       ),
                   ],
-                  builder: (BuildContext context, MenuController controller, Widget? child) {
+                  builder: (BuildContext context, MenuController controller,
+                      Widget? child) {
                     return ListTile(
                       leading: Container(
                         width: 20,
@@ -280,17 +298,23 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   ),
                   contentPadding: EdgeInsets.only(left: 12),
                   visualDensity: VisualDensity(vertical: -3),
-                  title: Text(request.nextInterventionDate?.toIso8601String() ?? "No date"),
+                  title: Text(request.nextInterventionDate?.toIso8601String() ??
+                      "No date"),
                   subtitle: Text("Next Intervention Date"),
-                  trailing:getCurrentProfile()!.hasRoleString("admin") || getCurrentProfile()!.hasRoleString("commercial")? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: const Icon(FluentIcons.edit_16_regular),
-                  ):null,
+                  trailing: getCurrentProfile()!.hasRoleString("admin") ||
+                          getCurrentProfile()!.hasRoleString("commercial")
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: const Icon(FluentIcons.edit_16_regular),
+                        )
+                      : null,
                   onTap: () async {
-                    if (getCurrentProfile()!.hasRoleString("admin") || getCurrentProfile()!.hasRoleString("commercial")) {
-                      
-                    }
-                    var date = await showDatePicker(context: context, firstDate: DateTime.now().add(Duration(days: -1000)), lastDate: DateTime.now().add(Duration(days: 1000)));
+                    if (getCurrentProfile()!.hasRoleString("admin") ||
+                        getCurrentProfile()!.hasRoleString("commercial")) {}
+                    var date = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now().add(Duration(days: -1000)),
+                        lastDate: DateTime.now().add(Duration(days: 1000)));
                     if (date != null) {
                       request.nextInterventionDate = date;
                       _submit("Change estimated date to $date");
@@ -308,12 +332,16 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 trailing: IconButton(
                   icon: const Icon(FluentIcons.add_24_regular),
                   onPressed: () async {
-                    var profiles = await showProfilesPickerDialog(context, filters: [
+                    var profiles =
+                        await showProfilesPickerDialog(context, filters: [
                       IndexViewFilter(
                         name: "Technicians",
                         active: true,
-                        local: (model) => model.roles.map((e) => e.name).contains("technician"),
-                        remote: (query) => query.where("roles", arrayContains: "technician"),
+                        local: (model) => model.roles
+                            .map((e) => e.name)
+                            .contains("technician"),
+                        remote: (query) =>
+                            query.where("roles", arrayContains: "technician"),
                         strict: false,
                         fixed: true,
                       )
@@ -321,7 +349,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                     if (profiles == null) return;
                     setState(() {
                       request.technicians = [
-                        ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                        ...?request.technicians?.where((e) =>
+                            !profiles.any((c) => c.ref.path == e.ref.path)),
                         ...profiles
                       ];
                       _submit(
@@ -337,7 +366,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 5),
                         onTap: () async {
                           await showDetailsProfileModelDailog(context, tech);
                         },
@@ -361,7 +391,9 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                             //   ..._technicians.value,
                             // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
                             setState(() {
-                              request.technicians = request.technicians!.where((e) => e.ref.path != tech.ref.path).toList();
+                              request.technicians = request.technicians!
+                                  .where((e) => e.ref.path != tech.ref.path)
+                                  .toList();
                             });
                             // save
                             _submit(
@@ -423,14 +455,20 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          leading: ProfileAvatar(profile: widget.model!.feedback!.profile),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                          leading: ProfileAvatar(
+                              profile: widget.model!.feedback!.profile),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 24),
                           visualDensity: const VisualDensity(vertical: -3),
                           title: Row(
                             children: [
                               Text(widget.model!.feedback!.profile.displayName),
                               const SizedBox(width: 8),
-                              if (widget.model?.feedback?.profile != null) DataFlagWidget(custom: widget.model!.feedback!.profile.roles.firstOrNull?.name ?? "?"),
+                              if (widget.model?.feedback?.profile != null)
+                                DataFlagWidget(
+                                    custom: widget.model!.feedback!.profile
+                                            .roles.firstOrNull?.name ??
+                                        "?"),
                             ],
                           ),
                           subtitle: Column(
@@ -457,20 +495,26 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                                     },
                                     child: Row(
                                       children: [
-                                        for (int i = 0; i < 5; i++) Icon(FluentIcons.star_24_filled, color: Colors.black),
+                                        for (int i = 0; i < 5; i++)
+                                          Icon(FluentIcons.star_24_filled,
+                                              color: Colors.black),
                                       ],
                                     ),
                                   ),
                                   const SizedBox(width: 10),
-                                  Text((widget.model!.feedback!.rate * 5).toStringAsFixed(1)),
+                                  Text((widget.model!.feedback!.rate * 5)
+                                      .toStringAsFixed(1)),
                                 ],
                               ),
                               Divider(),
-                              widget.model!.feedback!.note?.nullIfEmpty == null ? DataFlagWidget.empty() : Text(widget.model!.feedback!.note!),
+                              widget.model!.feedback!.note?.nullIfEmpty == null
+                                  ? DataFlagWidget.empty()
+                                  : Text(widget.model!.feedback!.note!),
                             ],
                           ),
                           onTap: () {
-                            showDetailsProfileModelDailog(context, widget.model!.feedback!.profile);
+                            showDetailsProfileModelDailog(
+                                context, widget.model!.feedback!.profile);
                           },
                         ),
                         // const SizedBox(height: 10),
@@ -485,7 +529,7 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(12),
-                    child: Text("No feedback yet"),
+                    child: Text("No feedbeck Provided"),
                   ),
                 ),
 
@@ -511,7 +555,13 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(errorText: _errors['date'], prefixIcon: const Icon(FluentIcons.calendar_32_regular), label: const Text('Time of the problem'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
+                decoration: InputDecoration(
+                    errorText: _errors['date'],
+                    prefixIcon: const Icon(FluentIcons.calendar_32_regular),
+                    label: const Text('Time of the problem'),
+                    alignLabelWithHint: true,
+                    border: InputBorder.none,
+                    fillColor: Colors.transparent),
               ),
               AppTextFormField(
                 enabled: false,
@@ -520,16 +570,34 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 onChanged: (v) async {
                   request.note = v;
                 },
-                decoration: InputDecoration(errorText: _errors['note'], prefixIcon: const Icon(FluentIcons.note_24_regular), label: const Text('Client note'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
+                decoration: InputDecoration(
+                    errorText: _errors['note'],
+                    prefixIcon: const Icon(FluentIcons.note_24_regular),
+                    label: const Text('Client note'),
+                    alignLabelWithHint: true,
+                    border: InputBorder.none,
+                    fillColor: Colors.transparent),
               ),
               // callDuration
-              AppTextFormField(
-                enabled: false,
-                initialValue: (widget.model?.intervention?.metadata["callDuration"]).toString() + " min",
-                margin: const EdgeInsets.symmetric(horizontal: 24),
-                onChanged: (v) async {},
-                decoration: InputDecoration(errorText: _errors['callDuration'], prefixIcon: const Icon(FluentIcons.timer_24_regular), label: const Text('Call duration'), alignLabelWithHint: true, border: InputBorder.none, fillColor: Colors.transparent),
-              ),
+              if (widget.model!.intervention != null &&
+                  widget.model!.intervention!.type.name ==
+                      InterventionType.byPhone.name)
+                AppTextFormField(
+                  enabled: false,
+                  initialValue:
+                      (widget.model?.intervention?.metadata["callDuration"])
+                              .toString() +
+                          " min",
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  onChanged: (v) async {},
+                  decoration: InputDecoration(
+                      errorText: _errors['callDuration'],
+                      prefixIcon: const Icon(FluentIcons.timer_24_regular),
+                      label: const Text('Call duration'),
+                      alignLabelWithHint: true,
+                      border: InputBorder.none,
+                      fillColor: Colors.transparent),
+                ),
               Divider(),
               const ListTile(
                 leading: Icon(FluentIcons.document_20_regular),
@@ -538,6 +606,14 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                 title: Text("Attachments"),
                 enabled: false,
               ),
+              if (request.attachments!.isEmpty)
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Text("No Attachements Provided"),
+                  ),
+                ),
+
               for (AttachmentModel item in request.attachments ?? [])
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -569,12 +645,16 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                   trailing: IconButton(
                     icon: const Icon(FluentIcons.add_24_regular),
                     onPressed: () async {
-                      var profiles = await showProfilesPickerDialog(context, filters: [
+                      var profiles =
+                          await showProfilesPickerDialog(context, filters: [
                         IndexViewFilter(
                           name: "Technicians",
                           active: true,
-                          local: (model) => model.roles.map((e) => e.name).contains("technician"),
-                          remote: (query) => query.where("roles", arrayContains: "technician"),
+                          local: (model) => model.roles
+                              .map((e) => e.name)
+                              .contains("technician"),
+                          remote: (query) =>
+                              query.where("roles", arrayContains: "technician"),
                           strict: false,
                           fixed: true,
                         )
@@ -582,7 +662,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                       if (profiles != null) {
                         setState(() {
                           request.technicians = [
-                            ...?request.technicians?.where((e) => !profiles.any((c) => c.ref.path == e.ref.path)),
+                            ...?request.technicians?.where((e) =>
+                                !profiles.any((c) => c.ref.path == e.ref.path)),
                             ...profiles
                           ];
                         });
@@ -597,13 +678,18 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 5),
                           onTap: () async {
                             showUpdateProfileModelDailog(context, tech);
                           },
                           leading: CircleAvatar(
-                            backgroundImage: tech.photoUrl.isEmpty ? null : CachedNetworkImageProvider(tech.photoUrl),
-                            child: tech.photoUrl != null ? null : const Icon(FluentIcons.person_24_regular),
+                            backgroundImage: tech.photoUrl.isEmpty
+                                ? null
+                                : CachedNetworkImageProvider(tech.photoUrl),
+                            child: tech.photoUrl != null
+                                ? null
+                                : const Icon(FluentIcons.person_24_regular),
                           ),
                           title: Text(tech.displayName),
                           trailing: IconButton(
@@ -614,7 +700,8 @@ class _UpdateAssistanceFormState extends State<UpdateAssistanceForm> {
                               // }..removeWhere((key, value) => value.ref.id == tech.ref.id);
                               setState(() {
                                 request.technicians = [
-                                  ...?request.technicians?.where((e) => e.ref.path != tech.ref.path),
+                                  ...?request.technicians?.where(
+                                      (e) => e.ref.path != tech.ref.path),
                                 ];
                               });
                             },
