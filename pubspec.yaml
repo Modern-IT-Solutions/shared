@@ -30,7 +30,7 @@ dependencies:
   zplayer:
     # path: ../zplayer
     git:
-     url: https://github.com/Modern-IT-Solutions/z-player.git
+     url: https://github.com/Modern-IT-Solutions/z-player-2.git
      ref: main
 
   fast_rsa:
