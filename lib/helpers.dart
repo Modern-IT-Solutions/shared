@@ -3,6 +3,8 @@ import 'package:lib/utils/platforms.dart';
 import 'package:shared/models/bill_item_template_model.dart';
 import 'package:shared/models/displacement_cost_list_model.dart';
 import 'package:algeria/algeria.dart';
+import 'package:shared/models/home_ad.dart';
+import 'package:shared/models/home_section.dart';
 export 'package:lib/utils/platforms.dart';
 
 import 'models/event_preference.dart';
@@ -412,6 +414,24 @@ extension PreferencesEx on PreferencesService {
         [];
 
     return sliders;
+  }
+
+  List<HomeSection> get homeSections {
+    final sections = preferences['homeSections']?.values.map((e) {
+          return HomeSection.fromJson(e);
+        }).toList() ??
+        [];
+
+    return sections;
+  }
+
+  List<HomeAd> get homeAds {
+    final ads = preferences['homeAds']?.values.map((e) {
+          return HomeAd.fromJson(e);
+        }).toList() ??
+        [];
+
+    return ads;
   }
 
   List<EventPreference> get events {

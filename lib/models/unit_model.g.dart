@@ -9,10 +9,10 @@ part of 'unit_model.dart';
 _$UnitModelImpl _$$UnitModelImplFromJson(Map<String, dynamic> json) =>
     _$UnitModelImpl(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
-      color: const ColorSerializer().fromJson(json['color'] as int),
+      color: const ColorSerializer().fromJson((json['color'] as num).toInt()),
       description: json['description'] as String? ?? "بلا وصف",
       discount: (json['discount'] as num).toDouble(),
-      duration: Duration(microseconds: json['duration'] as int),
+      duration: Duration(microseconds: (json['duration'] as num).toInt()),
       fields:
           (json['fields'] as List<dynamic>).map((e) => e as String).toList(),
       name: json['name'] as String,

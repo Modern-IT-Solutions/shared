@@ -12,7 +12,7 @@ _$UnitSectionModelImpl _$$UnitSectionModelImplFromJson(
       ref: const ModelRefSerializer().fromJson(json['ref'] as String),
       title: json['title'] as String,
       description: json['description'] as String?,
-      order: json['order'] as int,
+      order: (json['order'] as num).toInt(),
       isFree: json['isFree'] as bool? ?? false,
       visibility:
           $enumDecodeNullable(_$ModelVisibilityEnumMap, json['visibility']) ??

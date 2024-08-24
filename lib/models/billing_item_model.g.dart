@@ -15,7 +15,7 @@ _$BillingItemModelImpl _$$BillingItemModelImplFromJson(
       description: json['description'] as String?,
       amount: (json['amount'] as num).toDouble(),
       currency: json['currency'] as String? ?? "DZD",
-      quantity: json['quantity'] as int,
+      quantity: (json['quantity'] as num).toInt(),
       metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
       createdAt:
           const TimestampDateTimeSerializer().fromJson(json['createdAt']),

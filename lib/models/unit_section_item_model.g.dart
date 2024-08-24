@@ -13,7 +13,7 @@ _$UnitSectionItemModelImpl _$$UnitSectionItemModelImplFromJson(
       type: $enumDecode(_$UnitSectionItemTypeEnumMap, json['type']),
       title: json['title'] as String,
       description: json['description'] as String?,
-      order: json['order'] as int,
+      order: (json['order'] as num).toInt(),
       isFree: json['isFree'] as bool? ?? false,
       url: json['url'] as String? ?? "",
       hash: json['hash'] as String? ?? "",
