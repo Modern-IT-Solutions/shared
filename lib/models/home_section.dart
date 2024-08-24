@@ -7,6 +7,7 @@ part 'home_section.g.dart';
 class HomeSection with _$HomeSection {
 
   factory HomeSection({
+    required String id,
     required bool enabled,
     required int order,
     String? subtitle,

@@ -8,6 +8,7 @@ part of 'home_section.dart';
 
 _$HomeSectionImpl _$$HomeSectionImplFromJson(Map<String, dynamic> json) =>
     _$HomeSectionImpl(
+      id: json['id'] as String,
       enabled: json['enabled'] as bool,
       order: (json['order'] as num).toInt(),
       subtitle: json['subtitle'] as String?,
@@ -17,6 +18,7 @@ _$HomeSectionImpl _$$HomeSectionImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$HomeSectionImplToJson(_$HomeSectionImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'enabled': instance.enabled,
       'order': instance.order,
       'subtitle': instance.subtitle,

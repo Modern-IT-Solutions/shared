@@ -20,6 +20,7 @@ HomeSection _$HomeSectionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HomeSection {
+  String get id => throw _privateConstructorUsedError;
   bool get enabled => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   String? get subtitle => throw _privateConstructorUsedError;
@@ -39,7 +40,8 @@ abstract class $HomeSectionCopyWith<$Res> {
       _$HomeSectionCopyWithImpl<$Res, HomeSection>;
   @useResult
   $Res call(
-      {bool enabled,
+      {String id,
+      bool enabled,
       int order,
       String? subtitle,
       String title,
@@ -59,6 +61,7 @@ class _$HomeSectionCopyWithImpl<$Res, $Val extends HomeSection>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? enabled = null,
     Object? order = null,
     Object? subtitle = freezed,
@@ -66,6 +69,10 @@ class _$HomeSectionCopyWithImpl<$Res, $Val extends HomeSection>
     Object? units = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       enabled: null == enabled
           ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
@@ -99,7 +106,8 @@ abstract class _$$HomeSectionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool enabled,
+      {String id,
+      bool enabled,
       int order,
       String? subtitle,
       String title,
@@ -117,6 +125,7 @@ class __$$HomeSectionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? enabled = null,
     Object? order = null,
     Object? subtitle = freezed,
@@ -124,6 +133,10 @@ class __$$HomeSectionImplCopyWithImpl<$Res>
     Object? units = null,
   }) {
     return _then(_$HomeSectionImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       enabled: null == enabled
           ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
@@ -152,7 +165,8 @@ class __$$HomeSectionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HomeSectionImpl implements _HomeSection {
   _$HomeSectionImpl(
-      {required this.enabled,
+      {required this.id,
+      required this.enabled,
       required this.order,
       this.subtitle,
       required this.title,
@@ -162,6 +176,8 @@ class _$HomeSectionImpl implements _HomeSection {
   factory _$HomeSectionImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeSectionImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final bool enabled;
   @override
@@ -180,7 +196,7 @@ class _$HomeSectionImpl implements _HomeSection {
 
   @override
   String toString() {
-    return 'HomeSection(enabled: $enabled, order: $order, subtitle: $subtitle, title: $title, units: $units)';
+    return 'HomeSection(id: $id, enabled: $enabled, order: $order, subtitle: $subtitle, title: $title, units: $units)';
   }
 
   @override
@@ -188,6 +204,7 @@ class _$HomeSectionImpl implements _HomeSection {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeSectionImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.enabled, enabled) || other.enabled == enabled) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.subtitle, subtitle) ||
@@ -198,8 +215,8 @@ class _$HomeSectionImpl implements _HomeSection {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, enabled, order, subtitle, title,
-      const DeepCollectionEquality().hash(_units));
+  int get hashCode => Object.hash(runtimeType, id, enabled, order, subtitle,
+      title, const DeepCollectionEquality().hash(_units));
 
   @JsonKey(ignore: true)
   @override
@@ -217,7 +234,8 @@ class _$HomeSectionImpl implements _HomeSection {
 
 abstract class _HomeSection implements HomeSection {
   factory _HomeSection(
-      {required final bool enabled,
+      {required final String id,
+      required final bool enabled,
       required final int order,
       final String? subtitle,
       required final String title,
@@ -226,6 +244,8 @@ abstract class _HomeSection implements HomeSection {
   factory _HomeSection.fromJson(Map<String, dynamic> json) =
       _$HomeSectionImpl.fromJson;
 
+  @override
+  String get id;
   @override
   bool get enabled;
   @override
