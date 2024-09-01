@@ -249,7 +249,7 @@
     },
     {
       "name": "core",
-      "rootUri": "../../core",
+      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-94434ae856f8119d0577b6b1c31096d8dbd7dbb3/",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -1682,7 +1682,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-08-24T16:17:47.311928Z",
+  "generated": "2024-09-01T03:58:55.957070Z",
   "generator": "pub",
   "generatorVersion": "3.5.1",
   "flutterRoot": "file:///Users/mohamad/dev/flutter",
