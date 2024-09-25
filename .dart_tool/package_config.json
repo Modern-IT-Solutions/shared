@@ -249,7 +249,7 @@
     },
     {
       "name": "core",
-      "rootUri": "file:///Users/mohamad/.pub-cache/git/core-94434ae856f8119d0577b6b1c31096d8dbd7dbb3/",
+      "rootUri": "../../core",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -326,14 +326,20 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "enhanced_cloud_firestore",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/enhanced_cloud_firestore-2.0.0",
+      "name": "equatable",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/equatable-2.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
-      "name": "equatable",
-      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/equatable-2.0.5",
+      "name": "exif",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/exif-3.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "exifdart",
+      "rootUri": "file:///Users/mohamad/.pub-cache/hosted/pub.dev/exifdart-0.8.0-dev.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1682,10 +1688,10 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-09-01T03:58:55.957070Z",
+  "generated": "2024-09-25T10:03:41.767840Z",
   "generator": "pub",
-  "generatorVersion": "3.5.1",
+  "generatorVersion": "3.5.3",
   "flutterRoot": "file:///Users/mohamad/dev/flutter",
-  "flutterVersion": "3.24.1",
+  "flutterVersion": "3.24.3",
   "pubCache": "file:///Users/mohamad/.pub-cache"
 }

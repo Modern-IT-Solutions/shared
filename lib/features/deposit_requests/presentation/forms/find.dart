@@ -14,9 +14,44 @@ import 'package:recase/recase.dart';
 import 'package:shared/models/deposit_request_model.dart';
 import 'package:shared/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
+// exif
+import 'package:exif/exif.dart';
+import "package:exifdart/exifdart.dart";
+import 'dart:typed_data'; // For handling bytes
+import 'package:http/http.dart' as http; // For fetching image from the URL
+import 'package:image/image.dart' as img; // For image processing
+
+
 
 import '../../data/repositories/repository.dart';
 import '../../domain/request/requests.dart';
+
+
+
+// Function to get EXIF data from an image URL
+Future<Map<String, IfdTag>?> fetchExifFromUrl(String imageUrl) async {
+  try {
+    // Download the image as bytes
+    final response = await http.get(Uri.parse(imageUrl));
+    
+    if (response.statusCode == 200) {
+      // Get the image bytes
+      Uint8List imageBytes = response.bodyBytes;
+
+      // Decode the image using the 'image' package
+      // img.Image? image = img.decodeImage(imageBytes);
+
+        // Extract EXIF data from the image
+        final exifData = await readExifFromBytes(imageBytes);
+        return exifData;
+    } else {
+      print("Failed to download image.");
+    }
+  } catch (e) {
+    print("Error: $e");
+  }
+}
+
 
 /// [FindDepositRequestForm] is a form to update a new user
 class FindDepositRequestForm extends StatefulWidget {
@@ -676,14 +711,43 @@ class _FindDepositRequestFormState extends State<FindDepositRequestForm> {
   }
 }
 
-class AttatchmentViewer extends StatelessWidget {
+class AttatchmentViewer extends StatefulWidget {
   AttatchmentViewer({
     super.key,
     required String? firstImageUrl,
   }) : _firstImageUrl = firstImageUrl;
 
   final String? _firstImageUrl;
+
+  @override
+  State<AttatchmentViewer> createState() => _AttatchmentViewerState();
+}
+
+class _AttatchmentViewerState extends State<AttatchmentViewer> {
   var controller = PhotoViewController();
+
+  // exif data
+  Map<String, IfdTag>?  exifMetadata = null;
+
+  // load exif 
+  Future<void> loadExif() async {
+    if (widget._firstImageUrl == null) return;
+    if (Platforms.isWeb != true) return;
+    // load image
+    print("loading exif");
+    exifMetadata = await fetchExifFromUrl(widget._firstImageUrl!);
+    print(exifMetadata);
+    setState(() {
+      
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadExif();
+  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -692,10 +756,37 @@ class AttatchmentViewer extends StatelessWidget {
         title: const Text('Attachment'),
         // open in url luncher
         actions: [
+          if (exifMetadata != null)
+          IconButton(
+            onPressed: () async {
+              // open dailog for exif data in table
+              await showModalBottomSheet(
+                context: context, 
+                builder: (context) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (var item in exifMetadata!.entries)
+                        ListTile(
+                          title: Text(item.value.toString()),
+                          subtitle: Text(item.key),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text("Okey"),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              );
+            },
+            icon: const Icon(FluentIcons.info_16_regular),
+          ),
           ElevatedButton.icon(
             onPressed: () async {
-              if (_firstImageUrl != null) {
-                await launchUrl(Uri.parse(_firstImageUrl!));
+              if (widget._firstImageUrl != null) {
+                await launchUrl(Uri.parse(widget._firstImageUrl!));
               }
             },
             icon: const Icon(FluentIcons.image_24_regular),
@@ -709,7 +800,7 @@ class AttatchmentViewer extends StatelessWidget {
               enableRotation: true,
               controller: controller,
               imageProvider: CachedNetworkImageProvider(
-                _firstImageUrl!,
+                widget._firstImageUrl!,
               )),
           // toolbar
           Align(

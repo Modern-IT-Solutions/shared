@@ -17,3 +17,9 @@ class HomeSection with _$HomeSection {
 
   factory HomeSection.fromJson(Map<String, dynamic> json) => _$HomeSectionFromJson(json);
 }
+
+
+// extenion (isConst when start with CST_)
+extension CSTHomeSection on HomeSection {
+  bool get isConst => id.startsWith('CST_');
+}

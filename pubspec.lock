@@ -332,11 +332,9 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: arch2
-      resolved-ref: "94434ae856f8119d0577b6b1c31096d8dbd7dbb3"
-      url: "https://github.com/Modern-IT-Solutions/core.git"
-    source: git
+      path: "../core"
+      relative: true
+    source: path
     version: "0.0.4"
   cross_file:
     dependency: transitive
@@ -434,14 +432,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.17"
-  enhanced_cloud_firestore:
-    dependency: transitive
-    description:
-      name: enhanced_cloud_firestore
-      sha256: "03e0eb9eb277b3c225cf93e6291fc2f539354a0f65136c5c9d9c450af1d03b2a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   equatable:
     dependency: transitive
     description:
@@ -450,6 +440,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
+  exif:
+    dependency: "direct main"
+    description:
+      name: exif
+      sha256: a7980fdb3b7ffcd0b035e5b8a5e1eef7cadfe90ea6a4e85ebb62f87b96c7a172
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.0"
+  exifdart:
+    dependency: "direct main"
+    description:
+      name: exifdart
+      sha256: d967ff02540b5d0b8459af44d071a6f0ffeb8edb2c956737b6ab13daab41f75b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0-dev.2"
   fake_async:
     dependency: transitive
     description:
@@ -2222,5 +2228,5 @@ packages:
     source: git
     version: "0.0.2"
 sdks:
-  dart: ">=3.4.0 <3.7.0"
+  dart: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"

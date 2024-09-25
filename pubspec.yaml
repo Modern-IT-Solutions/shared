@@ -22,6 +22,8 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   firebase_ui_firestore: ^1.6.4
+  exif:
+  exifdart: ^0.8.0-dev.2
   safe_device:
   device_info_plus: ^9.0.3
   screen_capture_event:
