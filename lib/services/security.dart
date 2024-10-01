@@ -169,6 +169,7 @@ class SecurityService extends Service {
   StreamSubscription<html.Event>? _htmlOnLoadSubscription;
 
   Future<String> decryptVideoHash(String hash) async {
+    // return hash;
     Uint8List result = await RSA.decryptOAEPBytes(
       Uint8List.fromList(hex.decode(hash)),
       '',
@@ -179,6 +180,7 @@ class SecurityService extends Service {
   }
 
   Future<String> encryptVideo(String data) async {
+    // return data;
     Uint8List result = await RSA.encryptOAEPBytes(
       Uint8List.fromList(data.codeUnits),
       '',
